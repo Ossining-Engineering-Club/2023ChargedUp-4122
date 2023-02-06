@@ -1,0 +1,443 @@
+[
+  {
+    "name": "linuxathena",
+    "architecture": "arm-v7",
+    "operatingSystem": "linux",
+    "flavor": "default",
+    "buildType": "debug",
+    "cppPath": "/Users/joe/wpilib/2023/roborio/bin/arm-frc2023-linux-gnueabi-g++",
+    "cPath": "/Users/joe/wpilib/2023/roborio/bin/arm-frc2023-linux-gnueabi-gcc",
+    "msvc": false,
+    "gcc": true,
+    "systemCppMacros": [],
+    "systemCppArgs": [],
+    "systemCMacros": [],
+    "systemCArgs": [],
+    "allLibFiles": [
+      "/Users/joe/.gradle/caches/transforms-3/1f2f4102ec1db760c302f3f28c6a64fb/transformed/wpilibNewCommands-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/487052871e0ac984318d78545fe71336/transformed/REVLib-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/f9ec298e24d725a9ffb1549c696567e6/transformed/REVLib-driver-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/c883d8ad4875e72941876d0965928d14/transformed/PhotonLib-cpp-v2023.2.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/bb71c3c7fe0c7326108628e48089c79d/transformed/wpiapi-cpp-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/7b7926edd7223276460fba4ea9b123e5/transformed/api-cpp-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/04a8c1da954b85fd6b311063244b4d2b/transformed/cci-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/5381e66d5befee20c96ba60f71421a27/transformed/tools-23.0.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/549b6ff079a347ab7452bad789ec47d3/transformed/wpilibc-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/9777445aa9a11bd3dd5228fb7b4bbec2/transformed/ntcore-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/41492298a1201366dd0e67613adde55d/transformed/hal-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/58e9cd91453107af7998733c60500445/transformed/wpimath-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/a5d5e5aafe961b091006476fb7ea05b8/transformed/wpinet-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/847bacd8e7c0c38febcd43c82d03b2f9/transformed/wpiutil-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/5721dccff2d68a0447b334c04960e873/transformed/netcomm-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/50808fc755227dda1bf38eb240296a53/transformed/chipobject-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/28848cbdd9e5a277c6838ec75cb4c61f/transformed/visa-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/4e3646db9d43329c60fcc8fe4fef6043/transformed/cameraserver-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/d4eb1300f7d5231528344b067052da16/transformed/cscore-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/cfcc47416873e1d7fa6457a787c1aa04/transformed/apriltag-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/4d8ef545dfec2f7be698a30e208ef47d/transformed/opencv-cpp-4.6.0-4-headers/",
+      "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/include/",
+      "/Users/joe/.gradle/caches/transforms-3/0d1204feddb1763e47fc2d55c43ea25c/transformed/wpilibNewCommands-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/2e8fb5b3f525707b8e76644ad526037f/transformed/wpilibc-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5cff1c4ee87d22bd042e454af076735f/transformed/ntcore-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5496c9259a78217597f6826571efa099/transformed/hal-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5ca104dd5b1d146f794db9de2c402791/transformed/wpimath-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/b9c430b4b27ea6216364b734c0649c7b/transformed/wpinet-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/6ac6d457c157544c65fa0d6fddaaebde/transformed/wpiutil-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/0a0f400ac56b84e1ac5c7fe440d1dbd0/transformed/cameraserver-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/fe2fa266ff805304650bd0c659057c8c/transformed/cscore-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/39814cdb9a7ffab2ae22988593025076/transformed/apriltag-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/930ae587a977d7042fdc233169f37a05/transformed/opencv-cpp-4.6.0-4-sources/"
+    ],
+    "allLibSources": [
+      "/Users/joe/.gradle/caches/transforms-3/0d1204feddb1763e47fc2d55c43ea25c/transformed/wpilibNewCommands-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/2e8fb5b3f525707b8e76644ad526037f/transformed/wpilibc-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5cff1c4ee87d22bd042e454af076735f/transformed/ntcore-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5496c9259a78217597f6826571efa099/transformed/hal-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5ca104dd5b1d146f794db9de2c402791/transformed/wpimath-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/b9c430b4b27ea6216364b734c0649c7b/transformed/wpinet-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/6ac6d457c157544c65fa0d6fddaaebde/transformed/wpiutil-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/0a0f400ac56b84e1ac5c7fe440d1dbd0/transformed/cameraserver-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/fe2fa266ff805304650bd0c659057c8c/transformed/cscore-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/39814cdb9a7ffab2ae22988593025076/transformed/apriltag-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/930ae587a977d7042fdc233169f37a05/transformed/opencv-cpp-4.6.0-4-sources/"
+    ],
+    "allLibHeaders": [
+      "/Users/joe/.gradle/caches/transforms-3/1f2f4102ec1db760c302f3f28c6a64fb/transformed/wpilibNewCommands-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/487052871e0ac984318d78545fe71336/transformed/REVLib-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/f9ec298e24d725a9ffb1549c696567e6/transformed/REVLib-driver-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/c883d8ad4875e72941876d0965928d14/transformed/PhotonLib-cpp-v2023.2.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/bb71c3c7fe0c7326108628e48089c79d/transformed/wpiapi-cpp-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/7b7926edd7223276460fba4ea9b123e5/transformed/api-cpp-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/04a8c1da954b85fd6b311063244b4d2b/transformed/cci-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/5381e66d5befee20c96ba60f71421a27/transformed/tools-23.0.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/549b6ff079a347ab7452bad789ec47d3/transformed/wpilibc-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/9777445aa9a11bd3dd5228fb7b4bbec2/transformed/ntcore-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/41492298a1201366dd0e67613adde55d/transformed/hal-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/58e9cd91453107af7998733c60500445/transformed/wpimath-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/a5d5e5aafe961b091006476fb7ea05b8/transformed/wpinet-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/847bacd8e7c0c38febcd43c82d03b2f9/transformed/wpiutil-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/5721dccff2d68a0447b334c04960e873/transformed/netcomm-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/50808fc755227dda1bf38eb240296a53/transformed/chipobject-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/28848cbdd9e5a277c6838ec75cb4c61f/transformed/visa-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/4e3646db9d43329c60fcc8fe4fef6043/transformed/cameraserver-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/d4eb1300f7d5231528344b067052da16/transformed/cscore-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/cfcc47416873e1d7fa6457a787c1aa04/transformed/apriltag-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/4d8ef545dfec2f7be698a30e208ef47d/transformed/opencv-cpp-4.6.0-4-headers/",
+      "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/include/"
+    ],
+    "binaries": [
+      {
+        "componentName": "frcUserProgram",
+        "sourceSets": [
+          {
+            "source": {
+              "srcDirs": [
+                "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/cpp/"
+              ],
+              "includes": [
+                "**/*.cpp",
+                "**/*.cc"
+              ],
+              "excludes": []
+            },
+            "exportedHeaders": {
+              "srcDirs": [
+                "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/include/"
+              ],
+              "includes": [],
+              "excludes": []
+            },
+            "cpp": true,
+            "args": [
+              "-Wall",
+              "-Wextra",
+              "-std=c++20",
+              "-Wformat=2",
+              "-pedantic",
+              "-Wno-psabi",
+              "-Wno-unused-parameter",
+              "-Wno-error=deprecated-declarations",
+              "-fPIC",
+              "-pthread",
+              "-Wno-error=deprecated-enum-enum-conversion",
+              "-Og",
+              "-g"
+            ],
+            "macros": []
+          }
+        ],
+        "libHeaders": [
+          "/Users/joe/.gradle/caches/transforms-3/1f2f4102ec1db760c302f3f28c6a64fb/transformed/wpilibNewCommands-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/487052871e0ac984318d78545fe71336/transformed/REVLib-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/f9ec298e24d725a9ffb1549c696567e6/transformed/REVLib-driver-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/c883d8ad4875e72941876d0965928d14/transformed/PhotonLib-cpp-v2023.2.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/bb71c3c7fe0c7326108628e48089c79d/transformed/wpiapi-cpp-5.30.2-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/7b7926edd7223276460fba4ea9b123e5/transformed/api-cpp-5.30.2-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/04a8c1da954b85fd6b311063244b4d2b/transformed/cci-5.30.2-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/5381e66d5befee20c96ba60f71421a27/transformed/tools-23.0.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/549b6ff079a347ab7452bad789ec47d3/transformed/wpilibc-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/9777445aa9a11bd3dd5228fb7b4bbec2/transformed/ntcore-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/41492298a1201366dd0e67613adde55d/transformed/hal-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/58e9cd91453107af7998733c60500445/transformed/wpimath-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/a5d5e5aafe961b091006476fb7ea05b8/transformed/wpinet-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/847bacd8e7c0c38febcd43c82d03b2f9/transformed/wpiutil-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/5721dccff2d68a0447b334c04960e873/transformed/netcomm-2023.3.0-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/50808fc755227dda1bf38eb240296a53/transformed/chipobject-2023.3.0-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/28848cbdd9e5a277c6838ec75cb4c61f/transformed/visa-2023.3.0-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/4e3646db9d43329c60fcc8fe4fef6043/transformed/cameraserver-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/d4eb1300f7d5231528344b067052da16/transformed/cscore-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/cfcc47416873e1d7fa6457a787c1aa04/transformed/apriltag-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/4d8ef545dfec2f7be698a30e208ef47d/transformed/opencv-cpp-4.6.0-4-headers/",
+          "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/include/"
+        ],
+        "sharedLibrary": false,
+        "executable": true
+      }
+    ],
+    "sourceBinaries": [
+      {
+        "source": {
+          "srcDirs": [
+            "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/cpp/"
+          ],
+          "includes": [
+            "**/*.cpp",
+            "**/*.cc"
+          ],
+          "excludes": []
+        },
+        "componentName": "frcUserProgram",
+        "cpp": true,
+        "args": [
+          "-Wall",
+          "-Wextra",
+          "-std=c++20",
+          "-Wformat=2",
+          "-pedantic",
+          "-Wno-psabi",
+          "-Wno-unused-parameter",
+          "-Wno-error=deprecated-declarations",
+          "-fPIC",
+          "-pthread",
+          "-Wno-error=deprecated-enum-enum-conversion",
+          "-Og",
+          "-g"
+        ],
+        "macros": [],
+        "sharedLibrary": false,
+        "executable": true
+      },
+      {
+        "source": {
+          "srcDirs": [
+            "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/include/"
+          ],
+          "includes": [],
+          "excludes": []
+        },
+        "componentName": "frcUserProgram",
+        "cpp": true,
+        "args": [
+          "-Wall",
+          "-Wextra",
+          "-std=c++20",
+          "-Wformat=2",
+          "-pedantic",
+          "-Wno-psabi",
+          "-Wno-unused-parameter",
+          "-Wno-error=deprecated-declarations",
+          "-fPIC",
+          "-pthread",
+          "-Wno-error=deprecated-enum-enum-conversion",
+          "-Og",
+          "-g"
+        ],
+        "macros": [],
+        "sharedLibrary": false,
+        "executable": true
+      }
+    ],
+    "nameBinaryMap": {
+      "frcUserProgram": 0
+    }
+  },
+  {
+    "name": "linuxathena",
+    "architecture": "arm-v7",
+    "operatingSystem": "linux",
+    "flavor": "default",
+    "buildType": "release",
+    "cppPath": "/Users/joe/wpilib/2023/roborio/bin/arm-frc2023-linux-gnueabi-g++",
+    "cPath": "/Users/joe/wpilib/2023/roborio/bin/arm-frc2023-linux-gnueabi-gcc",
+    "msvc": false,
+    "gcc": true,
+    "systemCppMacros": [],
+    "systemCppArgs": [],
+    "systemCMacros": [],
+    "systemCArgs": [],
+    "allLibFiles": [
+      "/Users/joe/.gradle/caches/transforms-3/1f2f4102ec1db760c302f3f28c6a64fb/transformed/wpilibNewCommands-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/487052871e0ac984318d78545fe71336/transformed/REVLib-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/f9ec298e24d725a9ffb1549c696567e6/transformed/REVLib-driver-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/c883d8ad4875e72941876d0965928d14/transformed/PhotonLib-cpp-v2023.2.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/bb71c3c7fe0c7326108628e48089c79d/transformed/wpiapi-cpp-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/7b7926edd7223276460fba4ea9b123e5/transformed/api-cpp-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/04a8c1da954b85fd6b311063244b4d2b/transformed/cci-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/5381e66d5befee20c96ba60f71421a27/transformed/tools-23.0.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/549b6ff079a347ab7452bad789ec47d3/transformed/wpilibc-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/9777445aa9a11bd3dd5228fb7b4bbec2/transformed/ntcore-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/41492298a1201366dd0e67613adde55d/transformed/hal-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/58e9cd91453107af7998733c60500445/transformed/wpimath-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/a5d5e5aafe961b091006476fb7ea05b8/transformed/wpinet-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/847bacd8e7c0c38febcd43c82d03b2f9/transformed/wpiutil-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/5721dccff2d68a0447b334c04960e873/transformed/netcomm-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/50808fc755227dda1bf38eb240296a53/transformed/chipobject-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/28848cbdd9e5a277c6838ec75cb4c61f/transformed/visa-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/4e3646db9d43329c60fcc8fe4fef6043/transformed/cameraserver-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/d4eb1300f7d5231528344b067052da16/transformed/cscore-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/cfcc47416873e1d7fa6457a787c1aa04/transformed/apriltag-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/4d8ef545dfec2f7be698a30e208ef47d/transformed/opencv-cpp-4.6.0-4-headers/",
+      "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/include/",
+      "/Users/joe/.gradle/caches/transforms-3/0d1204feddb1763e47fc2d55c43ea25c/transformed/wpilibNewCommands-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/2e8fb5b3f525707b8e76644ad526037f/transformed/wpilibc-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5cff1c4ee87d22bd042e454af076735f/transformed/ntcore-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5496c9259a78217597f6826571efa099/transformed/hal-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5ca104dd5b1d146f794db9de2c402791/transformed/wpimath-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/b9c430b4b27ea6216364b734c0649c7b/transformed/wpinet-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/6ac6d457c157544c65fa0d6fddaaebde/transformed/wpiutil-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/0a0f400ac56b84e1ac5c7fe440d1dbd0/transformed/cameraserver-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/fe2fa266ff805304650bd0c659057c8c/transformed/cscore-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/39814cdb9a7ffab2ae22988593025076/transformed/apriltag-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/930ae587a977d7042fdc233169f37a05/transformed/opencv-cpp-4.6.0-4-sources/"
+    ],
+    "allLibSources": [
+      "/Users/joe/.gradle/caches/transforms-3/0d1204feddb1763e47fc2d55c43ea25c/transformed/wpilibNewCommands-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/2e8fb5b3f525707b8e76644ad526037f/transformed/wpilibc-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5cff1c4ee87d22bd042e454af076735f/transformed/ntcore-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5496c9259a78217597f6826571efa099/transformed/hal-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/5ca104dd5b1d146f794db9de2c402791/transformed/wpimath-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/b9c430b4b27ea6216364b734c0649c7b/transformed/wpinet-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/6ac6d457c157544c65fa0d6fddaaebde/transformed/wpiutil-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/0a0f400ac56b84e1ac5c7fe440d1dbd0/transformed/cameraserver-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/fe2fa266ff805304650bd0c659057c8c/transformed/cscore-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/39814cdb9a7ffab2ae22988593025076/transformed/apriltag-cpp-2023.1.1-sources/",
+      "/Users/joe/.gradle/caches/transforms-3/930ae587a977d7042fdc233169f37a05/transformed/opencv-cpp-4.6.0-4-sources/"
+    ],
+    "allLibHeaders": [
+      "/Users/joe/.gradle/caches/transforms-3/1f2f4102ec1db760c302f3f28c6a64fb/transformed/wpilibNewCommands-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/487052871e0ac984318d78545fe71336/transformed/REVLib-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/f9ec298e24d725a9ffb1549c696567e6/transformed/REVLib-driver-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/c883d8ad4875e72941876d0965928d14/transformed/PhotonLib-cpp-v2023.2.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/bb71c3c7fe0c7326108628e48089c79d/transformed/wpiapi-cpp-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/7b7926edd7223276460fba4ea9b123e5/transformed/api-cpp-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/04a8c1da954b85fd6b311063244b4d2b/transformed/cci-5.30.2-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/5381e66d5befee20c96ba60f71421a27/transformed/tools-23.0.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/549b6ff079a347ab7452bad789ec47d3/transformed/wpilibc-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/9777445aa9a11bd3dd5228fb7b4bbec2/transformed/ntcore-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/41492298a1201366dd0e67613adde55d/transformed/hal-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/58e9cd91453107af7998733c60500445/transformed/wpimath-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/a5d5e5aafe961b091006476fb7ea05b8/transformed/wpinet-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/847bacd8e7c0c38febcd43c82d03b2f9/transformed/wpiutil-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/5721dccff2d68a0447b334c04960e873/transformed/netcomm-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/50808fc755227dda1bf38eb240296a53/transformed/chipobject-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/28848cbdd9e5a277c6838ec75cb4c61f/transformed/visa-2023.3.0-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/4e3646db9d43329c60fcc8fe4fef6043/transformed/cameraserver-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/d4eb1300f7d5231528344b067052da16/transformed/cscore-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/cfcc47416873e1d7fa6457a787c1aa04/transformed/apriltag-cpp-2023.1.1-headers/",
+      "/Users/joe/.gradle/caches/transforms-3/4d8ef545dfec2f7be698a30e208ef47d/transformed/opencv-cpp-4.6.0-4-headers/",
+      "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/include/"
+    ],
+    "binaries": [
+      {
+        "componentName": "frcUserProgram",
+        "sourceSets": [
+          {
+            "source": {
+              "srcDirs": [
+                "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/cpp/"
+              ],
+              "includes": [
+                "**/*.cpp",
+                "**/*.cc"
+              ],
+              "excludes": []
+            },
+            "exportedHeaders": {
+              "srcDirs": [
+                "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/include/"
+              ],
+              "includes": [],
+              "excludes": []
+            },
+            "cpp": true,
+            "args": [
+              "-Wall",
+              "-Wextra",
+              "-std=c++20",
+              "-Wformat=2",
+              "-pedantic",
+              "-Wno-psabi",
+              "-Wno-unused-parameter",
+              "-Wno-error=deprecated-declarations",
+              "-fPIC",
+              "-pthread",
+              "-Wno-error=deprecated-enum-enum-conversion",
+              "-O2"
+            ],
+            "macros": []
+          }
+        ],
+        "libHeaders": [
+          "/Users/joe/.gradle/caches/transforms-3/1f2f4102ec1db760c302f3f28c6a64fb/transformed/wpilibNewCommands-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/487052871e0ac984318d78545fe71336/transformed/REVLib-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/f9ec298e24d725a9ffb1549c696567e6/transformed/REVLib-driver-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/c883d8ad4875e72941876d0965928d14/transformed/PhotonLib-cpp-v2023.2.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/bb71c3c7fe0c7326108628e48089c79d/transformed/wpiapi-cpp-5.30.2-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/7b7926edd7223276460fba4ea9b123e5/transformed/api-cpp-5.30.2-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/04a8c1da954b85fd6b311063244b4d2b/transformed/cci-5.30.2-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/5381e66d5befee20c96ba60f71421a27/transformed/tools-23.0.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/549b6ff079a347ab7452bad789ec47d3/transformed/wpilibc-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/9777445aa9a11bd3dd5228fb7b4bbec2/transformed/ntcore-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/41492298a1201366dd0e67613adde55d/transformed/hal-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/58e9cd91453107af7998733c60500445/transformed/wpimath-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/a5d5e5aafe961b091006476fb7ea05b8/transformed/wpinet-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/847bacd8e7c0c38febcd43c82d03b2f9/transformed/wpiutil-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/5721dccff2d68a0447b334c04960e873/transformed/netcomm-2023.3.0-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/50808fc755227dda1bf38eb240296a53/transformed/chipobject-2023.3.0-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/28848cbdd9e5a277c6838ec75cb4c61f/transformed/visa-2023.3.0-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/4e3646db9d43329c60fcc8fe4fef6043/transformed/cameraserver-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/d4eb1300f7d5231528344b067052da16/transformed/cscore-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/cfcc47416873e1d7fa6457a787c1aa04/transformed/apriltag-cpp-2023.1.1-headers/",
+          "/Users/joe/.gradle/caches/transforms-3/4d8ef545dfec2f7be698a30e208ef47d/transformed/opencv-cpp-4.6.0-4-headers/",
+          "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/include/"
+        ],
+        "sharedLibrary": false,
+        "executable": true
+      }
+    ],
+    "sourceBinaries": [
+      {
+        "source": {
+          "srcDirs": [
+            "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/cpp/"
+          ],
+          "includes": [
+            "**/*.cpp",
+            "**/*.cc"
+          ],
+          "excludes": []
+        },
+        "componentName": "frcUserProgram",
+        "cpp": true,
+        "args": [
+          "-Wall",
+          "-Wextra",
+          "-std=c++20",
+          "-Wformat=2",
+          "-pedantic",
+          "-Wno-psabi",
+          "-Wno-unused-parameter",
+          "-Wno-error=deprecated-declarations",
+          "-fPIC",
+          "-pthread",
+          "-Wno-error=deprecated-enum-enum-conversion",
+          "-O2"
+        ],
+        "macros": [],
+        "sharedLibrary": false,
+        "executable": true
+      },
+      {
+        "source": {
+          "srcDirs": [
+            "/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/include/"
+          ],
+          "includes": [],
+          "excludes": []
+        },
+        "componentName": "frcUserProgram",
+        "cpp": true,
+        "args": [
+          "-Wall",
+          "-Wextra",
+          "-std=c++20",
+          "-Wformat=2",
+          "-pedantic",
+          "-Wno-psabi",
+          "-Wno-unused-parameter",
+          "-Wno-error=deprecated-declarations",
+          "-fPIC",
+          "-pthread",
+          "-Wno-error=deprecated-enum-enum-conversion",
+          "-O2"
+        ],
+        "macros": [],
+        "sharedLibrary": false,
+        "executable": true
+      }
+    ],
+    "nameBinaryMap": {
+      "frcUserProgram": 0
+    }
+  }
+]
