@@ -62,13 +62,15 @@ double  getVisionDistance();
 
  private:
  // **********************************************************
-  frc::Translation2d frontLeftLocation{+0.3175_m,+0.3175_m};
-  frc::Translation2d frontRightLocation{+0.3175_m, -0.3175_m};
-  frc::Translation2d backLeftLocation{-0.3175_m, +0.3175_m};
-  frc::Translation2d backRightLocation{-0.3175_m, -0.3175_m}; 
+  frc::Translation2d frontLeftLocation{+0.29845_m,+0.27305_m};
+  frc::Translation2d frontRightLocation{+0.29845_m, -0.27305_m};
+  frc::Translation2d backLeftLocation{-0.29845_m, +0.27305_m};
+  frc::Translation2d backRightLocation{-0.29845_m, -0.27305_m}; 
   const double FowardSide_P_GAIN = 7.5;
+
   const double FowardSide_I_GAIN = 0.0;
-  const double FowardSide_D_GAIN = 0.0;
+  const double FowardSide_D_GAIN 
+  = 0.0;
 
   const double kP_Rot = 2.5;
   const double kI_Rot = 0.0;

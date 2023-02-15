@@ -1,4 +1,4 @@
-See file:///Users/joe/Documents/GitHub/2023ChargedUp-4122/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramReleaseExecutableFrcUserProgramCpp.
+See file:///C:/Users/finnl/Desktop/2023ChargedUp-4122/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramReleaseExecutableFrcUserProgramCpp.
 compiling OECPigeonIMU.cpp successful.
 
 compiling SwerveModule.cpp successful.
@@ -6,8 +6,8 @@ compiling SwerveModule.cpp successful.
 compiling Robot.cpp successful.
 
 compiling Drivetrain.cpp successful.
-/Users/joe/Documents/GitHub/2023ChargedUp-4122/src/main/cpp/Drivetrain.cpp:103:5: warning: "/*" within comment [-Wcomment]
+C:\Users\finnl\Desktop\2023ChargedUp-4122\src\main\cpp\Drivetrain.cpp:103:5: warning: "/*" within comment [-Wcomment]
   103 |     /*
       |      
 
-Finished compileFrcUserProgramReleaseExecutableFrcUserProgramCpp, see full log file:///Users/joe/Documents/GitHub/2023ChargedUp-4122/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt.
+Finished compileFrcUserProgramReleaseExecutableFrcUserProgramCpp, see full log file:///C:/Users/finnl/Desktop/2023ChargedUp-4122/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt.

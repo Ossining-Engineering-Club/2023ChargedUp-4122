@@ -58,6 +58,15 @@ public:
     // Odometry Values
     frc::SmartDashboard::PutNumber("YPose", swerveBot.SwerveOdometryGetPose().Y().value());
     frc::SmartDashboard::PutNumber("XPose", swerveBot.SwerveOdometryGetPose().X().value());
+   dash->PutNumber("ABSLBPos",swerveBot.LFMod.GetAbsEncoderAngle());
+    dash->PutNumber("ABSLBPos",swerveBot.LBMod.GetAbsEncoderAngle());
+    dash->PutNumber("ABSRFPos",swerveBot.RFMod.GetAbsEncoderAngle());
+    dash->PutNumber("ABSRBPos",swerveBot.RBMod.GetAbsEncoderAngle());
+    dash->PutNumber("LFPos",swerveBot.LFMod.GetCurrentAngle());
+    dash->PutNumber("LBPos",swerveBot.LBMod.GetCurrentAngle());
+    dash->PutNumber("RFPos",swerveBot.RFMod.GetCurrentAngle());
+    dash->PutNumber("RBPos",swerveBot.RBMod.GetCurrentAngle());
+    dash->PutNumber("Gyro", (swerveBot.getAngle().Degrees().value()));
     frc::SmartDashboard::PutNumber("Heading", swerveBot.SwerveOdometryGetPose().Rotation().Radians().value());
     frc::SmartDashboard::PutNumber("Drivetrain::getAngle", swerveBot.gyro.GetYaw());
 
@@ -67,7 +76,7 @@ public:
     }
     else
     {
-      ControlledDrive(true);
+      ControlledDrive(FIELD_ORIENTED);
     }
   }
 
