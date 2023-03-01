@@ -64,7 +64,21 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative)
       isFinished = true;
     }
   }
-} // Go to Pose
+} 
+void Drivetrain::AutoBallance(bool fieldRelative){
+  //Working Logic
+  //Based on 7004's code, they have a combined input of yaw and pitch pids so the robot stays straight and stays level
+  //We can do a similar thing but adapted to swerve
+  //Yaw dictates the rotational movement, keeping it on a setpoint to 0, then pitch is just foward and back on the x axis
+  //To implement this I need two PID's, a gyro pitch and yaw reading, and a drive method
+  frc2::PIDController yawPID{1.0,0.0,0.0};
+  frc2::PIDController pitchPID{1.0,0.0,0.0};
+  /*
+  double yawSpeed = yawPID.Calculate(Drivetrain::getAngle().Degrees().value(),0);
+  double pitchSpeed = pitchPID.Calculate(Drivetrain::getPitchRad().Degrees().value(),0);
+  Drivetrain::Drive(pitchSpeed*Drivetrain::maxSpeed,0_mps, yawSpeed*Drivetrain::maxSpeed,fieldRelative);
+  */
+  }// Go to Pose
 // }
 /*
 

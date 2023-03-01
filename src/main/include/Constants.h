@@ -7,8 +7,11 @@
 #define TurningMotorGearRatio 7.0/150.0 
 #define DrivingMotorGearRatio 1/6.75
 #define WheelDiameterInMeters 0.0992
-
-
+#define UpperJointConversionFactor (1/310)*360
+#define LowerJointConversionFactor (1/213.3)*360
+#define LowerJointFCANID 16
+#define LowerJointFCANID 15
+#define MiddleJointCANID 17
 #define O_PI std::numbers::pi
 #define gyroOffset (std::numbers::pi/2)*(0_rad)
 
@@ -45,5 +48,5 @@
 #define ABS_ANGLE 0
 
 // MAX PERCENTAGE CONSTANTS
-#define drivePercentage 0.2//0.80
+#define drivePercentage 0.4//0.80
 #define rotatePercentage 0.6//0.80

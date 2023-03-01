@@ -34,6 +34,7 @@ class Drivetrain {
   void GoToPose(frc::Pose2d desiredPose,bool fieldRelative);
   bool isFinished = false;
   void Adjust(bool strafe,bool fieldRelative);
+  void AutoBallance(bool fieldRelative);
 
     static constexpr units::meters_per_second_t maxSpeed = 4.441_mps;  // 3 meters per second
     static constexpr units::radians_per_second_t maxTurnRate{9.89};  // 1/2 rotation per second
