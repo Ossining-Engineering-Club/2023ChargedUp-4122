@@ -46,13 +46,13 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative)
 {
   Drivetrain::UpdateOdometry();
   while (isFinished == false)
-  {
+  {Drivetrain::UpdateOdometry();
     if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.01 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - desiredPose.Y().value()) > 0.01 ||
-        fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - desiredPose.Rotation().Radians().value()) > 0.2)
+        fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - desiredPose.Rotation().Radians().value()) > .02)
     {
 
-      Drivetrain::UpdateOdometry();
+      
       fowardSpeed = controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), desiredPose.X().value());
       strafeSpeed = controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), desiredPose.Y().value());
       rotationSpeed = controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), desiredPose.Rotation().Radians().value());
@@ -65,6 +65,15 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative)
     }
   }
 } 
+
+void Drivetrain::DriveUntilAngle(double angle){
+  
+
+
+}
+
+
+
 void Drivetrain::AutoBallance(bool fieldRelative){
   //Working Logic
   //Based on 7004's code, they have a combined input of yaw and pitch pids so the robot stays straight and stays level
@@ -140,7 +149,7 @@ frc::Pose2d Drivetrain::SwerveOdometryGetPose()
 // Returns the yaw of the robot via PigeonIMU gyro in degrees
 frc::Rotation2d Drivetrain::getAngle()
 {
-  units::degree_t yaw{gyro.GetYaw()};
+  units::radian_t yaw{gyro.GetYaw()* ((std::numbers::pi) / (180.0))};
   return frc::Rotation2d(yaw);
   // -> Old return in radians (commented since we switched to degrees)
   // return frc::Rotation2d(((gyro.GetYaw() * ((std::numbers::pi) / (180.0)) * 1_rad)) - gyroOffset); // gyroOffset defined in constants.h

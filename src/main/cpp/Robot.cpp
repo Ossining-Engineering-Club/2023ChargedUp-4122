@@ -34,14 +34,31 @@ public:
 
   void AutonomousInit()
   {
-    swerveBot.gyro.ResetYaw();
+    //swerveBot.gyro.ResetYaw();
     swerveBot.ResetDrive();
     fieldRelative = FIELD_ORIENTED;
-    frc::Pose2d Movement1 = frc::Pose2d(1_m, 2_m, frc::Rotation2d(180_deg));
-    swerveBot.GoToPose(Movement1, fieldRelative);
-    frc::Pose2d Movement2 = frc::Pose2d(3_m,0_m,frc::Rotation2d(90_deg));
-    swerveBot.GoToPose(Movement2,fieldRelative);
-    frc::Pose2d Movement3 = frc::Pose2d(1_m,3_m,frc::Rotation2d(0_deg));
+    // frc::Pose2d Movement1 = frc::Pose2d(1_m, 2_m, frc::Rotation2d(180_deg));
+    // swerveBot.GoToPose(Movement1, fieldRelative);
+    // frc::Pose2d Movement2 = frc::Pose2d(3_m,0_m,frc::Rotation2d(90_deg));
+    // swerveBot.GoToPose(Movement2,fieldRelative);
+    // frc::Pose2d Movement3 = frc::Pose2d(1_m,3_m,frc::Rotation2d(0_deg));
+
+  while(swerveBot.gyro.GetRoll()*-1.0 < 13.0){
+    swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
+    frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
+  }
+  
+  while(swerveBot.gyro.GetRoll()*-1.0 > 4.6){
+    swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
+    frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
+  }
+      swerveBot.ResetDrive();
+      frc::Pose2d RampDist = frc::Pose2d(0.0_m,0_m, 0.0_rad*std::numbers::pi);
+  while(true){
+      swerveBot.GoToPose(RampDist, FIELD_ORIENTED);
+  }
+      //swerveBot.Drive(0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxTurnRate,FIELD_ORIENTED);
+      
   }
 
   void AutonomousPeriodic() override {}
@@ -53,6 +70,8 @@ public:
       swerveBot.ResetDrive();
       isReset = true;
     }
+
+
   }
 
   void TeleopPeriodic() override
@@ -71,8 +90,10 @@ public:
     dash->PutNumber("RFPos",swerveBot.RFMod.GetCurrentAngle());
     dash->PutNumber("RBPos",swerveBot.RBMod.GetCurrentAngle());
     dash->PutNumber("Gyro", (swerveBot.getAngle().Degrees().value()));
-    frc::SmartDashboard::PutNumber("Heading", swerveBot.SwerveOdometryGetPose().Rotation().Radians().value());
-    frc::SmartDashboard::PutNumber("Drivetrain::getAngle", swerveBot.gyro.GetYaw());
+    frc::SmartDashboard::PutNumber("Heading", swerveBot.SwerveOdometryGetPose().Rotation().Degrees().value());
+    frc::SmartDashboard::PutNumber("Yaw", swerveBot.gyro.GetYaw());
+    frc::SmartDashboard::PutNumber("pitch", swerveBot.gyro.GetPitch());
+    frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
 
     if (driveController.GetXButton())
     {
@@ -81,6 +102,7 @@ public:
     else
     {
       ControlledDrive(FIELD_ORIENTED);
+      //swerveBot.Drive(.3*Drivetrain::maxSpeed,0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxTurnRate,FIELD_ORIENTED);
       ArmControl();
       
     }

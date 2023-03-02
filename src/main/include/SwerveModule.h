@@ -31,6 +31,8 @@ class SwerveModule {
   void ResetEncoder();
   double GetCurrentAngle();
   double GetAbsEncoderAngle();
+  void DriveTillAngle(double angle);
+  void Balance();
 
  private:
 

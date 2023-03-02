@@ -32,6 +32,9 @@ class Drivetrain {
   void UpdateOdometry();
   void ResetDrive();
   void GoToPose(frc::Pose2d desiredPose,bool fieldRelative);
+
+  void DriveUntilAngle(double angle);
+
   bool isFinished = false;
   void Adjust(bool strafe,bool fieldRelative);
   void AutoBallance(bool fieldRelative);

@@ -114,3 +114,9 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& state) {
         RotatorMotor.Set(0.0);
     }
 }
+void SwerveModule::DriveTillAngle(double angle){
+
+}
+void SwerveModule::Balance(){
+
+}
