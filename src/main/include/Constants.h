@@ -9,9 +9,11 @@
 #define WheelDiameterInMeters 0.0992
 #define UpperJointConversionFactor (1/310)*360
 #define LowerJointConversionFactor (1/213.3)*360
-#define LowerJointFCANID 16
-#define LowerJointFCANID 15
-#define MiddleJointCANID 17
+#define Joint1CloseToBatteryCANID 16
+#define Joint1AwayFromBatteryCANID 15
+#define Joint2CANID 17
+#define Joint3CANID 18
+#define GripSpinnerCANID 21
 #define O_PI std::numbers::pi
 #define gyroOffset (std::numbers::pi/2)*(0_rad)
 

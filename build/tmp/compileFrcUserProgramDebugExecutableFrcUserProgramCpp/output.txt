@@ -1,40 +1,11 @@
 See file:///C:/Users/engineering/Desktop/2-16%20WORKING%20SWERVE%20ARM/build/tmp/compileFrcUserProgramDebugExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramDebugExecutableFrcUserProgramCpp.
-compiling OECPigeonIMU.cpp successful.
-
 compiling SwerveModule.cpp successful.
-In file included from C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/SwerveModule.h:17,
-                 from C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\cpp\SwerveModule.cpp:5:
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Constants.h:13: warning: "LowerJointFCANID" redefined
-   13 | #define LowerJointFCANID 15
-      | 
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Constants.h:12: note: this is the location of the previous definition
-   12 | #define LowerJointFCANID 16
-      | 
 
 compiling Robot.cpp successful.
-In file included from C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\cpp\Robot.cpp:17:
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Constants.h:13: warning: "LowerJointFCANID" redefined
-   13 | #define LowerJointFCANID 15
-      | 
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Constants.h:12: note: this is the location of the previous definition
-   12 | #define LowerJointFCANID 16
-      | 
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\cpp\Robot.cpp: In member function 'virtual void Robot::AutonomousInit()':
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\cpp\Robot.cpp:44:17: warning: variable 'Movement3' set but not used [-Wunused-but-set-variable]
-   44 |     frc::Pose2d Movement3 = frc::Pose2d(1_m,3_m,frc::Rotation2d(0_deg));
-      |                 ^~~~~~~~~
 
 compiling Drivetrain.cpp successful.
-In file included from C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Drivetrain.h:15,
-                 from C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\cpp\Drivetrain.cpp:5:
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Constants.h:13: warning: "LowerJointFCANID" redefined
-   13 | #define LowerJointFCANID 15
-      | 
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Constants.h:12: note: this is the location of the previous definition
-   12 | #define LowerJointFCANID 16
-      | 
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\cpp\Drivetrain.cpp:117:5: warning: "/*" within comment [-Wcomment]
-  117 |     /*
+C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\cpp\Drivetrain.cpp:126:5: warning: "/*" within comment [-Wcomment]
+  126 |     /*
       |      
 
 Finished compileFrcUserProgramDebugExecutableFrcUserProgramCpp, see full log file:///C:/Users/engineering/Desktop/2-16%20WORKING%20SWERVE%20ARM/build/tmp/compileFrcUserProgramDebugExecutableFrcUserProgramCpp/output.txt.

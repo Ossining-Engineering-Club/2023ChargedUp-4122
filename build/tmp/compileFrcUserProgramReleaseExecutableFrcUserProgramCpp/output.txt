@@ -1,22 +1,7 @@
 See file:///C:/Users/engineering/Desktop/2-16%20WORKING%20SWERVE%20ARM/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramReleaseExecutableFrcUserProgramCpp.
 compiling Robot.cpp successful.
-In file included from C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\cpp\Robot.cpp:17:
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Constants.h:13: warning: "LowerJointFCANID" redefined
-   13 | #define LowerJointFCANID 15
-      | 
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Constants.h:12: note: this is the location of the previous definition
-   12 | #define LowerJointFCANID 16
-      | 
 
 compiling Drivetrain.cpp successful.
-In file included from C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Drivetrain.h:15,
-                 from C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\cpp\Drivetrain.cpp:5:
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Constants.h:13: warning: "LowerJointFCANID" redefined
-   13 | #define LowerJointFCANID 15
-      | 
-C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\include/Constants.h:12: note: this is the location of the previous definition
-   12 | #define LowerJointFCANID 16
-      | 
 C:\Users\engineering\Desktop\2-16 WORKING SWERVE ARM\src\main\cpp\Drivetrain.cpp:126:5: warning: "/*" within comment [-Wcomment]
   126 |     /*
       |      

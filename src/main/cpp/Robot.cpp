@@ -42,7 +42,35 @@ public:
     // frc::Pose2d Movement2 = frc::Pose2d(3_m,0_m,frc::Rotation2d(90_deg));
     // swerveBot.GoToPose(Movement2,fieldRelative);
     // frc::Pose2d Movement3 = frc::Pose2d(1_m,3_m,frc::Rotation2d(0_deg));
-
+    /*
+    //0,0,0 (1.92,4.67,0)
+    //ideally our starting position we can place without moving but that will remain to be seen
+    frc::Pose2d  HomePose frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg));
+    frc::Pose2d  TurningFromHomeOrPickupPose frc::Pose2d(2.58_m, 0_m, frc::Rotation2d(180_deg));
+    frc::Pose2d  PickupOnePose frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
+    frc::Pose2d  2ndPickupTurningPose frc::Pose2d(0_m, 0_m, frc::Rotation2d(90_deg));
+    frc::Pose2d  MovingToSecondPickupPose frc::Pose2d(0_m, -1.28_m, frc::Rotation2d(0_deg));
+    frc::Pose2d  TurningAfterSecondPickupPose frc::Pose2d(0_m, 0_m, frc::Rotation2d(180_deg));
+    frc::Pose2d  MovingAwayAfterSecondPickupPose frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
+    //arm place
+    swerveBot.GoToPose(TurningFromHomeOrPickupPose);
+    swerveBot.GoToPose(PickupOnePose);
+    //arm pickup
+    swerveBot.GoToPose(TurningFromHomeOrPickupPose);
+    swerveBot.GoToPose(HomePose);
+    //arm place
+    swerveBot.GoToPose(TurningFromHomeOrPickupPose);
+    swerveBot.GoToPose(PickupOnePose);
+    swerveBot.GoToPose(2ndPickupTurningPose);
+    swerveBot.GoToPose(MovingToSecondPickupPose);
+    //arm pickup
+    swerveBot.GoToPose();
+    swerveBot.GoToPose();
+    swerveBot.GoToPose();
+    swerveBot.GoToPose();
+    //arm place
+    //auto done
+    */
   while(swerveBot.gyro.GetRoll()*-1.0 < 13.0){
     swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
     frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
@@ -110,15 +138,19 @@ public:
 
 private:
   frc::XboxController driveController{0}; // Xbox controller in first port
-  frc::Joystick armJoint1{1};
-  frc::Joystick armJoint2{2};
+  frc::Joystick armJoint1Stick{1};
+  frc::Joystick armJoint2Stick{2};
+  frc::Joystick armJoint3Stick{3};
   frc::SmartDashboard *dash;         // Initialize smart dashboard
   Drivetrain swerveBot;              // Construct drivetrain object
   frc::Field2d m_field;
   bool fieldRelative;
   bool isReset = false;
-  rev::CANSparkMax Joint1Motor{LowerJointFCANID, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax Joint2Motor{MiddleJointCANID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax Joint1MotorClosestToBattery{Joint1CloseToBatteryCANID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax Joint1MotorAwayFromBattery{Joint1AwayFromBatteryCANID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax Joint2Motor{Joint2CANID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax Joint3Motor{Joint3CANID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax GripSpinnerMotor{GripSpinnerCANID, rev::CANSparkMax::MotorType::kBrushless};
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
   frc::SlewRateLimiter<units::scalar> xSpeedLimiter{5 / 1_s}; // Used to be 3 / 1_s
   frc::SlewRateLimiter<units::scalar> ySpeedLimiter{5 / 1_s}; // Used to be 3 / 1_s
@@ -146,12 +178,44 @@ private:
     dash->PutNumber("Heading", swerveBot.SwerveOdometryGetPose().Rotation().Radians().value());
   }
   void ArmControl(){
-    const auto joint1Speed = armJoint1.GetY()*.3;
-    const auto joint2Speed = -armJoint2.GetY()*.3;
-    dash ->PutNumber("Joint1Speed",joint1Speed);
-    dash ->PutNumber("Joint2Speed",joint2Speed);
-    Joint1Motor.Set(joint1Speed);
-    Joint2Motor.Set(joint2Speed);
+    //convention is as follows
+    //Joint One
+    //Motor closest to battery: + = joint up, - = joint down
+    //Motor on other side of base away from battery: - = joint up, + = joint down
+    //Joint 2
+    //Primary motor: - = joint up, + = joint down
+    //Joint 3
+    //Primary motor: + = joint up, - = joint down
+    //On our sticks we want + on the joystick to drive the arm foward, or down
+    //Each joint will have a stick assigned to it
+
+    // Close + | Away -
+    const auto joint1CloseToBatteryMotorSpeed = armJoint1Stick.GetY()*.3;
+    const auto joint1AwayFromBatteryMotorSpeed = -armJoint1Stick.GetY()*.3;
+
+    // Joint 2 + | Joint 3 -
+    const auto joint2MotorSpeed = armJoint2Stick.GetY()*.3;
+    const auto joint3MotorSpeed = -armJoint3Stick.GetY()*.3;
+    // const auto spinner2MotorSpeed = armJoint3Stick.GetX()*.3;
+
+    dash ->PutNumber("Joint1Speed",joint1CloseToBatteryMotorSpeed);
+    dash ->PutNumber("Joint2Speed",joint2MotorSpeed);
+    dash ->PutNumber("Joint3Speed",joint3MotorSpeed);
+    
+    Joint1MotorAwayFromBattery.Set(joint1AwayFromBatteryMotorSpeed);
+    Joint1MotorClosestToBattery.Set(joint1CloseToBatteryMotorSpeed);
+    Joint2Motor.Set(joint2MotorSpeed);
+    Joint3Motor.Set(joint3MotorSpeed);
+    
+    // GripSpinnerMotor.Set(spinner2MotorSpeed);
+
+    if(armJoint3Stick.GetRawButton(2)){
+      GripSpinnerMotor.Set(0.85);
+    } else if(armJoint3Stick.GetRawButton(3)){
+      GripSpinnerMotor.Set(-0.2);
+    }else{
+      GripSpinnerMotor.Set(0);
+    }
   }
 };
 
