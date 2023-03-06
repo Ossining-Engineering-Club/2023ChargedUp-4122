@@ -170,7 +170,7 @@ private:
 
     const auto rot = rotLimiter.Calculate(
                          frc::ApplyDeadband(driveController.GetRightX(), 0.4)) // Dead band used to be 0.02
-                     * Drivetrain::maxTurnRate;
+                     *0.4* Drivetrain::maxTurnRate;
 
     swerveBot.Drive(-ySpeed, -xSpeed, -rot, fieldRelative);
     dash->PutNumber("YPose", swerveBot.SwerveOdometryGetPose().Y().value());
@@ -195,27 +195,50 @@ private:
 
     // Joint 2 + | Joint 3 -
     const auto joint2MotorSpeed = armJoint2Stick.GetY()*.3;
-    const auto joint3MotorSpeed = -armJoint3Stick.GetY()*.3;
+
+    // Wrist contorl on Joystick #2
+    if(armJoint2Stick.GetRawButton(2)){
+      Joint3Motor.Set(-0.3);
+    }
+    else if (armJoint2Stick.GetRawButton(3)){
+      Joint3Motor.Set(0.3);
+    } else{
+      Joint3Motor.Set(0.0);
+    }
+    
+    if(armJoint1Stick.GetRawButton(2)){
+      GripSpinnerMotor.Set(0.2);
+    } else if(armJoint1Stick.GetRawButton(3)){
+      GripSpinnerMotor.Set(-0.85);
+    }else{
+      GripSpinnerMotor.Set(0.0);
+    }
+
+    // const auto joint3MotorSpeed = -armJoint3Stick.GetY()*.3;
+
     // const auto spinner2MotorSpeed = armJoint3Stick.GetX()*.3;
 
     dash ->PutNumber("Joint1Speed",joint1CloseToBatteryMotorSpeed);
     dash ->PutNumber("Joint2Speed",joint2MotorSpeed);
-    dash ->PutNumber("Joint3Speed",joint3MotorSpeed);
+    // Commented out after switching to two joystick configurtion
+    // dash ->PutNumber("Joint3Speed",joint3MotorSpeed);
     
     Joint1MotorAwayFromBattery.Set(joint1AwayFromBatteryMotorSpeed);
     Joint1MotorClosestToBattery.Set(joint1CloseToBatteryMotorSpeed);
     Joint2Motor.Set(joint2MotorSpeed);
-    Joint3Motor.Set(joint3MotorSpeed);
+    // Joint3Motor.Set(joint3MotorSpeed);
     
     // GripSpinnerMotor.Set(spinner2MotorSpeed);
 
-    if(armJoint3Stick.GetRawButton(2)){
-      GripSpinnerMotor.Set(0.85);
-    } else if(armJoint3Stick.GetRawButton(3)){
-      GripSpinnerMotor.Set(-0.2);
-    }else{
-      GripSpinnerMotor.Set(0);
-    }
+  // Third joystick code
+
+    // if(armJoint3Stick.GetRawButton(2)){
+    //   GripSpinnerMotor.Set(0.85);
+    // } else if(armJoint3Stick.GetRawButton(3)){
+    //   GripSpinnerMotor.Set(-0.2);
+    // }else{
+    //   GripSpinnerMotor.Set(0);
+    // }
   }
 };
 

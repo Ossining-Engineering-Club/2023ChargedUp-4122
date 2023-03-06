@@ -50,5 +50,5 @@
 #define ABS_ANGLE 0
 
 // MAX PERCENTAGE CONSTANTS
-#define drivePercentage 0.3//0.80
+#define drivePercentage 0.70///0.80//0.70
 #define rotatePercentage 0.6//0.80
