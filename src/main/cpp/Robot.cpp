@@ -42,22 +42,27 @@ public:
     // frc::Pose2d Movement2 = frc::Pose2d(3_m,0_m,frc::Rotation2d(90_deg));
     // swerveBot.GoToPose(Movement2,fieldRelative);
     // frc::Pose2d Movement3 = frc::Pose2d(1_m,3_m,frc::Rotation2d(0_deg));
-    /*
+  
     //0,0,0 (1.92,4.67,0)
     //ideally our starting position we can place without moving but that will remain to be seen
-    frc::Pose2d  HomePose frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg));
-    frc::Pose2d  TurningFromHomeOrPickupPose frc::Pose2d(2.58_m, 0_m, frc::Rotation2d(180_deg));
-    frc::Pose2d  PickupOnePose frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
-    frc::Pose2d  2ndPickupTurningPose frc::Pose2d(0_m, 0_m, frc::Rotation2d(90_deg));
-    frc::Pose2d  MovingToSecondPickupPose frc::Pose2d(0_m, -1.28_m, frc::Rotation2d(0_deg));
-    frc::Pose2d  TurningAfterSecondPickupPose frc::Pose2d(0_m, 0_m, frc::Rotation2d(180_deg));
-    frc::Pose2d  MovingAwayAfterSecondPickupPose frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
+    frc::Pose2d HomePose = frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg));
+    frc::Pose2d  TurningFromHomePose  = frc::Pose2d(2.58_m, 0_m, frc::Rotation2d(180_deg));
+    frc::Pose2d  TurningFromPickupPose  = frc::Pose2d(-2.58_m, 0_m, frc::Rotation2d(180_deg));
+    frc::Pose2d  PickupOnePose  = frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg));
+    frc::Pose2d  k2ndPickupTurningPose  = frc::Pose2d(0_m, 0_m, frc::Rotation2d(90_deg));
+    frc::Pose2d MovingToSecondPickupPose = frc::Pose2d(0_m, -1.28_m, frc::Rotation2d(0_deg));
+    frc::Pose2d   TurningAfterSecondPickupPose = frc::Pose2d(0_m, 0_m, frc::Rotation2d(180_deg));
+    frc::Pose2d  MovingAwayAfterSecondPickupPose = frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
     //arm place
-    swerveBot.GoToPose(TurningFromHomeOrPickupPose);
-    swerveBot.GoToPose(PickupOnePose);
+    //swerveBot.GoToPose(TurningFromHomePose,true);
+    swerveBot.GoToPose(PickupOnePose,true);
+    swerveBot.GoToPose(TurningFromHomePose,true);
+    /*
     //arm pickup
-    swerveBot.GoToPose(TurningFromHomeOrPickupPose);
-    swerveBot.GoToPose(HomePose);
+    swerveBot.GoToPose(TurningFromPickupPose,true);
+    swerveBot.GoToPose(HomePose, true);
+    */
+/*
     //arm place
     swerveBot.GoToPose(TurningFromHomeOrPickupPose);
     swerveBot.GoToPose(PickupOnePose);
@@ -71,6 +76,7 @@ public:
     //arm place
     //auto done
     */
+   /*
   while(swerveBot.gyro.GetRoll()*-1.0 < 13.0){
     swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
     frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
@@ -86,7 +92,7 @@ public:
       swerveBot.GoToPose(RampDist, FIELD_ORIENTED);
   }
       //swerveBot.Drive(0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxTurnRate,FIELD_ORIENTED);
-      
+      */
   }
 
   void AutonomousPeriodic() override {}
