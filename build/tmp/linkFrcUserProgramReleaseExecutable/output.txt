@@ -1,4 +1,4 @@
-See file:///Users/joe/Downloads/2023ChargedUp-4122-autotesting/build/tmp/linkFrcUserProgramReleaseExecutable/output.txt for all output for linkFrcUserProgramReleaseExecutable.
+See file:///C:/Users/gabes/Documents/GitHub/2023ChargedUp-4122/build/tmp/linkFrcUserProgramReleaseExecutable/output.txt for all output for linkFrcUserProgramReleaseExecutable.
 linking frcUserProgram successful.
 
-Finished linkFrcUserProgramReleaseExecutable, see full log file:///Users/joe/Downloads/2023ChargedUp-4122-autotesting/build/tmp/linkFrcUserProgramReleaseExecutable/output.txt.
+Finished linkFrcUserProgramReleaseExecutable, see full log file:///C:/Users/gabes/Documents/GitHub/2023ChargedUp-4122/build/tmp/linkFrcUserProgramReleaseExecutable/output.txt.

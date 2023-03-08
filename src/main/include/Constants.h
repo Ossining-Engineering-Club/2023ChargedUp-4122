@@ -2,6 +2,37 @@
 #include <numbers>
 
 #define FIELD_ORIENTED true
+
+//ArmKinematics:
+
+//Arm Position Conversions
+#define AlphaConversionFactor 0.0 // change
+#define BetaConversionFactor 0.0 // change
+#define GammaConversionFactor 0.0 // change
+//Velocity and Slope Scaling
+#define MaxVelocity 0.0 //change
+#define MaxSlope 0.0//change
+//Arm Parameter Offsets
+#define AlphaOffset 0.0 //change
+#define BetaOffset 0.0 //change
+#define GammaOffset 0.0 //change
+//StartingXY of claw
+#define StartingX 0.0
+#define StartingY 0.0
+//PID VALS
+//Gamma
+#define KGP 1.0
+#define KGI 0.0
+#define KGD 0.0
+//Beta
+#define KBP 1.0
+#define KBI 0.0
+#define KBD 0.0
+//Alpha
+#define KAP 1.0
+#define KAI 0.0
+#define KAD 0.0
+
 //Autobalance
 #define TipAngle 6.0
 #define ApproachAngle 10.0
