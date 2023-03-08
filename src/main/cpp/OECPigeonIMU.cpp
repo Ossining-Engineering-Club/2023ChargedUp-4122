@@ -10,6 +10,18 @@ void OECPigeonIMU::ResetYaw(){
     pigeonGyro->SetYaw(0.0);
 }
 
+void OECPigeonIMU::BootCalibrate(){
+    pigeonGyro->EnterCalibrationMode(ctre::phoenix::sensors::PigeonIMU::CalibrationMode::BootTareGyroAccel, 6000);
+}
+
+
+//Useless
+// void OECPigeonIMU::Reset(){
+//     pigeonGyro->SetYaw(0.0);
+//     pigeonGyro.Set
+//     pigeonGyro->SetPitch(0.0);
+// }
+
 //Yaw, Pitch, and Roll are returned in units of degrees
 // "Moving counter-clockwise is interpreted as a positive change." 
 

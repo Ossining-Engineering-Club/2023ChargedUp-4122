@@ -53,10 +53,14 @@ public:
     frc::Pose2d MovingToSecondPickupPose = frc::Pose2d(0_m, -1.28_m, frc::Rotation2d(0_deg));
     frc::Pose2d   TurningAfterSecondPickupPose = frc::Pose2d(0_m, 0_m, frc::Rotation2d(180_deg));
     frc::Pose2d  MovingAwayAfterSecondPickupPose = frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
+
+
     //arm place
     //swerveBot.GoToPose(TurningFromHomePose,true);
-    swerveBot.GoToPose(PickupOnePose,true);
-    swerveBot.GoToPose(TurningFromHomePose,true);
+
+    // swerveBot.GoToPose(PickupOnePose,true);
+    // swerveBot.GoToPose(TurningFromHomePose,true);
+
     /*
     //arm pickup
     swerveBot.GoToPose(TurningFromPickupPose,true);
@@ -76,23 +80,53 @@ public:
     //arm place
     //auto done
     */
-   /*
-  while(swerveBot.gyro.GetRoll()*-1.0 < 13.0){
+   //trive till bridhe is stable
+
+   dash->PutString("State", "Approach");
+  while(swerveBot.gyro.GetRoll()*-1.0 < ApproachAngle){
     swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
     frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
   }
-  
-  while(swerveBot.gyro.GetRoll()*-1.0 > 4.6){
+     dash->PutString("State", "Tipping");
+
+  //drive till bridge starts to level
+  while(swerveBot.gyro.GetRoll()*-1.0 > TipAngle){
     swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
     frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
   }
+  swerveBot.Drive(0.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
       swerveBot.ResetDrive();
-      frc::Pose2d RampDist = frc::Pose2d(0.0_m,0_m, 0.0_rad*std::numbers::pi);
-  while(true){
-      swerveBot.GoToPose(RampDist, FIELD_ORIENTED);
-  }
+
+      dash->PutString("State", "Stabilize");
+
+    frc::Pose2d RampDist = frc::Pose2d(-2.0_m,0.0_m, 0.0_rad*std::numbers::pi);
+  // while(true){
+      swerveBot.GoToPose(RampDist, FIELD_ORIENTED, 0.4);
+      dash->PutString("State", "Done");
+
+//  } 
+
+  //   frc::Pose2d F1 = frc::Pose2d(1.0_m,0.0_m, 0.0_rad*std::numbers::pi);
+  //   // frc::Pose2d R1 = frc::Pose2d(1.0_m,-1.0_m, 0.0_rad*std::numbers::pi);
+  //   frc::Pose2d B1 = frc::Pose2d(-1.0_m,0.0_m, 0.0_rad*std::numbers::pi);
+
+  // dash->PutString("State", "First");
+  // swerveBot.GoToPose(F1, FIELD_ORIENTED, 0.2);
+  // //   dash->PutString("State", "Second");
+
+  //   swerveBot.ResetDrive();
+  // // swerveBot.GoToPose(R1, FIELD_ORIENTED);
+  //     dash->PutString("State", "Third");
+
+  // swerveBot.GoToPose(B1, FIELD_ORIENTED, 0.2);
+  //       dash->PutString("State", "Fourth");
+  
+
+
+
       //swerveBot.Drive(0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxTurnRate,FIELD_ORIENTED);
-      */
+      
+
   }
 
   void AutonomousPeriodic() override {}

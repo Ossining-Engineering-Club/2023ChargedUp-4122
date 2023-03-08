@@ -2,7 +2,9 @@
 #include <numbers>
 
 #define FIELD_ORIENTED true
-
+//Autobalance
+#define TipAngle 6.0
+#define ApproachAngle 10.0
 
 #define TurningMotorGearRatio 7.0/150.0 
 #define DrivingMotorGearRatio 1/6.75

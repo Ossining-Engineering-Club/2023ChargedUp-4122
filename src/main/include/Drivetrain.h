@@ -31,7 +31,8 @@ class Drivetrain {
   OECPigeonIMU gyro{GYRO_PORT};
   void UpdateOdometry();
   void ResetDrive();
-  void GoToPose(frc::Pose2d desiredPose,bool fieldRelative);
+  void GoToPose(frc::Pose2d desiredPose,bool fieldRelative, double drivePower);
+  void GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower);
 
   void DriveUntilAngle(double angle);
 

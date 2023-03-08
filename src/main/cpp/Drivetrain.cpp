@@ -5,7 +5,8 @@
 #include "Drivetrain.h"
 
 Drivetrain::Drivetrain()
-{
+{  
+  // gyro.BootCalibrate();
   gyro.ResetYaw();
 }
 
@@ -42,8 +43,9 @@ void Drivetrain::UpdateOdometry()
 } // Update Odometry
 
 // Method for autonomous, takes in a given pose and drives until it reaches that pose
-void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative)
+void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double drivePower)
 {
+  isFinished = false;
   Drivetrain::UpdateOdometry();
   while (isFinished == false)
   {Drivetrain::UpdateOdometry();
@@ -53,9 +55,9 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative)
     {
 
       
-      fowardSpeed = controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), desiredPose.X().value());
-      strafeSpeed = controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), desiredPose.Y().value());
-      rotationSpeed = controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), desiredPose.Rotation().Radians().value());
+      fowardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), desiredPose.X().value());
+      strafeSpeed = (drivePower/drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), desiredPose.Y().value());
+      rotationSpeed = (drivePower/drivePercentage) * controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), desiredPose.Rotation().Radians().value());
       Drivetrain::Drive(fowardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
     }
     else
@@ -65,6 +67,32 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative)
     }
   }
 } 
+
+// Relative version of absolute go to pose method - goes to the pose away from the starting position rather than absolute position on the field
+void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower){
+  isFinished = false;
+  Drivetrain::UpdateOdometry();
+  frc::Pose2d initPose = Drivetrain::SwerveOdometryGetPose();
+  while (isFinished == false)
+  {Drivetrain::UpdateOdometry();
+    if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value())) > 0.01 ||
+        fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - (initPose.Y().value() + desiredPose.Y().value())) > 0.01 ||
+        fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - (initPose.Rotation().Radians().value() + 
+                                                                                 desiredPose.Rotation().Radians().value())) > .02)
+    {
+      fowardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), desiredPose.X().value());
+      strafeSpeed = (drivePower/drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), desiredPose.Y().value());
+      rotationSpeed = (drivePower/drivePercentage) * controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), desiredPose.Rotation().Radians().value());
+      Drivetrain::Drive(fowardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
+    }
+    else
+    {
+      Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
+      isFinished = true;
+    }
+  }
+
+}
 
 void Drivetrain::DriveUntilAngle(double angle){
   
@@ -170,7 +198,7 @@ frc::Rotation2d Drivetrain::getRollRad()
 // Resets all swerve module encoders and robot odometry
 void Drivetrain::ResetDrive()
 {
-  // gyro.Reset();
+  gyro.ResetYaw();
   LFMod.ResetEncoder();
   LBMod.ResetEncoder();
   RFMod.ResetEncoder();

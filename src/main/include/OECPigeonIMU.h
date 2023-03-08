@@ -8,7 +8,9 @@ class OECPigeonIMU{
         double GetYaw();
         double GetPitch();
         double GetRoll();
+        void BootCalibrate();
         
+                
     private:
         ctre::phoenix::sensors::PigeonIMU *pigeonGyro;
         
