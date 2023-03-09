@@ -4,14 +4,17 @@
 #define FIELD_ORIENTED true
 
 //ArmKinematics:
-
+//Arm Segment Lengths
+#define lA 0.0
+#define lB 0.0
+#define lG 0.0
 //Arm Position Conversions
 #define AlphaConversionFactor 0.0 // change
 #define BetaConversionFactor 0.0 // change
 #define GammaConversionFactor 0.0 // change
 //Velocity and Slope Scaling
-#define MaxVelocity 0.0 //change
-#define MaxSlope 0.0//change
+#define KConstant 0.0 //change
+
 //Arm Parameter Offsets
 #define AlphaOffset 0.0 //change
 #define BetaOffset 0.0 //change

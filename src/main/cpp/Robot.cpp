@@ -5,7 +5,7 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/smartdashboard/Field2d.h>
 #include <string>
-
+#include "Arm.h"
 #include <frc/MathUtil.h>
 #include <frc/TimedRobot.h>
 #include <frc/XboxController.h>
@@ -170,8 +170,9 @@ public:
     else
     {
       ControlledDrive(FIELD_ORIENTED);
+      arm.SetToPosition(armJoint1Stick.GetX(),armJoint1Stick.GetY(),0.0,true);
       //swerveBot.Drive(.3*Drivetrain::maxSpeed,0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxTurnRate,FIELD_ORIENTED);
-      ArmControl();
+      //ArmControl();
       
     }
   }
@@ -184,6 +185,7 @@ private:
   frc::SmartDashboard *dash;         // Initialize smart dashboard
   Drivetrain swerveBot;              // Construct drivetrain object
   frc::Field2d m_field;
+  Arm arm{Joint1CloseToBatteryCANID,Joint1AwayFromBatteryCANID,Joint2CANID,Joint3CANID,GripSpinnerCANID};
   bool fieldRelative;
   bool isReset = false;
   rev::CANSparkMax Joint1MotorClosestToBattery{Joint1CloseToBatteryCANID, rev::CANSparkMax::MotorType::kBrushless};

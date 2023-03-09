@@ -10,10 +10,10 @@ class Arm{
     Arm(int alphaMotor1, int alphamotor2, int betaMotor, int gammaMotor, int clawSpinner);
     void GetHandCoordinates();
     double* ProcessInputs(double x, double y);
-    void SetToPosition(double X, double Y, bool stick);
+    void SetToPosition(double X, double Y, double clawAngle,bool stick);
     void UpdateXY(double stickX, double stickY);
     void UpdateParameters();
-    void InverseKinematics();
+    void InverseKinematics(double clawAngle);
     void SetClawSpinner(double power);
     private:
     rev::CANSparkMax m_alphaMotor1;

@@ -16,6 +16,10 @@ Arm::Arm(int alphaMotor1, int alphaMotor2,
     e_alpha = new rev::SparkMaxRelativeEncoder(m_alphaMotor1.GetEncoder());
     e_beta = new rev::SparkMaxRelativeEncoder(m_betaMotor.GetEncoder());
     e_gamma = new rev::SparkMaxRelativeEncoder(m_gammaMotor.GetEncoder());
+    //InvertEncoders
+    e_alpha -> SetInverted(true);
+    e_beta -> SetInverted(true);
+    e_gamma -> SetInverted(true);
     //Encoder Position Factors, seen in constants file(factor states amount of rotations per rotation of motor)
     e_alpha -> SetPositionConversionFactor(AlphaConversionFactor);
     e_beta -> SetPositionConversionFactor(BetaConversionFactor);
@@ -30,8 +34,8 @@ double* Arm::ProcessInputs(double stickX, double stickY){
     double velocity = 0.0;
     double slope = 0.0;
     //Distance formula for velocity
-    velocity = sqrt(pow(stickX,2.0)+pow(stickY,2.0))*MaxVelocity;
-    slope = (stickY/stickX)*MaxSlope;
+    velocity = sqrt(pow(stickX,2.0)+pow(stickY,2.0))*KConstant;
+    slope = (stickY/stickX);
     double returnArr[2] ={velocity,slope};
     return returnArr;
 }
@@ -44,22 +48,23 @@ void Arm::UpdateXY(double stickX, double stickY){
     double *inputs = Arm::ProcessInputs(stickX,stickY);
     double velocity = inputs[0];
     double slope = inputs[1];
-    double X = 0.0;
-    double Y = 0.0;
     //Add math do do such using X and Y
-
-    //set final values
-    //Arm::x = X;
-    //Arm::y = Y;
+    x = lA*cos(Arm::alpha) - lB*cos(Arm::alpha+Arm::beta);
+    y = lA*sin(Arm::alpha) - lB*sin(Arm::alpha+Arm::beta);
+    x *= KConstant;
+    y *= KConstant;
 }
-void Arm::InverseKinematics(){
-    //Use x values to set new alpha
-    
+void Arm::InverseKinematics(double ClawAngle){
+    //r value calculation
+    double r = sqrt(pow(x,2)+pow(y,2));
+    Arm::beta = acos((pow(r,2)-pow(lA,2)-pow(lB,2))/(-2*lA*lB));
+    Arm::alpha = atan(y/x) + acos((pow(lB,2)-pow(r,2)-pow(lA,2))/(-2*r*lA));
+    Arm::gamma = 270 + ClawAngle - Arm::alpha - Arm::beta;
     //use calculate mu beta and gamma using alpha x and y
 
 }
 //If stick is true sets x and y based on input otherwise x y coordinates are used
-void Arm::SetToPosition(double X, double Y, bool stick){
+void Arm::SetToPosition(double X, double Y, double clawAngle,bool stick){
     Arm::UpdateParameters();
     if(stick == true){
         UpdateXY(X,Y);
@@ -67,7 +72,7 @@ void Arm::SetToPosition(double X, double Y, bool stick){
         Arm::x = X;
         Arm::y = Y;
     }
-    Arm::InverseKinematics();
+    Arm::InverseKinematics(clawAngle);
     m_alphaMotor1.Set(pid_alpha.Calculate((e_alpha -> GetPosition())- AlphaOffset,Arm::alpha));
     m_alphaMotor2.Set(-1.0*pid_alpha.Calculate((e_alpha -> GetPosition())- AlphaOffset,Arm::alpha));
     m_betaMotor.Set(pid_beta.Calculate((e_beta -> GetPosition()) - BetaOffset,Arm::beta));
