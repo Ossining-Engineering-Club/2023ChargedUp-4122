@@ -5,23 +5,23 @@
 
 //ArmKinematics:
 //Arm Segment Lengths
-#define lA 0.0
-#define lB 0.0
+#define lA 0.81
+#define lB 0.75
 #define lG 0.0
 //Arm Position Conversions
-#define AlphaConversionFactor 0.0 // change
-#define BetaConversionFactor 0.0 // change
-#define GammaConversionFactor 0.0 // change
+#define AlphaConversionFactor ((16.0/(64.0*64.0))*360.0)*1.3036 // change
+#define BetaConversionFactor ((18.0/(74.0*64.0))*360.0)*0.8918// change
+#define GammaConversionFactor ((18.0/(74.0*64.0))*360.0)*-.05424// change
 //Velocity and Slope Scaling
-#define KConstant 0.0 //change
+#define KConstant 0.6 //change
 
 //Arm Parameter Offsets
-#define AlphaOffset 0.0 //change
-#define BetaOffset 0.0 //change
-#define GammaOffset 0.0 //change
+#define AlphaOffset -122.29 //change
+#define BetaOffset -13.07 //change
+#define GammaOffset 308.7326 //change
 //StartingXY of claw
-#define StartingX 0.0
-#define StartingY 0.0
+#define StartingX 0.29
+#define StartingY 0.26
 //PID VALS
 //Gamma
 #define KGP 1.0

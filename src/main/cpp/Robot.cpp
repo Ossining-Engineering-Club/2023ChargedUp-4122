@@ -48,12 +48,13 @@ public:
     frc::Pose2d HomePose = frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg));
     frc::Pose2d  TurningFromHomePose  = frc::Pose2d(2.58_m, 0_m, frc::Rotation2d(180_deg));
     frc::Pose2d  TurningFromPickupPose  = frc::Pose2d(-2.58_m, 0_m, frc::Rotation2d(180_deg));
-    frc::Pose2d  PickupOnePose  = frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg));
-    frc::Pose2d  k2ndPickupTurningPose  = frc::Pose2d(0_m, 0_m, frc::Rotation2d(90_deg));
+    frc::Pose2d  PickupOnePose  = frc::Pose2d(-3_m, 0_m, frc::Rotation2d(0_deg));
+    frc::Pose2d  k2ndPickupTurningPose  = frc::Pose2d(3_m, 0_m, frc::Rotation2d(90_deg));
     frc::Pose2d MovingToSecondPickupPose = frc::Pose2d(0_m, -1.28_m, frc::Rotation2d(0_deg));
     frc::Pose2d   TurningAfterSecondPickupPose = frc::Pose2d(0_m, 0_m, frc::Rotation2d(180_deg));
     frc::Pose2d  MovingAwayAfterSecondPickupPose = frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
-
+    swerveBot.GoToPose(PickupOnePose,fieldRelative,.2);
+    swerveBot.GoToPose(HomePose,fieldRelative,.2);
 
     //arm place
     //swerveBot.GoToPose(TurningFromHomePose,true);
@@ -81,7 +82,7 @@ public:
     //auto done
     */
    //trive till bridhe is stable
-
+/*
    dash->PutString("State", "Approach");
   while(swerveBot.gyro.GetRoll()*-1.0 < ApproachAngle){
     swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
@@ -103,7 +104,7 @@ public:
   // while(true){
       swerveBot.GoToPose(RampDist, FIELD_ORIENTED, 0.4);
       dash->PutString("State", "Done");
-
+*/
 //  } 
 
   //   frc::Pose2d F1 = frc::Pose2d(1.0_m,0.0_m, 0.0_rad*std::numbers::pi);
@@ -145,6 +146,8 @@ public:
   void TeleopPeriodic() override
   {
     swerveBot.UpdateOdometry();
+    arm.UpdateParameters();
+    arm.CalculateXY();
     m_field.SetRobotPose(swerveBot.SwerveOdometryGetPose());
     // Odometry Values
     frc::SmartDashboard::PutNumber("YPose", swerveBot.SwerveOdometryGetPose().Y().value());
@@ -162,6 +165,13 @@ public:
     frc::SmartDashboard::PutNumber("Yaw", swerveBot.gyro.GetYaw());
     frc::SmartDashboard::PutNumber("pitch", swerveBot.gyro.GetPitch());
     frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
+    
+    dash->PutNumber("alpha", arm.alpha);
+    dash->PutNumber("beta", arm.beta);
+    dash->PutNumber("gamma", arm.gamma);
+    dash->PutNumber("x",arm.x);
+    dash->PutNumber("y",arm.y);
+    
 
     if (driveController.GetXButton())
     {
@@ -170,9 +180,9 @@ public:
     else
     {
       ControlledDrive(FIELD_ORIENTED);
-      arm.SetToPosition(armJoint1Stick.GetX(),armJoint1Stick.GetY(),0.0,true);
+      //arm.SetToPosition(armJoint1Stick.GetX(),armJoint1Stick.GetY(),0.0,true);
       //swerveBot.Drive(.3*Drivetrain::maxSpeed,0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxTurnRate,FIELD_ORIENTED);
-      //ArmControl();
+      ArmControl();
       
     }
   }
@@ -185,14 +195,14 @@ private:
   frc::SmartDashboard *dash;         // Initialize smart dashboard
   Drivetrain swerveBot;              // Construct drivetrain object
   frc::Field2d m_field;
-  Arm arm{Joint1CloseToBatteryCANID,Joint1AwayFromBatteryCANID,Joint2CANID,Joint3CANID,GripSpinnerCANID};
+ Arm arm{Joint1CloseToBatteryCANID,Joint1AwayFromBatteryCANID,Joint2CANID,Joint3CANID,GripSpinnerCANID};
   bool fieldRelative;
   bool isReset = false;
-  rev::CANSparkMax Joint1MotorClosestToBattery{Joint1CloseToBatteryCANID, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax Joint1MotorAwayFromBattery{Joint1AwayFromBatteryCANID, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax Joint2Motor{Joint2CANID, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax Joint3Motor{Joint3CANID, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax GripSpinnerMotor{GripSpinnerCANID, rev::CANSparkMax::MotorType::kBrushless};
+  // rev::CANSparkMax Joint1MotorClosestToBattery{Joint1CloseToBatteryCANID, rev::CANSparkMax::MotorType::kBrushless};
+  // rev::CANSparkMax Joint1MotorAwayFromBattery{Joint1AwayFromBatteryCANID, rev::CANSparkMax::MotorType::kBrushless};
+  // rev::CANSparkMax Joint2Motor{Joint2CANID, rev::CANSparkMax::MotorType::kBrushless};
+  // rev::CANSparkMax Joint3Motor{Joint3CANID, rev::CANSparkMax::MotorType::kBrushless};
+  // rev::CANSparkMax GripSpinnerMotor{GripSpinnerCANID, rev::CANSparkMax::MotorType::kBrushless};
   // Slew rate limiters to make joystick inputs more gentle; 1/3 sec from 0 to 1.
   frc::SlewRateLimiter<units::scalar> xSpeedLimiter{5 / 1_s}; // Used to be 3 / 1_s
   frc::SlewRateLimiter<units::scalar> ySpeedLimiter{5 / 1_s}; // Used to be 3 / 1_s
@@ -237,24 +247,43 @@ private:
 
     // Joint 2 + | Joint 3 -
     const auto joint2MotorSpeed = armJoint2Stick.GetY()*.3;
-
-    // Wrist contorl on Joystick #2
     if(armJoint2Stick.GetRawButton(2)){
-      Joint3Motor.Set(-0.3);
+      arm.m_gammaMotor.Set(-0.3);
     }
     else if (armJoint2Stick.GetRawButton(3)){
-      Joint3Motor.Set(0.3);
+      arm.m_gammaMotor.Set(0.3);
     } else{
-      Joint3Motor.Set(0.0);
+      arm.m_gammaMotor.Set(0.0);
     }
-    
+    /*
     if(armJoint1Stick.GetRawButton(2)){
-      GripSpinnerMotor.Set(0.2);
+      arm.m_clawSpinner.Set(0.2);
     } else if(armJoint1Stick.GetRawButton(3)){
-      GripSpinnerMotor.Set(-0.85);
+      arm.m_clawSpinner.Set(-0.85);
     }else{
-      GripSpinnerMotor.Set(0.0);
+      arm.m_clawSpinner.Set(0.0);
     }
+  */
+    arm.m_alphaMotor1.Set(joint1AwayFromBatteryMotorSpeed);
+    arm.m_alphaMotor2.Set(joint1CloseToBatteryMotorSpeed);
+    arm.m_betaMotor.Set(joint2MotorSpeed);
+    // // Wrist contorl on Joystick #2
+    // if(armJoint2Stick.GetRawButton(2)){
+    //   Joint3Motor.Set(-0.3);
+    // }
+    // else if (armJoint2Stick.GetRawButton(3)){
+    //   Joint3Motor.Set(0.3);
+    // } else{
+    //   Joint3Motor.Set(0.0);
+    // }
+    
+    // if(armJoint1Stick.GetRawButton(2)){
+    //   GripSpinnerMotor.Set(0.2);
+    // } else if(armJoint1Stick.GetRawButton(3)){
+    //   GripSpinnerMotor.Set(-0.85);
+    // }else{
+    //   GripSpinnerMotor.Set(0.0);
+    // }s
 
     // const auto joint3MotorSpeed = -armJoint3Stick.GetY()*.3;
 
@@ -265,10 +294,10 @@ private:
     // Commented out after switching to two joystick configurtion
     // dash ->PutNumber("Joint3Speed",joint3MotorSpeed);
     
-    Joint1MotorAwayFromBattery.Set(joint1AwayFromBatteryMotorSpeed);
-    Joint1MotorClosestToBattery.Set(joint1CloseToBatteryMotorSpeed);
-    Joint2Motor.Set(joint2MotorSpeed);
-    // Joint3Motor.Set(joint3MotorSpeed);
+    // Joint1MotorAwayFromBattery.Set(joint1AwayFromBatteryMotorSpeed);
+    // Joint1MotorClosestToBattery.Set(joint1CloseToBatteryMotorSpeed);
+    // Joint2Motor.Set(joint2MotorSpeed);
+    // // Joint3Motor.Set(joint3MotorSpeed);
     
     // GripSpinnerMotor.Set(spinner2MotorSpeed);
 

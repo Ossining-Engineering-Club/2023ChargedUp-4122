@@ -13,26 +13,32 @@ class Arm{
     void SetToPosition(double X, double Y, double clawAngle,bool stick);
     void UpdateXY(double stickX, double stickY);
     void UpdateParameters();
+        double alpha = 0.0;
+    double beta = 0.0;
+    double gamma = 0.0;
     void InverseKinematics(double clawAngle);
     void SetClawSpinner(double power);
-    private:
-    rev::CANSparkMax m_alphaMotor1;
+    void CalculateXY();
+    double x = 0.0;//StartingX;
+    double y = 0.0;//StartingY;
+     rev::CANSparkMax m_alphaMotor1;
     rev::CANSparkMax m_alphaMotor2;
     rev::CANSparkMax m_betaMotor;
     rev::CANSparkMax m_gammaMotor;
     rev::CANSparkMax m_clawSpinner;
-
     rev::SparkMaxRelativeEncoder * e_alpha;
     rev::SparkMaxRelativeEncoder * e_beta;
     rev::SparkMaxRelativeEncoder * e_gamma;
-    double alpha = 0.0;
-    double beta = 0.0;
-    double gamma = 0.0;
+
+    private:
+   
+    // double alpha = 0.0;
+    // double beta = 0.0;
+    // double gamma = 0.0;
     double mu = 0.0;
     frc2::PIDController pid_alpha{KAP, KAI, KAD};
     frc2::PIDController pid_beta{KBP, KBI, KBD};
     frc2::PIDController pid_gamma{KGP, KGI, KGD};
-    double x = StartingX;
-    double y = StartingY;
+
 
 };
