@@ -45,16 +45,18 @@ public:
   
     //0,0,0 (1.92,4.67,0)
     //ideally our starting position we can place without moving but that will remain to be seen
-    frc::Pose2d HomePose = frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg));
+    frc::Pose2d HomePose = frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg));
     frc::Pose2d  TurningFromHomePose  = frc::Pose2d(2.58_m, 0_m, frc::Rotation2d(180_deg));
     frc::Pose2d  TurningFromPickupPose  = frc::Pose2d(-2.58_m, 0_m, frc::Rotation2d(180_deg));
-    frc::Pose2d  PickupOnePose  = frc::Pose2d(-3_m, 0_m, frc::Rotation2d(0_deg));
+
+    frc::Pose2d  PickupOnePose  = frc::Pose2d(-2_m, 0_m, frc::Rotation2d(0_deg));
     frc::Pose2d  k2ndPickupTurningPose  = frc::Pose2d(3_m, 0_m, frc::Rotation2d(90_deg));
     frc::Pose2d MovingToSecondPickupPose = frc::Pose2d(0_m, -1.28_m, frc::Rotation2d(0_deg));
     frc::Pose2d   TurningAfterSecondPickupPose = frc::Pose2d(0_m, 0_m, frc::Rotation2d(180_deg));
     frc::Pose2d  MovingAwayAfterSecondPickupPose = frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
-    swerveBot.GoToPose(PickupOnePose,fieldRelative,.2);
-    swerveBot.GoToPose(HomePose,fieldRelative,.2);
+  
+    // swerveBot.GoToPose(PickupOnePose,fieldRelative,.2);
+    // swerveBot.GoToPoseRelative(HomePose,fieldRelative,.2);
 
     //arm place
     //swerveBot.GoToPose(TurningFromHomePose,true);
@@ -82,29 +84,33 @@ public:
     //auto done
     */
    //trive till bridhe is stable
-/*
+  double yawInit = swerveBot.gyro.GetRoll();
    dash->PutString("State", "Approach");
-  while(swerveBot.gyro.GetRoll()*-1.0 < ApproachAngle){
+  while((swerveBot.gyro.GetRoll()-yawInit) < ApproachAngle){
     swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
     frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
   }
      dash->PutString("State", "Tipping");
+     
+     
 
   //drive till bridge starts to level
-  while(swerveBot.gyro.GetRoll()*-1.0 > TipAngle){
+  while((swerveBot.gyro.GetRoll()-yawInit) > TipAngle){
     swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
     frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
   }
+  frc::Pose2d RampDist = frc::Pose2d(-0.12_m,0.0_m, 0_deg);
+  frc::Pose2d RotateAfter = frc::Pose2d(0.0_m,0.0_m,20_deg);
+ swerveBot.GoToPoseRelative(RampDist, FIELD_ORIENTED, 0.2);
+ swerveBot.GoToPoseRelative(RotateAfter,FIELD_ORIENTED,0.2);
   swerveBot.Drive(0.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
-      swerveBot.ResetDrive();
-
       dash->PutString("State", "Stabilize");
 
-    frc::Pose2d RampDist = frc::Pose2d(-2.0_m,0.0_m, 0.0_rad*std::numbers::pi);
-  // while(true){
-      swerveBot.GoToPose(RampDist, FIELD_ORIENTED, 0.4);
-      dash->PutString("State", "Done");
-*/
+  //   frc::Pose2d RampDist = frc::Pose2d(-2.0_m,0.0_m, 0.0_rad*std::numbers::pi);
+  // // while(true){
+  //     swerveBot.GoToPose(RampDist, FIELD_ORIENTED, 0.4);
+  //     dash->PutString("State", "Done");
+
 //  } 
 
   //   frc::Pose2d F1 = frc::Pose2d(1.0_m,0.0_m, 0.0_rad*std::numbers::pi);
@@ -139,17 +145,33 @@ public:
       swerveBot.ResetDrive();
       isReset = true;
     }
-
+    arm.UpdateParameters(); //Needs to be moved into isReset
+    arm.CalculateXY();
+    arm.UpdateXY(0.0, 0.0);
 
   }
 
   void TeleopPeriodic() override
   {
+  
     swerveBot.UpdateOdometry();
+    // arm.SetToPosition(-inverseStick.GetY(),inverseStick.GetX(),0.0,true);
+    
     arm.UpdateParameters();
     arm.CalculateXY();
+    if(fabs(arm.alpha-arm.alphaNew+arm.beta-arm.betaNew+arm.gamma-arm.gammaNew) < 4 || fabs(inverseStick.GetY()-y1+inverseStick.GetX()-x1) > .2){
+      y1 = inverseStick.GetY();
+      x1 = inverseStick.GetX();
+      arm.UpdateXY(y1, -x1);
+      
+    }
+    //arm.UpdateXY(-inverseStick.GetY(),inverseStick.GetX());
+    arm.InverseKinematics(0.0);
     m_field.SetRobotPose(swerveBot.SwerveOdometryGetPose());
     // Odometry Values
+    if(inverseStick.GetRawButton(2)){
+     arm.SetToPosition(x1,y1,0.0,true);
+    }
     frc::SmartDashboard::PutNumber("YPose", swerveBot.SwerveOdometryGetPose().Y().value());
     frc::SmartDashboard::PutNumber("XPose", swerveBot.SwerveOdometryGetPose().X().value());
    dash->PutNumber("ABSLBPos",swerveBot.LFMod.GetAbsEncoderAngle());
@@ -171,6 +193,21 @@ public:
     dash->PutNumber("gamma", arm.gamma);
     dash->PutNumber("x",arm.x);
     dash->PutNumber("y",arm.y);
+    dash->PutNumber("xnew",arm.xnew);
+    dash->PutNumber("ynew",arm.ynew);
+    dash->PutNumber("alpha enc angle",arm.alpha);
+    dash->PutNumber("beta enc angle",arm.beta);
+    dash->PutNumber("gamma enc angle",arm.gamma);
+    dash->PutNumber("alpha inverse angle",arm.alphaNew);
+    dash->PutNumber("beta inverse angle",arm.betaNew);
+    dash->PutNumber("gamma inverse angle",arm.gammaNew);
+    dash->PutNumber("diffrence between enc and inverse alpha",arm.alpha-arm.alphaNew);
+    dash->PutNumber("diffrence between enc and inverse beta",arm.beta-arm.betaNew);
+    dash->PutNumber("diffrence between enc and inverse gamma",arm.gamma-arm.gammaNew);
+    dash ->PutNumber("alphapid",arm.pid_alpha.Calculate(arm.alpha,arm.alphaNew));
+    dash ->PutNumber("betapid",arm.pid_beta.Calculate(arm.beta,arm.betaNew));
+    
+
     
 
     if (driveController.GetXButton())
@@ -180,9 +217,12 @@ public:
     else
     {
       ControlledDrive(FIELD_ORIENTED);
+      
       //arm.SetToPosition(armJoint1Stick.GetX(),armJoint1Stick.GetY(),0.0,true);
       //swerveBot.Drive(.3*Drivetrain::maxSpeed,0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxTurnRate,FIELD_ORIENTED);
-      ArmControl();
+    if(!inverseStick.GetRawButton(2)){
+     ArmControl();
+    }
       
     }
   }
@@ -190,14 +230,16 @@ public:
 private:
   frc::XboxController driveController{0}; // Xbox controller in first port
   frc::Joystick armJoint1Stick{1};
-  frc::Joystick armJoint2Stick{2};
-  frc::Joystick armJoint3Stick{3};
+  frc::Joystick armJoint2Stick{3};
+  frc::Joystick inverseStick{2};
   frc::SmartDashboard *dash;         // Initialize smart dashboard
   Drivetrain swerveBot;              // Construct drivetrain object
   frc::Field2d m_field;
  Arm arm{Joint1CloseToBatteryCANID,Joint1AwayFromBatteryCANID,Joint2CANID,Joint3CANID,GripSpinnerCANID};
   bool fieldRelative;
   bool isReset = false;
+      double x1 = StartingX;
+    double y1 = StartingY;
   // rev::CANSparkMax Joint1MotorClosestToBattery{Joint1CloseToBatteryCANID, rev::CANSparkMax::MotorType::kBrushless};
   // rev::CANSparkMax Joint1MotorAwayFromBattery{Joint1AwayFromBatteryCANID, rev::CANSparkMax::MotorType::kBrushless};
   // rev::CANSparkMax Joint2Motor{Joint2CANID, rev::CANSparkMax::MotorType::kBrushless};

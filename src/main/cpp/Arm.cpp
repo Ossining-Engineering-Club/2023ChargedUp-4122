@@ -48,15 +48,15 @@ void Arm::UpdateParameters(){
     Arm::gamma = -1.0*(e_gamma -> GetPosition()) - GammaOffset; 
 }
 void Arm::UpdateXY(double stickX, double stickY){
-    double *inputs = Arm::ProcessInputs(stickX,stickY);
-    double velocity = inputs[0];
-    double slope = inputs[1];
+
+    xnew = x +stickX*KConstant;
+    ynew = y+ stickY*KConstant;
     //Add math do do such using X and Y
-    Arm::CalculateXY();
+    //Arm::CalculateXY();
 }
 void Arm::CalculateXY(){
-    x = (lA*cos(Arm::alpha*(O_PI/180)) - lB*cos(Arm::alpha*(O_PI/180)+Arm::beta*(O_PI/180)))-StartingX;
-    y = (lA*sin(Arm::alpha*(O_PI/180)) - lB*sin(Arm::alpha*(O_PI/180)+Arm::beta*(O_PI/180)))+StartingY;
+    x = (lA*cos(Arm::alpha*(O_PI/180.0)) - lB*cos(Arm::alpha*(O_PI/180.0)+Arm::beta*(O_PI/180.0)))+StartingX;
+    y = (lA*sin(Arm::alpha*(O_PI/180.0)) - lB*sin(Arm::alpha*(O_PI/180.0)+Arm::beta*(O_PI/180.0)))+StartingY;
     // x *= KConstant;
     // y *= KConstant;
 
@@ -66,27 +66,28 @@ void Arm::CalculateXY(){
 }
 void Arm::InverseKinematics(double ClawAngle){
     //r value calculation
-    double r = sqrt(pow(x,2)+pow(y,2));
-    Arm::beta = acos(((pow(r,2)-pow(lA,2)-pow(lB,2))/(-2*lA*lB))*(O_PI/180));
-    Arm::alpha = atan((y/x) + acos((pow(lB,2)-pow(r,2)-pow(lA,2))/(-2*r*lA))*(O_PI/180));
-    Arm::gamma = (1.5*O_PI) + (ClawAngle*(O_PI/180)) - Arm::alpha - Arm::beta;
+    double r = sqrt(xnew*xnew+ynew*ynew);
+    Arm::betaNew = acos((r*r-lA*lA-lB*lB)/(-2.0*lA*lB))*(180.0/O_PI);
+    Arm::alphaNew = atan(ynew/xnew)*(180.0/O_PI) + acos((lB*lB-r*r-lA*lA)/(-2.0*r*lA))*(180.0/O_PI);
+    Arm::gammaNew = (1.5*O_PI) + (ClawAngle*(O_PI/180.0)) - Arm::alpha - Arm::beta;
     //use calculate mu beta and gamma using alpha x and y
 
 }
 //If stick is true sets x and y based on input otherwise x y coordinates are used
 void Arm::SetToPosition(double X, double Y, double clawAngle,bool stick){
-    Arm::UpdateParameters();
-    if(stick == true){
-        UpdateXY(X,Y);
-    }else{
-        Arm::x = X;
-        Arm::y = Y;
-    }
-    Arm::InverseKinematics(clawAngle);
-    m_alphaMotor1.Set(pid_alpha.Calculate((O_PI/180)*((e_alpha -> GetPosition())- AlphaOffset),Arm::alpha));
-    m_alphaMotor2.Set(-1.0*pid_alpha.Calculate((O_PI/180)*((e_alpha -> GetPosition())- AlphaOffset),Arm::alpha));
-    m_betaMotor.Set(pid_beta.Calculate((O_PI/180)*((e_beta -> GetPosition())- BetaOffset),Arm::beta));
-    m_gammaMotor.Set(pid_gamma.Calculate((O_PI/180)*((e_gamma -> GetPosition())- GammaOffset),Arm::gamma));
+    // Arm::UpdateParameters();
+    // Arm::CalculateXY();
+    // if(stick == true){
+    //     UpdateXY(X,Y);
+    // }else{
+    //     Arm::x = X;
+    //     Arm::y = Y;
+    // }
+    // Arm::InverseKinematics(clawAngle);
+    m_alphaMotor1.Set(pid_alpha.Calculate(Arm::alpha,Arm::alphaNew));
+    m_alphaMotor2.Set(-1.0*pid_alpha.Calculate(Arm::alpha,Arm::alphaNew));
+    m_betaMotor.Set(pid_beta.Calculate(Arm::beta,Arm::betaNew));
+    m_gammaMotor.Set(pid_gamma.Calculate(Arm::gamma,Arm::gammaNew));
 
 }
 void Arm::SetClawSpinner(double power){

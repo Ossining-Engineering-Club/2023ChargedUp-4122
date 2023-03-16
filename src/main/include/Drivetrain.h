@@ -42,10 +42,16 @@ class Drivetrain {
 
     static constexpr units::meters_per_second_t maxSpeed = 4.441_mps;  // 3 meters per second
     static constexpr units::radians_per_second_t maxTurnRate{9.89};  // 1/2 rotation per second
-  SwerveModule RFMod{1, 2, 9, false, RFZERO, false, false};
-  SwerveModule RBMod{3, 4, 10, false, RBZERO, false, false};
-  SwerveModule LBMod{5, 6, 11, true, LBZERO, false, false};
-  SwerveModule LFMod{8, 7, 12, true,LFZERO, false, false}; 
+   
+  
+  SwerveModule RFMod{5, 6, 11, true, LBZERO, false, false};
+  SwerveModule RBMod{8, 7, 12, true,LFZERO, false, false};
+  SwerveModule LBMod{1, 2, 9, false, RFZERO, false, false};
+  SwerveModule LFMod{3, 4, 10, false, RBZERO, false, false}; 
+  // SwerveModule RFMod{1, 2, 9, false, RFZERO, false, false};
+  // SwerveModule RBMod{3, 4, 10, false, RBZERO, false, false};
+  // SwerveModule LBMod{5, 6, 11, true, LBZERO, false, false};
+  // SwerveModule LFMod{8, 7, 12, true,LFZERO, false, false}; 
   units::meter_t CAMERA_HEIGHT = .34_m;
   units::meter_t TARGET_HEIGHT = .6_m;
   units::angle::radian_t CAMERA_PITCH{0};
@@ -67,6 +73,7 @@ double  getVisionDistance();
 
  private:
  // **********************************************************
+  
   frc::Translation2d frontLeftLocation{+0.29845_m,+0.27305_m};
   frc::Translation2d frontRightLocation{+0.29845_m, -0.27305_m};
   frc::Translation2d backLeftLocation{-0.29845_m, +0.27305_m};
