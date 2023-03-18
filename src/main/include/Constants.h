@@ -40,6 +40,8 @@
 #define TipAngle 10.0
 #define ApproachAngle 13.0
 
+#define drivePowerMax 1.0
+#define drivePowerMin 0.2
 #define TurningMotorGearRatio 7.0/150.0 
 #define DrivingMotorGearRatio 1/6.75
 #define WheelDiameterInMeters 0.0992
@@ -86,5 +88,5 @@
 #define ABS_ANGLE 0
 
 // MAX PERCENTAGE CONSTANTS
-#define drivePercentage 0.20///0.80//0.70
-#define rotatePercentage 0.6//0.80
+#define drivePercentage 0.80///0.80//0.70
+#define rotatePercentage 0.80//0.80

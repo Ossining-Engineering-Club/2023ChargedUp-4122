@@ -1,0 +1,17 @@
+Xbox Controller: Port 0
+    Left Stick: Translational Movement(Left, Right, Foward, Back)-Front of Robot is where arm points, move in direction you want to go
+    Right Stick: Rotational movement(360)- Move left and right
+    Y Button: Field Oriented Toggle- Determines if the robot drives relative to the field(foward back left right ect)
+    B Button: 100% Power Drive Speed (Hold while driving to use)
+    A Button: 20% Power Drive Speed (Hold while driving to use)
+    X Button: Robot Oriented Toggle- Determines if the robot drives relative to the robot(front is where arm points and left right back according to that)
+Left Joystick: Port 1
+    Stick: 1st Joint/Alpha Joint movement(Move foward to move out(away from robot), move back to move in(twoards robot))
+    Button 2: Wrist Joint movement(Moves Wrist Up)
+    Button 3: Wrist Joint movement(Moves Wrist Down)
+    Button 6: Resets Odometry(Only use if field relative is janky, align yourself square against something then hit it)
+Right Joystick: Port 2
+    Stick: 2nd Joint/Beta movement(Move foward to move out(away from robot), move back to move in(twoards robot))
+    Button 2: Intake Out(Cones or Cubes)
+    Button 3: Intake In(Speed for Cubes)
+    Trigger: Intake In(Speed for Cones)

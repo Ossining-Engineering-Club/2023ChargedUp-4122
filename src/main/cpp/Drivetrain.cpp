@@ -100,6 +100,34 @@ void Drivetrain::DriveUntilAngle(double angle){
 
 }
 
+void Drivetrain::VisionAdjustTeleop(bool fieldRelative){
+    
+          std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
+          double IfHasTarget = table->GetNumber("tv",0.0);
+          double targetOffsetAngle_Horizontal = table->GetNumber("tx",0.0);
+          
+          
+          if(IfHasTarget==1){
+           strafeSpeed = strafeSpeedVisionController.Calculate(targetOffsetAngle_Horizontal, 0.0);
+          strafeSpeed = (strafeSpeed*.05);
+          driveSpeed = strafeSpeed*4.9;
+          Drivetrain::Drive(Drivetrain::maxSpeed*0, strafeSpeed*Drivetrain::maxSpeed,0*Drivetrain::maxTurnRate, fieldRelative); 
+          Drivetrain::FramesLost = 0;
+          }
+          else if(IfHasTarget==0 && Drivetrain::FramesLost < Drivetrain::FrameLossConstant){
+            Drivetrain::Drive(Drivetrain::maxSpeed*0, strafeSpeed*Drivetrain::maxSpeed,0*Drivetrain::maxTurnRate, fieldRelative);
+            FramesLost += 1;
+          }
+          else{
+            driveSpeed = 0*4.9;
+            Drivetrain::Drive(0_mps,0_mps,0*Drivetrain::maxTurnRate,fieldRelative);
+            strafeSpeed = strafeSpeedVisionController.Calculate(0.0, 0.0);
+          }
+          
+          //remember 5.7
+          
+      
+}
 
 
 void Drivetrain::AutoBallance(bool fieldRelative){
