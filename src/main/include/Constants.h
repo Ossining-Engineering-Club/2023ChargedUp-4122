@@ -3,7 +3,45 @@
 
 #define FIELD_ORIENTED true
 
+//ArmKinematics:
+//Arm Segment Lengths
+#define lA 0.81
+#define lB 0.75
+#define lG 0.0
+//Arm Position Conversions
+#define AlphaConversionFactor ((16.0/(64.0*64.0))*360.0)*1.3036 // change
+#define BetaConversionFactor ((18.0/(74.0*64.0))*360.0)*0.8918// change
+#define GammaConversionFactor ((18.0/(74.0*64.0))*360.0)*0.05424// change
+//Velocity and Slope Scaling
+#define KConstant 0.1 //change
 
+//Arm Parameter Offsets  ALL ANGLES IN DEG
+#define AlphaOffset -122.29 //change
+#define BetaOffset -13.07 //change
+#define GammaOffset -308.7326 //change
+//StartingXY of claw
+#define StartingX 0.0
+#define StartingY 0.0
+//PID VALS
+//Gamma
+#define KGP 0.01
+#define KGI 0.0
+#define KGD 0.0
+//Beta
+#define KBP 0.01
+#define KBI 0.0
+#define KBD 0.0
+//Alpha
+#define KAP 0.005
+#define KAI 0.0
+#define KAD 0.0
+
+//Autobalance
+#define TipAngle 10.0
+#define ApproachAngle 13.0
+
+#define drivePowerMax 1.0
+#define drivePowerMin 0.2
 #define TurningMotorGearRatio 7.0/150.0 
 #define DrivingMotorGearRatio 1/6.75
 #define WheelDiameterInMeters 0.0992
@@ -24,10 +62,10 @@
 
 #define GYRO_PORT 13
 //Offsets for Absolute Encoders
-#define RFZERO (1.761010-1.57079632)
-#define RBZERO (3.204486-1.57079632)
-#define LFZERO (5.514661-1.57079632)
-#define LBZERO (5.787710-1.57079632)
+#define RFZERO (1.761010-1.57079632)-3.1415926535
+#define RBZERO (3.204486-1.57079632)-3.1415926535
+#define LFZERO (5.514661-1.57079632)-3.1415926535
+#define LBZERO (5.787710-1.57079632)-3.1415926535
 
 //SwerveModule PID for Drive
 #define KDP 1.0
@@ -50,5 +88,5 @@
 #define ABS_ANGLE 0
 
 // MAX PERCENTAGE CONSTANTS
-#define drivePercentage 0.70///0.80//0.70
-#define rotatePercentage 0.6//0.80
+#define drivePercentage 0.80///0.80//0.70
+#define rotatePercentage 0.80//0.80

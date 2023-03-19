@@ -90,7 +90,6 @@ void SwerveModule::ResetEncoder(){
     turningEncoder -> SetPosition(0.0);
 
 }
-
 // Set desired state for the swerve
 void SwerveModule::SetDesiredState(const frc::SwerveModuleState& state) {
     if(std::abs(state.speed.value()) > 0.01){
