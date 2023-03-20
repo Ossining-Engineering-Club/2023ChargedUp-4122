@@ -1,10 +1,10 @@
 -o
-"C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2 - Copy\\build\\exe\\frcUserProgram\\debug\\frcUserProgram"
-"C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2 - Copy\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\2bzeyvkc5skz4t5n9zkco7x7s\\SwerveModule.o"
-"C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2 - Copy\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\3bg5a77l7vd4edmrxq5jco6ri\\Robot.o"
-"C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2 - Copy\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\b7p6vc177y3git9iad4njlwao\\Arm.o"
-"C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2 - Copy\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\bv8allmn53jp7hrwetrf7id8i\\Drivetrain.o"
-"C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2 - Copy\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\e9tcb9w26xf6vx2skosxbjlxh\\OECPigeonIMU.o"
+C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\build\\exe\\frcUserProgram\\debug\\frcUserProgram
+C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\2bzeyvkc5skz4t5n9zkco7x7s\\SwerveModule.o
+C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\3bg5a77l7vd4edmrxq5jco6ri\\Robot.o
+C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\b7p6vc177y3git9iad4njlwao\\Arm.o
+C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\bv8allmn53jp7hrwetrf7id8i\\Drivetrain.o
+C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\build\\objs\\frcUserProgram\\debug\\frcUserProgramCpp\\e9tcb9w26xf6vx2skosxbjlxh\\OECPigeonIMU.o
 C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\9bf107298f8fac44a58ed937b3e9aa51\\transformed\\wpilibNewCommands-cpp-2023.3.2-linuxathenadebug\\linux\\athena\\shared\\libwpilibNewCommandsd.so
 C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\9a041ecf6d2fb1485eeb7d854d09c1aa\\transformed\\REVLib-cpp-2023.1.1-linuxathenastaticdebug\\linux\\athena\\static\\libREVLib.a
 C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\e05f97852f22f1f6ed18ce6b1e20aeff\\transformed\\REVLib-driver-2023.1.1-linuxathenastaticdebug\\linux\\athena\\static\\libREVLibDriver.a
