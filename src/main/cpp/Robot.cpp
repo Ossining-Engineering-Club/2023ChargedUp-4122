@@ -13,6 +13,7 @@
 #include <frc/filter/SlewRateLimiter.h>
 #include <frc/PowerDistribution.h>
 #include "cameraserver/CameraServer.h"
+#include <frc/DigitalInput.h>
 
 
 #include <frc/kinematics/SwerveModuleState.h>
@@ -23,7 +24,7 @@
 class Robot : public frc::TimedRobot
 {
 public:
-  // Comment out if issues
+ 
   Robot() : swerveBot()
   {
     dash->init();
@@ -95,6 +96,7 @@ public:
     //auto done
     */
    //trive till bridhe is stable
+  if(DIOSwitch0.Get()){ //autobalance 
   double yawInit = swerveBot.gyro.GetRoll();
    dash->PutString("State", "Approach");
   while((swerveBot.gyro.GetRoll()-yawInit) < ApproachAngle){
@@ -116,7 +118,11 @@ public:
  swerveBot.GoToPoseRelative(RotateAfter,FIELD_ORIENTED,0.2);
   swerveBot.Drive(0.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
       dash->PutString("State", "Stabilize");
-
+  }
+  if(DIOSwitch1.Get()){
+    frc::Pose2d getOutOfCommunity = frc::Pose2d(8.0_m,0.0_m,0.0_deg);
+    swerveBot.GoToPoseRelative(getOutOfCommunity, fieldRelative, .2);
+  }
   //   frc::Pose2d RampDist = frc::Pose2d(-2.0_m,0.0_m, 0.0_rad*std::numbers::pi);
   // // while(true){
   //     swerveBot.GoToPose(RampDist, FIELD_ORIENTED, 0.4);
@@ -270,6 +276,8 @@ private:
   frc::Joystick armJoint1Stick{1};
   frc::Joystick armJoint2Stick{2};
   frc::PowerDistribution PDHObj{20, frc::PowerDistribution::ModuleType::kRev};
+  frc::DigitalInput  DIOSwitch0{0}; //autoballance
+  frc::DigitalInput  DIOSwitch1{1}; //drive out of com
   //frc::Joystick inverseStick{4};
   frc::SmartDashboard *dash;         // Initialize smart dashboard
   Drivetrain swerveBot;              // Construct drivetrain object
