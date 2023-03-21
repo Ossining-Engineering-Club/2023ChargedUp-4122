@@ -54,6 +54,10 @@
 #define GripSpinnerCANID 21
 #define O_PI std::numbers::pi
 #define gyroOffset (std::numbers::pi/2)*(0_rad)
+#define ShortAutoLength 2.03
+#define LongAutoLength 3.68
+#define ConeStoppingThreshold 10
+#define CubeStoppingThreshold 2.25
 
 #define DriveEncoderPosFactor (DrivingMotorGearRatio * std::numbers::pi * WheelDiameterInMeters)
 #define DriveEncoderVelocityFactor (DriveEncoderPosFactor / 60.0)

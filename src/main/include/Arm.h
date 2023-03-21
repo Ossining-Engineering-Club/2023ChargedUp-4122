@@ -16,6 +16,8 @@ class Arm{
     void SetToPosition(double X, double Y, double clawAngle,bool stick);
     void UpdateXY(double stickX, double stickY);
     void UpdateParameters();
+    void GoToStowed();
+    void GoToShelf();
     double alpha = 0.0;
     double beta = 0.0;
     double gamma = 0.0;
@@ -44,6 +46,7 @@ class Arm{
     // double beta = 0.0;
     // double gamma = 0.0;
     double mu = 0.0;
+    frc2::PIDController setToPositionPID{.1,.1,0.0};
 
 
 

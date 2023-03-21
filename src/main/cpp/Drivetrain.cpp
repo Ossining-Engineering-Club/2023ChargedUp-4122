@@ -49,8 +49,8 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double dr
   Drivetrain::UpdateOdometry();
   while (isFinished == false)
   {Drivetrain::UpdateOdometry();
-    if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.01 ||
-        fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - desiredPose.Y().value()) > 0.01 ||
+    if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.1||
+        fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - desiredPose.Y().value()) > 0.1 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - desiredPose.Rotation().Radians().value()) > .02)
     {
 
@@ -108,7 +108,7 @@ void Drivetrain::VisionAdjustTeleop(bool fieldRelative){
           
           
           if(IfHasTarget==1){
-           strafeSpeed = strafeSpeedVisionController.Calculate(targetOffsetAngle_Horizontal, 0.0);
+           strafeSpeed = strafeSpeedVisionController.Calculate(targetOffsetAngle_Horizontal, 5.7);
           strafeSpeed = (strafeSpeed*.05);
           driveSpeed = strafeSpeed*4.9;
           Drivetrain::Drive(Drivetrain::maxSpeed*0, strafeSpeed*Drivetrain::maxSpeed,0*Drivetrain::maxTurnRate, fieldRelative); 

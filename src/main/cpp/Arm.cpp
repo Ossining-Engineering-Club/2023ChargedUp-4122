@@ -20,10 +20,10 @@ Arm::Arm(int alphaMotor1, int alphaMotor2,
     // e_alpha -> SetInverted(true);
     // e_beta -> SetInverted(true);
     // e_gamma -> SetInverted(true);
-    //Encoder Position Factors, seen in constants file(factor states amount of rotations per rotation of motor)
-    e_alpha -> SetPositionConversionFactor(AlphaConversionFactor);
-    e_beta -> SetPositionConversionFactor(BetaConversionFactor);
-    e_gamma -> SetPositionConversionFactor(GammaConversionFactor);
+    // //Encoder Position Factors, seen in constants file(factor states amount of rotations per rotation of motor)
+    //  e_alpha -> SetPositionConversionFactor(1.0);
+    //  e_beta -> SetPositionConversionFactor();
+    //  e_gamma -> SetPositionConversionFactor(GammaConversionFactor);
     //Zeroing
     e_alpha -> SetPosition(0.0);
     e_beta -> SetPosition(0.0);
@@ -43,9 +43,9 @@ double* Arm::ProcessInputs(double stickX, double stickY){
     return returnArr;
 }
 void Arm::UpdateParameters(){
-    Arm::alpha = -1.0*(e_alpha -> GetPosition())- AlphaOffset; 
-    Arm::beta = -1.0*(e_beta -> GetPosition()) - BetaOffset; 
-    Arm::gamma = -1.0*(e_gamma -> GetPosition()) - GammaOffset; 
+    Arm::alpha = (e_alpha -> GetPosition());//- AlphaOffset; 
+    Arm::beta = (e_beta -> GetPosition());// - BetaOffset; 
+    Arm::gamma = (e_gamma -> GetPosition());// - GammaOffset; 
 }
 void Arm::UpdateXY(double stickX, double stickY){
 
@@ -92,4 +92,22 @@ void Arm::SetToPosition(double X, double Y, double clawAngle,bool stick){
 }
 void Arm::SetClawSpinner(double power){
    //m_clawSpinner.Set(power); 
+}
+void Arm::GoToStowed(){
+    double alphaSpeed = setToPositionPID.Calculate(alpha,121.63);
+    double betaSpeed = setToPositionPID.Calculate(beta,8.21);
+    double gammaSpeed = setToPositionPID.Calculate(gamma,309.55);
+    m_alphaMotor1.Set(alphaSpeed*.06);
+    m_alphaMotor2.Set(alphaSpeed *.06*-1.0);
+    m_betaMotor.Set(betaSpeed*.15);
+    m_gammaMotor.Set(gammaSpeed*.1);
+}
+void Arm::GoToShelf(){
+    double alphaSpeed = setToPositionPID.Calculate(alpha,28.54);
+    double betaSpeed = setToPositionPID.Calculate(beta,-132.0);
+    double gammaSpeed = setToPositionPID.Calculate(gamma,-12.71);
+    m_alphaMotor1.Set(alphaSpeed*.05);
+    m_alphaMotor2.Set(alphaSpeed *-.05);
+    m_betaMotor.Set(betaSpeed*.15);
+    m_gammaMotor.Set(gammaSpeed*.1);
 }

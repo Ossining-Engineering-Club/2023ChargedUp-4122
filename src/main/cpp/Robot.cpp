@@ -46,13 +46,19 @@ public:
   void AutonomousInit()
   {
     //swerveBot.gyro.ResetYaw();
-    swerveBot.ResetDrive();
+    if (isReset == false)
+    {
+      swerveBot.gyro.ResetYaw();
+      swerveBot.ResetDrive();
+      isReset = true;
+    }
     fieldRelative = FIELD_ORIENTED;
     // frc::Pose2d Movement1 = frc::Pose2d(1_m, 2_m, frc::Rotation2d(180_deg));
     // swerveBot.GoToPose(Movement1, fieldRelative);
     // frc::Pose2d Movement2 = frc::Pose2d(3_m,0_m,frc::Rotation2d(90_deg));
     // swerveBot.GoToPose(Movement2,fieldRelative);
     // frc::Pose2d Movement3 = frc::Pose2d(1_m,3_m,frc::Rotation2d(0_deg));
+    
   
     //0,0,0 (1.92,4.67,0)
     //ideally our starting position we can place without moving but that will remain to be seen
@@ -95,12 +101,17 @@ public:
     //auto done
     */
    //trive till bridhe is stable
-   if(DIOSwitch0.Get()){
-  double yawInit = swerveBot.gyro.GetRoll();
-   dash->PutString("State", "Approach");
-  while((swerveBot.gyro.GetRoll()-yawInit) < ApproachAngle){
-    swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
-    frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
+   bool DIOS0= !DIOSwitch0.Get();
+   bool DIOS1= !DIOSwitch1.Get();
+   bool DIOS2= !DIOSwitch2.Get();
+   bool DIOS3= !DIOSwitch3.Get();
+   if(DIOS0 || DIOS1 || DIOS2 || DIOS3){
+    if(DIOS0){
+      double yawInit = swerveBot.gyro.GetRoll();
+      dash->PutString("State", "Approach");
+      while((swerveBot.gyro.GetRoll()-yawInit) < ApproachAngle){
+      swerveBot.Drive(0.25*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
+      frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
   }
      dash->PutString("State", "Tipping");
      
@@ -108,7 +119,7 @@ public:
 
   //drive till bridge starts to level
   while((swerveBot.gyro.GetRoll()-yawInit) > TipAngle){
-    swerveBot.Drive(1.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
+    swerveBot.Drive(.25*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
     frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
   }
   frc::Pose2d RampDist = frc::Pose2d(-0.12_m,0.0_m, 0_deg);
@@ -118,10 +129,21 @@ public:
   swerveBot.Drive(0.0*4.441_mps, 0.0_mps, units::radians_per_second_t{0.0},FIELD_ORIENTED);
       dash->PutString("State", "Stabilize");
    }
-   if(DIOSwitch1.Get()){
-    frc::Pose2d getOutOfCommunityPose = frc::Pose2d(8_m,0_m,0_deg);
-    swerveBot.GoToPoseRelative(getOutOfCommunityPose, fieldRelative, .2);
+  
+   else if(DIOS1){ //short distance
+    frc::Pose2d getOutOfCommunityPoseShort = frc::Pose2d(ShortAutoLength*1_m,0_m,0_deg);
+    swerveBot.GoToPose(getOutOfCommunityPoseShort, fieldRelative, .05);
    }
+   else if(DIOS2){
+    frc::Pose2d getOutOfCommunityPoseLong = frc::Pose2d(LongAutoLength*1_m,0_m,0_deg);
+    swerveBot.GoToPose(getOutOfCommunityPoseLong, fieldRelative, .05);
+   }
+   if(DIOS3){
+
+   }
+   
+  
+   
 
   //   frc::Pose2d RampDist = frc::Pose2d(-2.0_m,0.0_m, 0.0_rad*std::numbers::pi);
   // // while(true){
@@ -149,8 +171,8 @@ public:
 
 
       //swerveBot.Drive(0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxTurnRate,FIELD_ORIENTED);
-      
-
+   }  
+  else{} //do nothing code
   }
 
   void AutonomousPeriodic() override {}
@@ -176,6 +198,7 @@ public:
   {
     double targetOffsetAngle_Horizontal = table->GetNumber("tx",0.0);
     swerveBot.UpdateOdometry();
+    arm.UpdateParameters();
     // arm.SetToPosition(-inverseStick.GetY(),inverseStick.GetX(),0.0,true);
     if(driveController.GetYButton()){
       fieldRelative = true;
@@ -246,9 +269,9 @@ public:
     dash->PutNumber("y",arm.y);
     dash->PutNumber("xnew",arm.xnew);
     dash->PutNumber("ynew",arm.ynew);
-    dash->PutNumber("alpha enc angle",arm.alpha);
-    dash->PutNumber("beta enc angle",arm.beta);
-    dash->PutNumber("gamma enc angle",arm.gamma);
+    // dash->PutNumber("alpha enc angle",arm.alpha);
+    // dash->PutNumber("beta enc angle",arm.beta);
+    // dash->PutNumber("gamma enc angle",arm.gamma);
     dash->PutNumber("alpha inverse angle",arm.alphaNew);
     dash->PutNumber("beta inverse angle",arm.betaNew);
     dash->PutNumber("gamma inverse angle",arm.gammaNew);
@@ -278,6 +301,9 @@ private:
   frc::PowerDistribution PDHObj{20, frc::PowerDistribution::ModuleType::kRev};
   frc::DigitalInput DIOSwitch0{0};
   frc::DigitalInput DIOSwitch1{1};
+  frc::DigitalInput DIOSwitch2{2};
+  frc::DigitalInput DIOSwitch3{3};
+  
   //frc::Joystick inverseStick{4};
   frc::SmartDashboard *dash;         // Initialize smart dashboard
   Drivetrain swerveBot;              // Construct drivetrain object
@@ -349,7 +375,7 @@ private:
     const auto joint1AwayFromBatteryMotorSpeed = -armJoint1Stick.GetY()*.3;
 
     // Joint 2 + | Joint 3 -
-    const auto joint2MotorSpeed = armJoint2Stick.GetY()*.3;
+    const auto joint2MotorSpeed = armJoint2Stick.GetY()*.5;
     if(armJoint1Stick.GetRawButton(2)){
       arm.m_gammaMotor.Set(-0.3);
     }
@@ -367,9 +393,11 @@ private:
       arm.m_clawSpinner.Set(0.0);
     }
   */
+  if(!armJoint2Stick.GetRawButton(5) || !armJoint2Stick.GetRawButton(4)){
     arm.m_alphaMotor1.Set(joint1AwayFromBatteryMotorSpeed);
     arm.m_alphaMotor2.Set(joint1CloseToBatteryMotorSpeed);
     arm.m_betaMotor.Set(joint2MotorSpeed);
+  }
     // // Wrist contorl on Joystick #2
     // if(armJoint2Stick.GetRawButton(2)){
     //   Joint3Motor.Set(-0.3);
@@ -379,7 +407,11 @@ private:
     // } else{
     //   Joint3Motor.Set(0.0);
     // }
-    if(PDHObj.GetCurrent(11)>10.0 && IntakeCount > 15){ 
+    if(PDHObj.GetCurrent(11)>ConeStoppingThreshold && IntakeCount > 15 && armJoint2Stick.GetTrigger()){ 
+      isOverCurrent = true; 
+      isGripped = true;
+    }
+    if(PDHObj.GetCurrent(11)>CubeStoppingThreshold && IntakeCount > 15 && armJoint2Stick.GetRawButton(3)){ 
       isOverCurrent = true; 
       isGripped = true;
     }
@@ -391,7 +423,7 @@ private:
     } else if(armJoint2Stick.GetRawButton(3)){ //Cube In
       IntakeCount++;
       if(!isOverCurrent){arm.m_clawSpinner.Set(-0.30);}
-      else{arm.m_clawSpinner.Set(0.0);}
+      else{arm.m_clawSpinner.Set(0.01);}
     }else if(armJoint2Stick.GetTrigger()){ //Cone In
       IntakeCount++;
       if(!isOverCurrent){arm.m_clawSpinner.Set(-0.70);}
@@ -400,6 +432,10 @@ private:
       isOverCurrent = false;
       OverCurrentCount = 0;
       IntakeCount = 0;
+    }else if(armJoint2Stick.GetRawButton(4)){
+      //arm.GoToStowed();
+    }else if(armJoint2Stick.GetRawButton(5)){
+      arm.GoToShelf();
     }
     else{
       arm.m_clawSpinner.Set(0.0);
