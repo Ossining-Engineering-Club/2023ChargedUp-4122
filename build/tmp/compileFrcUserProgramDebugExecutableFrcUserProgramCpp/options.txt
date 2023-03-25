@@ -16,58 +16,58 @@ c++
 -g
 -nostdinc
 -I
-C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include
+"C:\\Users\\Gabe Sankar\\OneDrive\\Documents\\WORKINGCODEMARCH21\\src\\main\\include"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\656b5cb02310d34e6f5c8471a01ef71f\\transformed\\wpilibNewCommands-cpp-2023.3.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\9faa1c93bf3d3f3c2e638fe509203607\\transformed\\wpilibNewCommands-cpp-2023.3.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\5a77f459c8e3e7c28e6cebf4a3639fae\\transformed\\REVLib-cpp-2023.1.1-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\f543c75370d0466fba374568ced911f6\\transformed\\REVLib-cpp-2023.1.1-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\7eb09d3fac04bfe81e2c010bec07d129\\transformed\\REVLib-driver-2023.1.1-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\b3ab76ed4abe791d93254f9dbf418559\\transformed\\REVLib-driver-2023.1.1-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\d4e7ba568a7977420d4a37132a887c80\\transformed\\PhotonLib-cpp-v2023.2.1-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\7db536a47f8c10ccf89f036174693f37\\transformed\\PhotonLib-cpp-v2023.2.1-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\38057d13cf020de79ec9a31682c9c46d\\transformed\\wpiapi-cpp-5.30.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\5a9da2806d5fc86fcf0374d72ce733a6\\transformed\\wpiapi-cpp-5.30.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\4418d451e94687b85377a8a7d8a817cf\\transformed\\api-cpp-5.30.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\e42e03763a30ee772316479b56d638f8\\transformed\\api-cpp-5.30.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\6041d74e73f4ec531ea875776843a8e0\\transformed\\cci-5.30.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\675a09066d48bebd3d72989427630d16\\transformed\\cci-5.30.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\7a4d4ec7ea0dcdb6c2473056307951f7\\transformed\\tools-23.0.1-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\4d9c8f3127f0c4d9655aaced38a5d36e\\transformed\\tools-23.0.1-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\ac01a5a6a115f014ffc0cf37178ad869\\transformed\\wpilibc-cpp-2023.3.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\2639438636ce155994f85b2eb26a0197\\transformed\\wpilibc-cpp-2023.3.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\7ad0af12750f4ae2a9095ef3aa25e88e\\transformed\\ntcore-cpp-2023.3.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\6da809396797a0fad96034ef2cc39108\\transformed\\ntcore-cpp-2023.3.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\146adccfa01be72d253afac24b876a96\\transformed\\hal-cpp-2023.3.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\d0f70be5bf0040623167cdb480bff377\\transformed\\hal-cpp-2023.3.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\b2dbdc7c16905e37fdc8365121c74ba1\\transformed\\wpimath-cpp-2023.3.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\163141faaa00422171f83bdfa2b50033\\transformed\\wpimath-cpp-2023.3.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\b6b6adbb40c32862624e38a6864aec66\\transformed\\wpinet-cpp-2023.3.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\440a26c84a0cb2f424ee7602bcd64b01\\transformed\\wpinet-cpp-2023.3.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\004d8057c15e9000da4087c6ad94f8b1\\transformed\\wpiutil-cpp-2023.3.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\67011e00eb478e177623f9baaa52056a\\transformed\\wpiutil-cpp-2023.3.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\40b6932e1948022ce64bd70754e9b7af\\transformed\\netcomm-2023.3.0-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\77fa5d0d2dfe5fe0127bfc154b84baab\\transformed\\netcomm-2023.3.0-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\fda6004368f573f0bb01c8d032e124d6\\transformed\\chipobject-2023.3.0-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\8c6cb5cbc2fd260ae38e38cc09ad53be\\transformed\\chipobject-2023.3.0-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\106179155980090ad82f3cd087e8169f\\transformed\\visa-2023.3.0-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\3eeb24dc3054f565050690c1ce356299\\transformed\\visa-2023.3.0-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\feec7431f1dda0c03bd05c9f6b7c196a\\transformed\\cameraserver-cpp-2023.3.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\b0db26eda621e5db84cec702743e1b61\\transformed\\cameraserver-cpp-2023.3.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\b99ff60c2ad344a9aece17080c607463\\transformed\\cscore-cpp-2023.3.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\523fd8a863b0f34b78ce1a81ca03b20b\\transformed\\cscore-cpp-2023.3.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\9785a404e1f02491f8913f315a9c5271\\transformed\\apriltag-cpp-2023.3.2-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\c51df034d5df77182f451ec3940c9b9b\\transformed\\apriltag-cpp-2023.3.2-headers"
 -I
-C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\df671bd4df6e387749e196b4a45e4b30\\transformed\\opencv-cpp-4.6.0-4-headers
+"C:\\Users\\Gabe Sankar\\.gradle\\caches\\transforms-3\\59754e7a8ba276e11380ae656ae1a953\\transformed\\opencv-cpp-4.6.0-4-headers"
 -isystem
-C:\\Users\\Public\\wpilib\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\lib\\gcc\\arm-nilrt-linux-gnueabi\\12\\include
+"C:\\Users\\Gabe Sankar\\.gradle\\toolchains\\frc\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\lib\\gcc\\arm-nilrt-linux-gnueabi\\12\\include"
 -isystem
-C:\\Users\\Public\\wpilib\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\lib\\gcc\\arm-nilrt-linux-gnueabi\\12\\include-fixed
+"C:\\Users\\Gabe Sankar\\.gradle\\toolchains\\frc\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\lib\\gcc\\arm-nilrt-linux-gnueabi\\12\\include-fixed"
 -isystem
-C:\\Users\\Public\\wpilib\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\include\\c++\\12
+"C:\\Users\\Gabe Sankar\\.gradle\\toolchains\\frc\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\include\\c++\\12"
 -isystem
-C:\\Users\\Public\\wpilib\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\include\\c++\\12\\arm-nilrt-linux-gnueabi
+"C:\\Users\\Gabe Sankar\\.gradle\\toolchains\\frc\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\include\\c++\\12\\arm-nilrt-linux-gnueabi"
 -isystem
-C:\\Users\\Public\\wpilib\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\include\\c++\\12\\backward
+"C:\\Users\\Gabe Sankar\\.gradle\\toolchains\\frc\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\include\\c++\\12\\backward"
 -isystem
-C:\\Users\\Public\\wpilib\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\include
+"C:\\Users\\Gabe Sankar\\.gradle\\toolchains\\frc\\2023\\roborio\\arm-nilrt-linux-gnueabi\\sysroot\\usr\\include"
