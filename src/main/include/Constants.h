@@ -19,23 +19,45 @@
 #define AlphaOffset -122.29 //change
 #define BetaOffset -13.07 //change
 #define GammaOffset -308.7326 //change
+
 //StartingXY of claw
 #define StartingX 0.0
 #define StartingY 0.0
 //PID VALS
 //Gamma
-#define KGP 0.01
+#define KGP 0.02
 #define KGI 0.0
 #define KGD 0.0
 //Beta
-#define KBP 0.01
+#define KBP 0.02
 #define KBI 0.0
 #define KBD 0.0
 //Alpha
-#define KAP 0.005
+#define KAP 0.008
 #define KAI 0.0
 #define KAD 0.0
 
+#define MedAlpha 20.928478
+#define MedBeta -72.240211
+#define MedGamma -35.64251
+
+#define StowAlpha 0.476190
+#define StowBeta -3.238093
+#define StowGamma -1.976190
+
+#define HIAlpha 35.213959
+#define HIBeta -160.423477
+#define HIGamma -45.809055
+
+#define FloorAlpha 37.356781
+#define FloorBeta -8.404788
+#define FloorGamma -86.479698
+
+#define PlaceGamma -95.741432
+
+#define ShelfAlpha 8.500027
+#define ShelfBeta -98.335808
+#define ShelfGamma -178.277390
 //Autobalance
 #define TipAngle 10.0
 #define ApproachAngle 13.0
@@ -57,7 +79,7 @@
 #define ShortAutoLength 2.03
 #define LongAutoLength 3.68
 #define ConeStoppingThreshold 10
-#define CubeStoppingThreshold 2.25
+#define CubeStoppingThreshold 1.5
 
 #define DriveEncoderPosFactor (DrivingMotorGearRatio * std::numbers::pi * WheelDiameterInMeters)
 #define DriveEncoderVelocityFactor (DriveEncoderPosFactor / 60.0)

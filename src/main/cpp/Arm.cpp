@@ -90,40 +90,87 @@ void Arm::SetToPosition(double X, double Y, double clawAngle,bool stick){
 void Arm::SetClawSpinner(double power){
    //m_clawSpinner.Set(power); 
 }
-void Arm::GoToStowed(){
-    double Alpha1Speed = pid_alpha.Calculate(e_alpha -> GetPosition(), 0.0);
-    double Alpha2Speed = -pid_alpha.Calculate(e_alpha -> GetPosition(), 0.0);
-    double BetaSpeed = pid_beta.Calculate(e_beta -> GetPosition(), 0.0);
-    double GammaSpeed = pid_gamma.Calculate(e_gamma -> GetPosition(), 0.0);
+
+// void Arm::GoToStowed(){
+//     double Alpha1Speed = pid_alpha.Calculate(e_alpha -> GetPosition(), 0.0);
+//     double Alpha2Speed = -pid_alpha.Calculate(e_alpha -> GetPosition(), 0.0);
+//     double BetaSpeed = pid_beta.Calculate(e_beta -> GetPosition(), 0.0);
+//     double GammaSpeed = pid_gamma.Calculate(e_gamma -> GetPosition(), 0.0);
     
-    m_gammaMotor.Set(GammaSpeed);
-    m_betaMotor.Set(BetaSpeed);
+//     m_gammaMotor.Set(GammaSpeed);
+//     m_betaMotor.Set(BetaSpeed);
+//     m_alphaMotor1.Set(Alpha1Speed);
+//     m_alphaMotor2.Set(Alpha2Speed);
+//     // m_alphaMotor1.Set(pid_alpha.Calculate(Arm::alpha,0.0));
+//     // m_alphaMotor2.Set(-1.0*pid_alpha.Calculate(Arm::alpha,0.0));
+//     //m_betaMotor.Set(pid_beta.Calculate(Arm::beta,0.0));
+//     //m_gammaMotor.Set(pid_gamma.Calculate(Arm::gamma,0.0));
+// }
+// void Arm::GoToShelf(){
+//     double Alpha1Speed = pid_alpha.Calculate(e_alpha -> GetPosition(), 7.023818);
+//     double Alpha2Speed = -pid_alpha.Calculate(e_alpha -> GetPosition(),  7.023818);
+//     double BetaSpeed = pid_beta.Calculate(e_beta -> GetPosition(), -100.121811);
+//     double GammaSpeed = pid_gamma.Calculate(e_gamma -> GetPosition(), -169.803223);
+    
+//     m_gammaMotor.Set(GammaSpeed);
+//     m_betaMotor.Set(BetaSpeed);
+//     m_alphaMotor1.Set(Alpha1Speed);
+//     m_alphaMotor2.Set(Alpha2Speed);
+// }
+void Arm::GoTo(double Alpha, double Beta, double Gamma, double multiplier){ // Multiplier is a double from 0.0 to 1.0
+
+    double alphapos = e_alpha -> GetPosition();
+    double betapos = e_beta -> GetPosition();
+    double gammapos = e_gamma -> GetPosition();
+
+    double Alpha1Speed = pid_alpha.Calculate(alphapos, Alpha);
+    double Alpha2Speed = -pid_alpha.Calculate(alphapos, Alpha);
+    double BetaSpeed = pid_beta.Calculate(betapos, Beta);
+    double GammaSpeed = pid_gamma.Calculate(gammapos,Gamma);
+
+    if(Alpha - alphapos > 5.0){
+    m_alphaMotor1.Set(.15*multiplier); // Alpha Forward
+    m_alphaMotor2.Set(-.15*multiplier); //Alpha Forward
+    }else if(Alpha - alphapos < -5.0){
+    m_alphaMotor1.Set(-.25*multiplier); // Alpha Backward
+    m_alphaMotor2.Set(.25*multiplier); // Alpha Backward
+    }else{
     m_alphaMotor1.Set(Alpha1Speed);
     m_alphaMotor2.Set(Alpha2Speed);
-    // m_alphaMotor1.Set(pid_alpha.Calculate(Arm::alpha,0.0));
-    // m_alphaMotor2.Set(-1.0*pid_alpha.Calculate(Arm::alpha,0.0));
-    //m_betaMotor.Set(pid_beta.Calculate(Arm::beta,0.0));
-    //m_gammaMotor.Set(pid_gamma.Calculate(Arm::gamma,0.0));
+    }
+    
+    if(Beta - betapos > 5.0){
+    m_betaMotor.Set(.7*multiplier); // Beta backward
+    }else if(Beta - betapos < -5.0){
+    m_betaMotor.Set(-1.0*multiplier); //Beta forward
+    }else{
+    m_betaMotor.Set(BetaSpeed);
+    }
+
+    if(Gamma - gammapos > 10.0){
+    m_gammaMotor.Set(.5*multiplier);
+    }else if(Gamma - gammapos < -10.0){
+    m_gammaMotor.Set(-.5*multiplier);
+    }else{
+    m_gammaMotor.Set(GammaSpeed);
+    }
+
 }
-void Arm::GoToShelf(){
-    double Alpha1Speed = pid_alpha.Calculate(e_alpha -> GetPosition(), 11.047677);
-    double Alpha2Speed = -pid_alpha.Calculate(e_alpha -> GetPosition(),  11.047677);
-    double BetaSpeed = pid_beta.Calculate(e_beta -> GetPosition(), -103.645164);
-    double GammaSpeed = pid_gamma.Calculate(e_gamma -> GetPosition(), -170.588821);
+// void Arm::GoToFloor(){
+//     double Alpha1Speed = pid_alpha.Calculate(e_alpha -> GetPosition(), 11.047677);
+//     double Alpha2Speed = -pid_alpha.Calculate(e_alpha -> GetPosition(),  11.047677);
+//     double BetaSpeed = pid_beta.Calculate(e_beta -> GetPosition(), -103.645164);
+//     double GammaSpeed = pid_gamma.Calculate(e_gamma -> GetPosition(), -170.588821);
     
-    m_gammaMotor.Set(GammaSpeed);
-    m_betaMotor.Set(BetaSpeed);
-    m_alphaMotor1.Set(Alpha1Speed);
-    m_alphaMotor2.Set(Alpha2Speed);
-}
-void Arm::GoToFloor(){
-    double Alpha1Speed = pid_alpha.Calculate(e_alpha -> GetPosition(), 11.047677);
-    double Alpha2Speed = -pid_alpha.Calculate(e_alpha -> GetPosition(),  11.047677);
-    double BetaSpeed = pid_beta.Calculate(e_beta -> GetPosition(), -103.645164);
-    double GammaSpeed = pid_gamma.Calculate(e_gamma -> GetPosition(), -170.588821);
-    
-    m_gammaMotor.Set(GammaSpeed);
-    m_betaMotor.Set(BetaSpeed);
-    m_alphaMotor1.Set(Alpha1Speed);
-    m_alphaMotor2.Set(Alpha2Speed);
+//     m_gammaMotor.Set(GammaSpeed);
+//     m_betaMotor.Set(BetaSpeed);
+//     m_alphaMotor1.Set(Alpha1Speed);
+//     m_alphaMotor2.Set(Alpha2Speed);
+// }
+
+void Arm::ResetEncoders(){
+    e_alpha -> SetPosition(0.0);
+    e_beta -> SetPosition(0.0);
+    e_gamma -> SetPosition(0.0);
+
 }

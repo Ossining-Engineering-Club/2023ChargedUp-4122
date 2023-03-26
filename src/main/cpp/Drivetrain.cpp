@@ -43,11 +43,14 @@ void Drivetrain::UpdateOdometry()
 } // Update Odometry
 
 // Method for autonomous, takes in a given pose and drives until it reaches that pose
-void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double drivePower)
+void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout)
 {
   isFinished = false;
+  timer.Reset();
+  timer.Start();
+
   Drivetrain::UpdateOdometry();
-  while (isFinished == false)
+  while (isFinished == false && (timer.Get() < timeout * 1.0_s))
   {Drivetrain::UpdateOdometry();
     if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.1||
         fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - desiredPose.Y().value()) > 0.1 ||
@@ -62,18 +65,23 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double dr
     }
     else
     {
-      Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
+      // Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
       isFinished = true;
     }
   }
+      Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
+
 } 
 
 // Relative version of absolute go to pose method - goes to the pose away from the starting position rather than absolute position on the field
-void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower){
+void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout){
   isFinished = false;
+  timer.Reset();
+  timer.Start();
+
   Drivetrain::UpdateOdometry();
   frc::Pose2d initPose = Drivetrain::SwerveOdometryGetPose();
-  while (isFinished == false)
+  while (isFinished == false && timer.Get() < (timeout * 1.0_s))
   {Drivetrain::UpdateOdometry();
     if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value())) > 0.01 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - (initPose.Y().value() + desiredPose.Y().value())) > 0.01 ||
@@ -87,10 +95,12 @@ void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, d
     }
     else
     {
-      Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
+      // Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
       isFinished = true;
     }
   }
+      Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
+
 
 }
 
@@ -205,7 +215,7 @@ frc::Pose2d Drivetrain::SwerveOdometryGetPose()
 // Returns the yaw of the robot via PigeonIMU gyro in degrees
 frc::Rotation2d Drivetrain::getAngle()
 {
-  units::radian_t yaw{gyro.GetYaw()* ((std::numbers::pi) / (180.0))};
+  units::radian_t yaw{gyro.GetYaw()* ((std::numbers::pi) / (180.0))+O_PI};
   return frc::Rotation2d(yaw);
   // -> Old return in radians (commented since we switched to degrees)
   // return frc::Rotation2d(((gyro.GetYaw() * ((std::numbers::pi) / (180.0)) * 1_rad)) - gyroOffset); // gyroOffset defined in constants.h

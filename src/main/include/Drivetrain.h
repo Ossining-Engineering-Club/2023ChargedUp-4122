@@ -18,6 +18,7 @@
 #include "networktables/NetworkTableInstance.h"
 #include "networktables/NetworkTableEntry.h"
 #include "networktables/NetworkTableValue.h"
+#include <frc/Timer.h>
 
 
 /**
@@ -36,8 +37,8 @@ class Drivetrain {
   OECPigeonIMU gyro{GYRO_PORT};
   void UpdateOdometry();
   void ResetDrive();
-  void GoToPose(frc::Pose2d desiredPose,bool fieldRelative, double drivePower);
-  void GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower);
+  void GoToPose(frc::Pose2d desiredPose,bool fieldRelative, double drivePower, double timeout);
+  void GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout);
   void VisionAdjustTeleop(bool fieldRelative);
 
   void DriveUntilAngle(double angle);
@@ -85,6 +86,8 @@ double  getVisionDistance();
   double targetArea = table->GetNumber("ta",0.0);
   double targetSkew = table->GetNumber("ts",0.0);
   double strafeSpeed;
+
+  frc::Timer(timer);
  private:
  // **********************************************************
   frc2::PIDController strafeSpeedVisionController{.5,0,0};
@@ -98,7 +101,7 @@ double  getVisionDistance();
   const double FowardSide_D_GAIN 
   = 0.0;
 
-  const double kP_Rot = 2.5;
+  const double kP_Rot = 0.1;
   const double kI_Rot = 0.0;
   const double kD_Rot = 0.0;
 
@@ -139,6 +142,6 @@ double  getVisionDistance();
         {LFMod.GetPosition(), 
         RFMod.GetPosition(),
         LBMod.GetPosition(), 
-        RBMod.GetPosition()},frc::Pose2d{0_m,0_m,0_rad}
+        RBMod.GetPosition()},frc::Pose2d{0_m,0_m,O_PI*1_rad}
         };
  };

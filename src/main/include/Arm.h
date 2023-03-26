@@ -7,7 +7,7 @@
 class Arm{
 
     public:
-        frc2::PIDController pid_alpha{KAP, KAI, KAD};
+    frc2::PIDController pid_alpha{KAP, KAI, KAD};
     frc2::PIDController pid_beta{KBP, KBI, KBD};
     frc2::PIDController pid_gamma{KGP, KGI, KGD};
     Arm(int alphaMotor1, int alphamotor2, int betaMotor, int gammaMotor, int clawSpinner);
@@ -16,9 +16,10 @@ class Arm{
     void SetToPosition(double X, double Y, double clawAngle,bool stick);
     void UpdateXY(double stickX, double stickY);
     void UpdateParameters();
-    void GoToStowed();
-    void GoToShelf();
-    void GoToFloor();
+    //void GoToStowed();
+    //void GoToShelf();
+    //void GoToFloor();
+    void GoTo(double Alpha, double Beta, double Gamma, double multiplier);
     double alpha = 0.0;
     double beta = 0.0;
     double gamma = 0.0;
