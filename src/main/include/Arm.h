@@ -18,7 +18,6 @@ class Arm{
     void UpdateParameters();
     void GoToStowed();
     void GoToShelf();
-    void GoToFloor();
     double alpha = 0.0;
     double beta = 0.0;
     double gamma = 0.0;
@@ -28,7 +27,6 @@ class Arm{
     void InverseKinematics(double clawAngle);
     void SetClawSpinner(double power);
     void CalculateXY();
-    void ResetEncoders();
     double x = 0.0;//StartingX;
     double y = 0.0;//StartingY;
     double xnew = 0.0;//StartingX;
@@ -48,9 +46,7 @@ class Arm{
     // double beta = 0.0;
     // double gamma = 0.0;
     double mu = 0.0;
-    frc2::PIDController setToPositionAlpha{.25,0.0,0.0};
-    frc2::PIDController setToPositionBeta{.6,0.0,0.0};
-    frc2::PIDController setToPositionGamma{.25,0.0,0.0};
+    frc2::PIDController setToPositionPID{.1,.1,0.0};
 
 
 
