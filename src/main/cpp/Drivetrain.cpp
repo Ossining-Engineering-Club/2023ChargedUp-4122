@@ -46,26 +46,24 @@ void Drivetrain::UpdateOdometry()
 void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout)
 {
   isFinished = false;
-  timer.Reset();
-  timer.Start();
-
+  //timer.Reset();
+  //timer.Start();
   Drivetrain::UpdateOdometry();
-  while (isFinished == false && (timer.Get() < timeout * 1.0_s))
-  {Drivetrain::UpdateOdometry();
+  while (isFinished == false) // && (timer.Get() < timeout * 1.0_s))
+  {
+    Drivetrain::UpdateOdometry();
     if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.1||
         fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - desiredPose.Y().value()) > 0.1 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - desiredPose.Rotation().Radians().value()) > .02)
     {
-
-      
-      fowardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), desiredPose.X().value());
+      forwardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), desiredPose.X().value());
       strafeSpeed = (drivePower/drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), desiredPose.Y().value());
       rotationSpeed = (drivePower/drivePercentage) * controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), desiredPose.Rotation().Radians().value());
-      Drivetrain::Drive(fowardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
+      Drivetrain::Drive(forwardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
     }
     else
     {
-      // Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
+      Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
       isFinished = true;
     }
   }
@@ -76,32 +74,31 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double dr
 // Relative version of absolute go to pose method - goes to the pose away from the starting position rather than absolute position on the field
 void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout){
   isFinished = false;
-  timer.Reset();
-  timer.Start();
+  //timer.Reset();
+  //timer.Start();
 
   Drivetrain::UpdateOdometry();
   frc::Pose2d initPose = Drivetrain::SwerveOdometryGetPose();
-  while (isFinished == false && timer.Get() < (timeout * 1.0_s))
-  {Drivetrain::UpdateOdometry();
+  while (isFinished == false ) //&& timer.Get() < (timeout * 1.0_s))
+  {
+    Drivetrain::UpdateOdometry();
     if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value())) > 0.01 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - (initPose.Y().value() + desiredPose.Y().value())) > 0.01 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - (initPose.Rotation().Radians().value() + 
-                                                                                 desiredPose.Rotation().Radians().value())) > .02)
+          desiredPose.Rotation().Radians().value())) > .02)
     {
-      fowardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), (initPose.X().value() + desiredPose.X().value()));
+      forwardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), (initPose.X().value() + desiredPose.X().value()));
       strafeSpeed = (drivePower/drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), (initPose.Y().value() + desiredPose.Y().value()));
       rotationSpeed = (drivePower/drivePercentage) * controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), (initPose.Rotation().Radians().value() + desiredPose.Rotation().Radians().value()));
-      Drivetrain::Drive(fowardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
+      Drivetrain::Drive(forwardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
     }
     else
     {
-      // Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
+      Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
       isFinished = true;
     }
   }
-      Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
-
-
+  Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
 }
 
 void Drivetrain::DriveUntilAngle(double angle){

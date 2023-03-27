@@ -46,13 +46,11 @@ public:
   void AutonomousInit()
   {
     // swerveBot.gyro.ResetYaw();
-    if (isReset == false)
-    {
-      swerveBot.gyro.ResetYaw();
-      swerveBot.ResetDrive();
-      arm.ResetEncoders();
-      isReset = true;
-    }
+    swerveBot.gyro.ResetYaw();
+    swerveBot.ResetDrive();
+    arm.ResetEncoders();
+    isReset = true;
+    
     fieldRelative = FIELD_ORIENTED;
     // frc::Pose2d Movement1 = frc::Pose2d(1_m, 2_m, frc::Rotation2d(180_deg));
     // swerveBot.GoToPose(Movement1, fieldRelative);
@@ -142,12 +140,15 @@ public:
         //   frc::SmartDashboard::PutNumber("roll", swerveBot.gyro.GetRoll());
         // }
         //frc::Pose2d RampDist = frc::Pose2d(0.12_m, 0.0_m, 0_deg); //negated -0.12 -> 0.12
-        frc::Pose2d RotateAfter = frc::Pose2d(0.0_m, 0.0_m, 0.5_rad); //negated 20_deg -> -20_deg
+        frc::Pose2d RotateAfter = frc::Pose2d(0.0_m,0.0_m,20_deg); //negated 20_deg -> -20_deg
         //swerveBot.GoToPoseRelative(RampDist, FIELD_ORIENTED, 0.2, 10.0);
         swerveBot.GoToPoseRelative(RotateAfter, FIELD_ORIENTED, 0.2, 5.0);
         //swerveBot.Drive(0.0 * 4.441_mps, 0.0_mps, units::radians_per_second_t{1.0}, FIELD_ORIENTED);
         //frc::Wait(0_s);
-        swerveBot.Drive(0.0 * 4.441_mps, 0.0_mps, units::radians_per_second_t{0.0}, FIELD_ORIENTED);        
+        //swerveBot.Drive(0.0 * 4.441_mps, 0.0_mps, units::radians_per_second_t{0.0}, FIELD_ORIENTED); 
+        //dash->PutNumber("forwardSpeed",swerveBot.forwardSpeed);
+        //dash->PutNumber("strafeSpeed",swerveBot.strafeSpeed);
+        //dash->PutNumber("rotationSpeed",swerveBot.rotationSpeed);      
         dash->PutString("State", "Stabilize");
       }
 
@@ -199,6 +200,7 @@ public:
   }
 
   void AutonomousPeriodic() override {}
+
   void TeleopInit() override
   {
     if (isReset == false)
@@ -306,9 +308,6 @@ public:
     dash->PutNumber("beta", arm.beta);
     dash->PutNumber("gamma", arm.gamma);
 
-    // dash->PutNumber("alpha enc angle",arm.alpha);
-    // dash->PutNumber("beta enc angle",arm.beta);
-    // dash->PutNumber("gamma enc angle",arm.gamma);
     dash->PutNumber("alpha inverse angle", arm.alphaNew);
     dash->PutNumber("beta inverse angle", arm.betaNew);
     dash->PutNumber("gamma inverse angle", arm.gammaNew);
