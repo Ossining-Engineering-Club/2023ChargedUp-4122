@@ -106,6 +106,25 @@ public:
    bool DIOS2= !DIOSwitch2.Get();
    bool DIOS3= !DIOSwitch3.Get();
    if(DIOS0 || DIOS1 || DIOS2 || DIOS3){
+    if(DIOS3){
+      for (int i = 0; i < 174; i++)
+        { // Move to high position
+          arm.GoTo(AutoPlaceAlpha, AutoPlaceBeta, AutoPlaceGamma, 1.0);
+          frc::Wait(0.02_s);
+        }
+        arm.m_clawSpinner.Set(0.4); // Place cube
+        frc::Wait(0.5_s);
+        arm.m_clawSpinner.Set(0.0); // Stop spinner
+        for (int i = 0; i < 180; i++)
+        { // Move to stow position
+          arm.GoTo(AutoStowAlpha, AutoStowBeta, AutoStowGamma, 1.0);
+          frc::Wait(0.02_s);
+        }
+        arm.m_alphaMotor1.Set(0.0);
+        arm.m_alphaMotor2.Set(0.0);
+        arm.m_betaMotor.Set(0.0);
+        arm.m_gammaMotor.Set(0.0);
+    }
     if(DIOS0){
       double yawInit = swerveBot.gyro.GetRoll();
       dash->PutString("State", "Approach");
@@ -114,8 +133,6 @@ public:
       frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
   }
      dash->PutString("State", "Tipping");
-     
-     
 
   //drive till bridge starts to level
   while((swerveBot.gyro.GetRoll()-yawInit) > TipAngle){
@@ -132,14 +149,11 @@ public:
   
    else if(DIOS1){ //short distance
     frc::Pose2d getOutOfCommunityPoseShort = frc::Pose2d(ShortAutoLength*1_m,0_m,0_deg);
-    swerveBot.GoToPose(getOutOfCommunityPoseShort, fieldRelative, .05);
+    swerveBot.GoToPose(getOutOfCommunityPoseShort, fieldRelative, .03);
    }
    else if(DIOS2){
     frc::Pose2d getOutOfCommunityPoseLong = frc::Pose2d(LongAutoLength*1_m,0_m,0_deg);
-    swerveBot.GoToPose(getOutOfCommunityPoseLong, fieldRelative, .05);
-   }
-   if(DIOS3){
-
+    swerveBot.GoToPose(getOutOfCommunityPoseLong, fieldRelative, .02);
    }
    
   
@@ -182,12 +196,11 @@ public:
     {
       swerveBot.gyro.ResetYaw();
       swerveBot.ResetDrive();
+      arm.ResetEncoders();
       isReset = true;
     }
     arm.UpdateParameters(); //Needs to be moved into isReset
-    arm.CalculateXY();
-    arm.UpdateXY(0.0, 0.0);
-
+    
     fieldRelative = true;
 
     
@@ -196,40 +209,79 @@ public:
 
   void TeleopPeriodic() override
   {
-    double targetOffsetAngle_Horizontal = table->GetNumber("tx",0.0);
+    
+    // ouble targetOffsetAngle_Horizontal = table->GetNumber("tx",0.0);
     swerveBot.UpdateOdometry();
     arm.UpdateParameters();
+    m_field.SetRobotPose(swerveBot.SwerveOdometryGetPose());
     // arm.SetToPosition(-inverseStick.GetY(),inverseStick.GetX(),0.0,true);
-    if(driveController.GetYButton()){
+    if (driveController.GetYButton())
+    {
       fieldRelative = true;
-    }else if(driveController.GetXButton()){
+    }
+    else if (driveController.GetXButton())
+    {
       fieldRelative = false;
     }
-    if(armJoint1Stick.GetRawButtonPressed(6)){
+    if (armJoint1Stick.GetRawButtonPressed(6))
+    {
       swerveBot.ResetDrive();
     }
-    
-    
+
     dash->PutBoolean("Field Oriented: ", fieldRelative);
-    dash->PutNumber("limelight x diff", (targetOffsetAngle_Horizontal-5.7));
-    if(!armJoint1Stick.GetTrigger()){
+    // dash->PutNumber("limelight x diff", (targetOffsetAngle_Horizontal-5.7));
     ControlledDrive(fieldRelative);
+
+    if (armJoint1Stick.GetRawButton(7))
+    {
+      arm.ResetEncoders();
     }
-    else{
-      swerveBot.VisionAdjustTeleop(fieldRelative);
-      dash->PutNumber("limelightPID",swerveBot.strafeSpeed);
-      dash->PutNumber("drivetrainSpeed", swerveBot.driveSpeed);
-      dash->PutNumber("Frames Lost",swerveBot.FramesLost);
+    // Zero
+    if (armJoint2Stick.GetRawButton(4))
+    {
+      arm.GoTo(StowAlpha, StowBeta, StowGamma, 1.0);
     }
-    ArmControl();
-    
-    // arm.UpateParameters();
+    // Shelf
+    else if (armJoint2Stick.GetRawButton(5))
+    {
+      arm.GoTo(ShelfAlpha, ShelfBeta, ShelfGamma, 1.0);
+
+    } // Medium Cone and cube
+    else if (armJoint2Stick.GetRawButton(7))
+    {
+      arm.GoTo(MedAlpha, MedBeta, MedGamma, 1.0);
+    }
+    else if (armJoint2Stick.GetRawButton(6))
+    {
+      arm.GoTo(HIAlpha, HIBeta, HIGamma, 1.0);
+    } // placeGamma
+    else if (armJoint2Stick.GetRawButton(8))
+    {
+      arm.GoTo(FloorAlpha, FloorBeta, FloorGamma, 1.0);
+    } // placeGamma
+    else if (armJoint1Stick.GetRawButton(4))
+    {
+      arm.GoTo(arm.e_alpha->GetPosition(), arm.e_beta->GetPosition(), PlaceGamma, 1.0);
+    }
+    else if(armJoint2Stick.GetRawButton(11)){
+      arm.GoTo(AutoPlaceAlpha, AutoPlaceBeta, AutoPlaceGamma, 1.0);
+    }
+    else if (armJoint1Stick.GetRawButtonReleased(4))
+    {
+      arm.m_clawSpinner.Set(0.2);
+      frc::Wait(0.5_s);
+      arm.m_clawSpinner.Set(0.0);
+    }
+    else
+    {
+      ArmControl();
+    }
     // arm.CalculateXY();
     // if(fabs(arm.alpha-arm.alphaNew+arm.beta-arm.betaNew+arm.gamma-arm.gammaNew) < 4 || fabs(inverseStick.GetY()-y1+inverseStick.GetX()-x1) > .2){
     //   y1 = inverseStick.GetY();
     //   x1 = inverseStick.GetX();
     //   arm.UpdateXY(y1, -x1);
-      
+
     // }
     // //arm.UpdateXY(-inverseStick.GetY(),inverseStick.GetX());
     // arm.InverseKinematics(0.0);
@@ -238,70 +290,35 @@ public:
     // if(inverseStick.GetRawButton(2)){
     //  arm.SetToPosition(x1,y1,0.0,true);
     // }
-    for(int i=0.0;i<19;i++){
-        Current[i] = PDHObj.GetCurrent(i);
-        dash->PutNumber("Current Channel:"+std::to_string(i),Current[i]);
-        
-    }
-    frc::SmartDashboard::PutNumber("YPose", swerveBot.SwerveOdometryGetPose().Y().value());
-    frc::SmartDashboard::PutNumber("XPose", swerveBot.SwerveOdometryGetPose().X().value());
-   dash->PutNumber("ABSLBPos",swerveBot.LFMod.GetAbsEncoderAngle());
-    dash->PutNumber("ABSLBPos",swerveBot.LBMod.GetAbsEncoderAngle());
-    dash->PutNumber("ABSRFPos",swerveBot.RFMod.GetAbsEncoderAngle());
-    dash->PutNumber("ABSRBPos",swerveBot.RBMod.GetAbsEncoderAngle());
-    dash->PutNumber("LFPos",swerveBot.LFMod.GetCurrentAngle());
-    dash->PutNumber("LBPos",swerveBot.LBMod.GetCurrentAngle());
-    dash->PutNumber("RFPos",swerveBot.RFMod.GetCurrentAngle());
-    dash->PutNumber("RBPos",swerveBot.RBMod.GetCurrentAngle());
-    dash->PutNumber("Gyro", (swerveBot.getAngle().Degrees().value()));
-    dash-> PutBoolean("Gripped",isGripped);
-    dash-> PutBoolean("Overcurrent",isOverCurrent);
-    dash-> PutNumber("overcurrent count", OverCurrentCount);
+
+    dash->PutBoolean("Gripped", isGripped);
+    dash->PutBoolean("Overcurrent", isOverCurrent);
+    dash->PutNumber("overcurrent count", OverCurrentCount);
     frc::SmartDashboard::PutNumber("Heading", swerveBot.SwerveOdometryGetPose().Rotation().Degrees().value());
     frc::SmartDashboard::PutNumber("Yaw", swerveBot.gyro.GetYaw());
     frc::SmartDashboard::PutNumber("pitch", swerveBot.gyro.GetPitch());
-    frc::SmartDashboard::PutNumber("roll",swerveBot.gyro.GetRoll()*-1);
-    
+    frc::SmartDashboard::PutNumber("roll", swerveBot.gyro.GetRoll());
+
     dash->PutNumber("alpha", arm.alpha);
     dash->PutNumber("beta", arm.beta);
     dash->PutNumber("gamma", arm.gamma);
-    dash->PutNumber("x",arm.x);
-    dash->PutNumber("y",arm.y);
-    dash->PutNumber("xnew",arm.xnew);
-    dash->PutNumber("ynew",arm.ynew);
-    // dash->PutNumber("alpha enc angle",arm.alpha);
-    // dash->PutNumber("beta enc angle",arm.beta);
-    // dash->PutNumber("gamma enc angle",arm.gamma);
-    dash->PutNumber("alpha inverse angle",arm.alphaNew);
-    dash->PutNumber("beta inverse angle",arm.betaNew);
-    dash->PutNumber("gamma inverse angle",arm.gammaNew);
-    dash->PutNumber("diffrence between enc and inverse alpha",arm.alpha-arm.alphaNew);
-    dash->PutNumber("diffrence between enc and inverse beta",arm.beta-arm.betaNew);
-    dash->PutNumber("diffrence between enc and inverse gamma",arm.gamma-arm.gammaNew);
-    dash ->PutNumber("alphapid",arm.pid_alpha.Calculate(arm.alpha,arm.alphaNew));
-    dash ->PutNumber("betapid",arm.pid_beta.Calculate(arm.beta,arm.betaNew));
-    
 
-    
+    dash->PutNumber("alpha inverse angle", arm.alphaNew);
+    dash->PutNumber("beta inverse angle", arm.betaNew);
+    dash->PutNumber("gamma inverse angle", arm.gammaNew);
 
-
-
-      //arm.SetToPosition(armJoint1Stick.GetX(),armJoint1Stick.GetY(),0.0,true);
-      //swerveBot.Drive(.3*Drivetrain::maxSpeed,0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxTurnRate,FIELD_ORIENTED);
-
-    
-
-    
+    // arm.SetToPosition(armJoint1Stick.GetX(),armJoint1Stick.GetY(),0.0,true);
+    // swerveBot.Drive(.3*Drivetrain::maxSpeed,0.0*Drivetrain::maxSpeed,0.0*Drivetrain::maxTurnRate,FIELD_ORIENTED);
   }
 
 private:
   frc::XboxController driveController{0}; // Xbox controller in first port
   frc::Joystick armJoint1Stick{1};
   frc::Joystick armJoint2Stick{2};
-  frc::PowerDistribution PDHObj{20, frc::PowerDistribution::ModuleType::kRev};
+  frc::PowerDistribution PDHObj{1, frc::PowerDistribution::ModuleType::kRev};
   frc::DigitalInput DIOSwitch0{0};
   frc::DigitalInput DIOSwitch1{1};
-  frc::DigitalInput DIOSwitch2{2};
+frc::DigitalInput DIOSwitch2{2};
   frc::DigitalInput DIOSwitch3{3};
   
   //frc::Joystick inverseStick{4};
@@ -344,14 +361,12 @@ private:
 
     const auto rot = rotLimiter.Calculate(
                          frc::ApplyDeadband(driveController.GetRightX(), 0.4)) // Dead band used to be 0.02
-                     *0.4* Drivetrain::maxTurnRate;
+                     *Drivetrain::maxTurnRate;
     if(driveController.GetAButton()){
       swerveBot.Drive(-ySpeed*(drivePowerMin/drivePercentage), -xSpeed*(drivePowerMin/drivePercentage), -rot*(drivePowerMin/drivePercentage), fieldRelative);
-    }else if(driveController.GetBButton()){
+    }
+    else{
       swerveBot.Drive(-ySpeed*(drivePowerMax/drivePercentage), -xSpeed*(drivePowerMax/drivePercentage), -rot*(drivePowerMax/drivePercentage), fieldRelative);
-    }else{
-      
-      swerveBot.Drive(-ySpeed, -xSpeed, -rot, fieldRelative);
     }
     
     dash->PutNumber("YPose", swerveBot.SwerveOdometryGetPose().Y().value());
@@ -393,11 +408,20 @@ private:
       arm.m_clawSpinner.Set(0.0);
     }
   */
-  if(!armJoint2Stick.GetRawButton(5) || !armJoint2Stick.GetRawButton(4)){
-    arm.m_alphaMotor1.Set(joint1AwayFromBatteryMotorSpeed);
+   arm.m_alphaMotor1.Set(joint1AwayFromBatteryMotorSpeed);
     arm.m_alphaMotor2.Set(joint1CloseToBatteryMotorSpeed);
     arm.m_betaMotor.Set(joint2MotorSpeed);
-  }
+  // if(!armJoint2Stick.GetRawButton(5) && !armJoint2Stick.GetRawButton(4)){
+  //   arm.m_alphaMotor1.Set(joint1AwayFromBatteryMotorSpeed);
+  //   arm.m_alphaMotor2.Set(joint1CloseToBatteryMotorSpeed);
+  //   arm.m_betaMotor.Set(joint2MotorSpeed);
+  // }
+  // else if(armJoint2Stick.GetRawButton(4)){
+  //     //arm.GoToStowed();
+  //   }else if(armJoint2Stick.GetRawButton(5)){
+  //     arm.GoToShelf();
+  //   }
+  
     // // Wrist contorl on Joystick #2
     // if(armJoint2Stick.GetRawButton(2)){
     //   Joint3Motor.Set(-0.3);
@@ -432,10 +456,6 @@ private:
       isOverCurrent = false;
       OverCurrentCount = 0;
       IntakeCount = 0;
-    }else if(armJoint2Stick.GetRawButton(4)){
-      //arm.GoToStowed();
-    }else if(armJoint2Stick.GetRawButton(5)){
-      arm.GoToShelf();
     }
     else{
       arm.m_clawSpinner.Set(0.0);

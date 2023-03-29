@@ -35,7 +35,7 @@
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\b99ff60c2ad344a9aece17080c607463\\transformed\\cscore-cpp-2023.3.2-headers\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\9785a404e1f02491f8913f315a9c5271\\transformed\\apriltag-cpp-2023.3.2-headers\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\df671bd4df6e387749e196b4a45e4b30\\transformed\\opencv-cpp-4.6.0-4-headers\\",
-      "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include\\",
+      "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\include\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\96c53c5a0de2a657dd78fb76ce7add29\\transformed\\wpilibNewCommands-cpp-2023.3.2-sources\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\42c359fdee4dd3d4098539bb29998fbe\\transformed\\wpilibc-cpp-2023.3.2-sources\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\afab2dd0eb73232d67b51f99752f3250\\transformed\\ntcore-cpp-2023.3.2-sources\\",
@@ -83,7 +83,7 @@
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\b99ff60c2ad344a9aece17080c607463\\transformed\\cscore-cpp-2023.3.2-headers\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\9785a404e1f02491f8913f315a9c5271\\transformed\\apriltag-cpp-2023.3.2-headers\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\df671bd4df6e387749e196b4a45e4b30\\transformed\\opencv-cpp-4.6.0-4-headers\\",
-      "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include\\"
+      "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\include\\"
     ],
     "binaries": [
       {
@@ -92,7 +92,7 @@
           {
             "source": {
               "srcDirs": [
-                "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\cpp\\"
+                "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\cpp\\"
               ],
               "includes": [
                 "**/*.cpp",
@@ -102,7 +102,7 @@
             },
             "exportedHeaders": {
               "srcDirs": [
-                "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include\\"
+                "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\include\\"
               ],
               "includes": [],
               "excludes": []
@@ -148,7 +148,7 @@
           "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\b99ff60c2ad344a9aece17080c607463\\transformed\\cscore-cpp-2023.3.2-headers\\",
           "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\9785a404e1f02491f8913f315a9c5271\\transformed\\apriltag-cpp-2023.3.2-headers\\",
           "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\df671bd4df6e387749e196b4a45e4b30\\transformed\\opencv-cpp-4.6.0-4-headers\\",
-          "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include\\"
+          "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\include\\"
         ],
         "sharedLibrary": false,
         "executable": true
@@ -158,7 +158,7 @@
       {
         "source": {
           "srcDirs": [
-            "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\cpp\\"
+            "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\cpp\\"
           ],
           "includes": [
             "**/*.cpp",
@@ -190,7 +190,7 @@
       {
         "source": {
           "srcDirs": [
-            "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include\\"
+            "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\include\\"
           ],
           "includes": [],
           "excludes": []
@@ -257,7 +257,7 @@
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\b99ff60c2ad344a9aece17080c607463\\transformed\\cscore-cpp-2023.3.2-headers\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\9785a404e1f02491f8913f315a9c5271\\transformed\\apriltag-cpp-2023.3.2-headers\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\df671bd4df6e387749e196b4a45e4b30\\transformed\\opencv-cpp-4.6.0-4-headers\\",
-      "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include\\",
+      "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\include\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\96c53c5a0de2a657dd78fb76ce7add29\\transformed\\wpilibNewCommands-cpp-2023.3.2-sources\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\42c359fdee4dd3d4098539bb29998fbe\\transformed\\wpilibc-cpp-2023.3.2-sources\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\afab2dd0eb73232d67b51f99752f3250\\transformed\\ntcore-cpp-2023.3.2-sources\\",
@@ -305,7 +305,7 @@
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\b99ff60c2ad344a9aece17080c607463\\transformed\\cscore-cpp-2023.3.2-headers\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\9785a404e1f02491f8913f315a9c5271\\transformed\\apriltag-cpp-2023.3.2-headers\\",
       "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\df671bd4df6e387749e196b4a45e4b30\\transformed\\opencv-cpp-4.6.0-4-headers\\",
-      "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include\\"
+      "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\include\\"
     ],
     "binaries": [
       {
@@ -314,7 +314,7 @@
           {
             "source": {
               "srcDirs": [
-                "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\cpp\\"
+                "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\cpp\\"
               ],
               "includes": [
                 "**/*.cpp",
@@ -324,7 +324,7 @@
             },
             "exportedHeaders": {
               "srcDirs": [
-                "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include\\"
+                "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\include\\"
               ],
               "includes": [],
               "excludes": []
@@ -369,7 +369,7 @@
           "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\b99ff60c2ad344a9aece17080c607463\\transformed\\cscore-cpp-2023.3.2-headers\\",
           "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\9785a404e1f02491f8913f315a9c5271\\transformed\\apriltag-cpp-2023.3.2-headers\\",
           "C:\\Users\\finnl\\.gradle\\caches\\transforms-3\\df671bd4df6e387749e196b4a45e4b30\\transformed\\opencv-cpp-4.6.0-4-headers\\",
-          "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include\\"
+          "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\include\\"
         ],
         "sharedLibrary": false,
         "executable": true
@@ -379,7 +379,7 @@
       {
         "source": {
           "srcDirs": [
-            "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\cpp\\"
+            "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\cpp\\"
           ],
           "includes": [
             "**/*.cpp",
@@ -410,7 +410,7 @@
       {
         "source": {
           "srcDirs": [
-            "C:\\Users\\finnl\\Desktop\\2023ChargedUp-4122_2\\src\\main\\include\\"
+            "C:\\Users\\finnl\\Desktop\\WorkingCodeLongIslandPlayoffs\\src\\main\\include\\"
           ],
           "includes": [],
           "excludes": []
