@@ -5,7 +5,7 @@
 #include "Drivetrain.h"
 
 Drivetrain::Drivetrain()
-{  
+{
   // gyro.BootCalibrate();
   gyro.ResetYaw();
 }
@@ -46,50 +46,19 @@ void Drivetrain::UpdateOdometry()
 void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout)
 {
   isFinished = false;
-  //timer.Reset();
-  //timer.Start();
+  // timer.Reset();
+  // timer.Start();
   Drivetrain::UpdateOdometry();
   while (isFinished == false) // && (timer.Get() < timeout * 1.0_s))
   {
     Drivetrain::UpdateOdometry();
-    if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.1||
+    if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.1 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - desiredPose.Y().value()) > 0.1 ||
-        fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - desiredPose.Rotation().Radians().value()) > .02)
+        fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - desiredPose.Rotation().Radians().value()) > .04)
     {
-      forwardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), desiredPose.X().value());
-      strafeSpeed = (drivePower/drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), desiredPose.Y().value());
-      rotationSpeed = (drivePower/drivePercentage) * controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), desiredPose.Rotation().Radians().value());
-      Drivetrain::Drive(forwardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
-    }
-    else
-    {
-      Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
-      isFinished = true;
-    }
-  }
-      Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
-
-} 
-
-// Relative version of absolute go to pose method - goes to the pose away from the starting position rather than absolute position on the field
-void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout){
-  isFinished = false;
-  //timer.Reset();
-  //timer.Start();
-
-  Drivetrain::UpdateOdometry();
-  frc::Pose2d initPose = Drivetrain::SwerveOdometryGetPose();
-  while (isFinished == false ) //&& timer.Get() < (timeout * 1.0_s))
-  {
-    Drivetrain::UpdateOdometry();
-    if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value())) > 0.01 ||
-        fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - (initPose.Y().value() + desiredPose.Y().value())) > 0.01 ||
-        fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - (initPose.Rotation().Radians().value() + 
-          desiredPose.Rotation().Radians().value())) > .02)
-    {
-      forwardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), (initPose.X().value() + desiredPose.X().value()));
-      strafeSpeed = (drivePower/drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), (initPose.Y().value() + desiredPose.Y().value()));
-      rotationSpeed = (drivePower/drivePercentage) * controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), (initPose.Rotation().Radians().value() + desiredPose.Rotation().Radians().value()));
+      forwardSpeed = (drivePower / drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), desiredPose.X().value());
+      strafeSpeed = (drivePower / drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), desiredPose.Y().value());
+      rotationSpeed = (drivePower / drivePercentage) * controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), desiredPose.Rotation().Radians().value());
       Drivetrain::Drive(forwardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
     }
     else
@@ -101,56 +70,111 @@ void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, d
   Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
 }
 
-void Drivetrain::DriveUntilAngle(double angle){
+// Relative version of absolute go to pose method - goes to the pose away from the starting position rather than absolute position on the field
+void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout)
+{
+  isFinished = false;
+  HeadingDiff = 0.0;
+  ForwardDiff = 0.0;
+  StrafeDiff = 0.0;
+  // timer.Reset();
+  // timer.Start();
+  TurnDirection = 0.0;
+
+  Drivetrain::UpdateOdometry();
+  initPose = Drivetrain::SwerveOdometryGetPose();
+  PoseAngle = desiredPose.Rotation().Radians().value();
+  while (isFinished == false ) //&& timer.Get() < (timeout * 1.0_s))
+  {
+  Drivetrain::UpdateOdometry();
+  //if ((desiredPose.Rotation().Radians().value()) >= 0.0) TurnDirection = 1.0;
+  //else  TurnDirection = -1.0;
+
+  HeadingDiff = Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - (initPose.Rotation().Radians().value() +
+    desiredPose.Rotation().Radians().value());
+  ForwardDiff = Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value());
+  StrafeDiff = Drivetrain::SwerveOdometryGetPose().Y().value() - (initPose.Y().value() + desiredPose.Y().value());
   
+  if (HeadingDiff > 2.0 * O_PI)   HeadingDiff -= 2.0 * O_PI;
+  else if (HeadingDiff < -2.0 * O_PI)   HeadingDiff += 2.0 * O_PI;
 
-
-}
-
-void Drivetrain::VisionAdjustTeleop(bool fieldRelative){
+  if (fabs(ForwardDiff) > 0.01 || fabs(StrafeDiff) > 0.01 || fabs(HeadingDiff) > .02)
+  {
+    if (fabs(HeadingDiff) < (O_PI / 4.0))
+      rotationSpeed = (drivePower / drivePercentage) * controllerRotationMovement.Calculate(HeadingDiff, 0.0);
+    else   rotationSpeed = (drivePower / drivePercentage) * controllerRotationMovement.Calculate((O_PI / 4.0), 0.0);
     
-          std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
-          double IfHasTarget = table->GetNumber("tv",0.0);
-          double targetOffsetAngle_Horizontal = table->GetNumber("tx",0.0);
-          
-          
-          if(IfHasTarget==1){
-           strafeSpeed = strafeSpeedVisionController.Calculate(targetOffsetAngle_Horizontal, 5.7);
-          strafeSpeed = (strafeSpeed*.05);
-          driveSpeed = strafeSpeed*4.9;
-          Drivetrain::Drive(Drivetrain::maxSpeed*0, strafeSpeed*Drivetrain::maxSpeed,0*Drivetrain::maxTurnRate, fieldRelative); 
-          Drivetrain::FramesLost = 0;
-          }
-          else if(IfHasTarget==0 && Drivetrain::FramesLost < Drivetrain::FrameLossConstant){
-            Drivetrain::Drive(Drivetrain::maxSpeed*0, strafeSpeed*Drivetrain::maxSpeed,0*Drivetrain::maxTurnRate, fieldRelative);
-            FramesLost += 1;
-          }
-          else{
-            driveSpeed = 0*4.9;
-            Drivetrain::Drive(0_mps,0_mps,0*Drivetrain::maxTurnRate,fieldRelative);
-            strafeSpeed = strafeSpeedVisionController.Calculate(0.0, 0.0);
-          }
-          
-          //remember 5.7
-          
-      
+    if (ForwardDiff > TranslationPIDKickInVal)
+      forwardSpeed = (drivePower / drivePercentage) * controllerFowardMovement.Calculate(TranslationPIDKickInVal, 0.0);
+    else if (ForwardDiff < -TranslationPIDKickInVal)
+      forwardSpeed = (drivePower / drivePercentage) * controllerFowardMovement.Calculate(-TranslationPIDKickInVal, 0.0);
+    else  forwardSpeed = (drivePower / drivePercentage) * controllerFowardMovement.Calculate(ForwardDiff, 0.0);
+
+    if (StrafeDiff > TranslationPIDKickInVal)
+      strafeSpeed = (drivePower / drivePercentage) * controllerSideMovement.Calculate(TranslationPIDKickInVal, 0.0);
+    else if (StrafeDiff < -TranslationPIDKickInVal)
+      strafeSpeed = (drivePower / drivePercentage) * controllerSideMovement.Calculate(-TranslationPIDKickInVal, 0.0);
+    else strafeSpeed = (drivePower / drivePercentage) * controllerSideMovement.Calculate(StrafeDiff, 0.0);
+
+    Drivetrain::Drive(forwardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
+  }
+  else
+  {
+    isFinished = true;
+  }
+  }
+  Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
 }
 
+void Drivetrain::DriveUntilAngle(double angle)
+{
+}
 
-void Drivetrain::AutoBallance(bool fieldRelative){
-  //Working Logic
-  //Based on 7004's code, they have a combined input of yaw and pitch pids so the robot stays straight and stays level
-  //We can do a similar thing but adapted to swerve
-  //Yaw dictates the rotational movement, keeping it on a setpoint to 0, then pitch is just foward and back on the x axis
-  //To implement this I need two PID's, a gyro pitch and yaw reading, and a drive method
-  frc2::PIDController yawPID{1.0,0.0,0.0};
-  frc2::PIDController pitchPID{1.0,0.0,0.0};
+void Drivetrain::VisionAdjustTeleop(bool fieldRelative)
+{
+
+  std::shared_ptr<nt::NetworkTable> table = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
+  double IfHasTarget = table->GetNumber("tv", 0.0);
+  double targetOffsetAngle_Horizontal = table->GetNumber("tx", 0.0);
+
+  if (IfHasTarget == 1)
+  {
+    strafeSpeed = strafeSpeedVisionController.Calculate(targetOffsetAngle_Horizontal, 5.7);
+    strafeSpeed = (strafeSpeed * .05);
+    driveSpeed = strafeSpeed * 4.9;
+    Drivetrain::Drive(Drivetrain::maxSpeed * 0, strafeSpeed * Drivetrain::maxSpeed, 0 * Drivetrain::maxTurnRate, fieldRelative);
+    Drivetrain::FramesLost = 0;
+  }
+  else if (IfHasTarget == 0 && Drivetrain::FramesLost < Drivetrain::FrameLossConstant)
+  {
+    Drivetrain::Drive(Drivetrain::maxSpeed * 0, strafeSpeed * Drivetrain::maxSpeed, 0 * Drivetrain::maxTurnRate, fieldRelative);
+    FramesLost += 1;
+  }
+  else
+  {
+    driveSpeed = 0 * 4.9;
+    Drivetrain::Drive(0_mps, 0_mps, 0 * Drivetrain::maxTurnRate, fieldRelative);
+    strafeSpeed = strafeSpeedVisionController.Calculate(0.0, 0.0);
+  }
+
+  // remember 5.7
+}
+
+void Drivetrain::AutoBallance(bool fieldRelative)
+{
+  // Working Logic
+  // Based on 7004's code, they have a combined input of yaw and pitch pids so the robot stays straight and stays level
+  // We can do a similar thing but adapted to swerve
+  // Yaw dictates the rotational movement, keeping it on a setpoint to 0, then pitch is just foward and back on the x axis
+  // To implement this I need two PID's, a gyro pitch and yaw reading, and a drive method
+  frc2::PIDController yawPID{1.0, 0.0, 0.0};
+  frc2::PIDController pitchPID{1.0, 0.0, 0.0};
   /*
   double yawSpeed = yawPID.Calculate(Drivetrain::getAngle().Degrees().value(),0);
   double pitchSpeed = pitchPID.Calculate(Drivetrain::getPitchRad().Degrees().value(),0);
   Drivetrain::Drive(pitchSpeed*Drivetrain::maxSpeed,0_mps, yawSpeed*Drivetrain::maxSpeed,fieldRelative);
   */
-  }// Go to Pose
+} // Go to Pose
 // }
 /*
 
@@ -212,7 +236,8 @@ frc::Pose2d Drivetrain::SwerveOdometryGetPose()
 // Returns the yaw of the robot via PigeonIMU gyro in degrees
 frc::Rotation2d Drivetrain::getAngle()
 {
-  units::radian_t yaw{gyro.GetYaw()* ((std::numbers::pi) / (180.0))+O_PI};
+  units::radian_t yaw{gyro.GetYaw() * ((std::numbers::pi) / (180.0)) + O_PI};
+  // units::radian_t yaw{gyro.GetYaw()* ((std::numbers::pi) / (180.0))};
   return frc::Rotation2d(yaw);
   // -> Old return in radians (commented since we switched to degrees)
   // return frc::Rotation2d(((gyro.GetYaw() * ((std::numbers::pi) / (180.0)) * 1_rad)) - gyroOffset); // gyroOffset defined in constants.h

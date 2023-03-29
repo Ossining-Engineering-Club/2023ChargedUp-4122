@@ -70,42 +70,14 @@ public:
     frc::Pose2d TurningAfterSecondPickupPose = frc::Pose2d(0_m, 0_m, frc::Rotation2d(180_deg));
     frc::Pose2d MovingAwayAfterSecondPickupPose = frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
 
-    // swerveBot.GoToPose(PickupOnePose,fieldRelative,.2);
-    // swerveBot.GoToPoseRelative(HomePose,fieldRelative,.2);
-
-    // arm place
-    // swerveBot.GoToPose(TurningFromHomePose,true);
-
-    // swerveBot.GoToPose(PickupOnePose,true);
-    // swerveBot.GoToPose(TurningFromHomePose,true);
-
-    /*
-    //arm pickup
-    swerveBot.GoToPose(TurningFromPickupPose,true);
-    swerveBot.GoToPose(HomePose, true);
-    */
-    /*
-        //arm place
-        swerveBot.GoToPose(TurningFromHomeOrPickupPose);
-        swerveBot.GoToPose(PickupOnePose);
-        swerveBot.GoToPose(2ndPickupTurningPose);
-        swerveBot.GoToPose(MovingToSecondPickupPose);
-        //arm pickup
-        swerveBot.GoToPose();
-        swerveBot.GoToPose();
-        swerveBot.GoToPose();
-        swerveBot.GoToPose();
-        //arm place
-        //auto done
-        */
-    // trive till bridhe is stable
+    
     bool DIOS0 = !DIOSwitch0.Get();
     bool DIOS1 = !DIOSwitch1.Get();
     bool DIOS2 = !DIOSwitch2.Get();
     bool DIOS3 = !DIOSwitch3.Get();
     if (DIOS0 || DIOS1 || DIOS2 || DIOS3)
     {
-      if (DIOS3)
+      if (DIOS3)   //If place object
       {
         for (int i = 0; i < 99; i++)
         { // Move to high position
@@ -125,7 +97,23 @@ public:
       if (DIOS0)
       {
         double yawInit = swerveBot.gyro.GetRoll();
-        dash->PutString("State", "Approach");
+        dash->PutString("State", "ApproachDriveOver");
+        while ((swerveBot.gyro.GetRoll() - yawInit) < -ApproachAngle)
+        {
+          swerveBot.Drive(0.25 * 4.441_mps, 0.0_mps, units::radians_per_second_t{0.0}, FIELD_ORIENTED);//negated 0.25 -> -0.25
+          frc::SmartDashboard::PutNumber("roll", swerveBot.gyro.GetRoll());
+        }
+        dash->PutString("State", "TippingDriveOver");
+
+        // // drive till bridge starts to level
+        // while ((swerveBot.gyro.GetRoll() - yawInit) > -TipAngle)
+        // {
+        //   swerveBot.Drive(0.25 * 4.441_mps, 0.0_mps, units::radians_per_second_t{0.0}, FIELD_ORIENTED);//negated -0.25 -> 0.25
+        //   frc::SmartDashboard::PutNumber("roll", swerveBot.gyro.GetRoll());
+        // }
+        // frc::Wait(2.0_s);
+
+        // //Starting Working AutoBal
         // while ((swerveBot.gyro.GetRoll() - yawInit) < ApproachAngle)
         // {
         //   swerveBot.Drive(-0.25 * 4.441_mps, 0.0_mps, units::radians_per_second_t{0.0}, FIELD_ORIENTED);//negated 0.25 -> -0.25
@@ -139,24 +127,25 @@ public:
         //   swerveBot.Drive(-0.25 * 4.441_mps, 0.0_mps, units::radians_per_second_t{0.0}, FIELD_ORIENTED);//negated -0.25 -> 0.25
         //   frc::SmartDashboard::PutNumber("roll", swerveBot.gyro.GetRoll());
         // }
-        //frc::Pose2d RampDist = frc::Pose2d(0.12_m, 0.0_m, 0_deg); //negated -0.12 -> 0.12
-        frc::Pose2d RotateAfter = frc::Pose2d(0.0_m,0.0_m,20_deg); //negated 20_deg -> -20_deg
-        //swerveBot.GoToPoseRelative(RampDist, FIELD_ORIENTED, 0.2, 10.0);
-        swerveBot.GoToPoseRelative(RotateAfter, FIELD_ORIENTED, 0.2, 5.0);
+        // frc::Pose2d RampDist = frc::Pose2d(0.12_m, 0.0_m, 0_deg); //negated -0.12 -> 0.12
+        // frc::Pose2d RotateAfter = frc::Pose2d(0.0_m,0.0_m,20_deg); //negated 20_deg -> -20_deg
+        // swerveBot.GoToPoseRelative(RampDist, FIELD_ORIENTED, 0.2, 10.0);
+        // swerveBot.GoToPoseRelative(RotateAfter, FIELD_ORIENTED, 0.2, 5.0);
         //swerveBot.Drive(0.0 * 4.441_mps, 0.0_mps, units::radians_per_second_t{1.0}, FIELD_ORIENTED);
         //frc::Wait(0_s);
         //swerveBot.Drive(0.0 * 4.441_mps, 0.0_mps, units::radians_per_second_t{0.0}, FIELD_ORIENTED); 
         //dash->PutNumber("forwardSpeed",swerveBot.forwardSpeed);
         //dash->PutNumber("strafeSpeed",swerveBot.strafeSpeed);
         //dash->PutNumber("rotationSpeed",swerveBot.rotationSpeed);      
-        dash->PutString("State", "Stabilize");
+        dash->PutString("State", "Done");
       }
 
       else if (DIOS1)
       { // short distance
         dash->PutString("State", "Starting Short Drive");
-        frc::Pose2d getOutOfCommunityPoseShort = frc::Pose2d(ShortAutoLength * 1.0_m, 0_m, 0.0_rad);
-        swerveBot.GoToPoseRelative(getOutOfCommunityPoseShort, fieldRelative, .02, 10.0);
+        //frc::Pose2d getOutOfCommunityPoseShort = frc::Pose2d(1.0_m, 0_m, 0.0_deg); 
+        frc::Pose2d getOutOfCommunityPoseShort = frc::Pose2d(ShortAutoLength * 1.0_m, 0_m, 0.0_rad);  
+        swerveBot.GoToPoseRelative(getOutOfCommunityPoseShort, fieldRelative, 0.2, 10.0);
         dash->PutString("State", "Completed Short Drive");
         // frc::Pose2d zeroPose = frc::Pose2d(0_m,0_m,0_deg);
         // swerveBot.GoToPoseRelative(zeroPose, fieldRelative, .02, 5.0);
@@ -165,12 +154,27 @@ public:
       {
         dash->PutString("State", "Starting Long Drive");
         frc::Pose2d getOutOfCommunityPoseLong = frc::Pose2d(LongAutoLength * 1.0_m, 0_m, 0.0_rad);
-        swerveBot.GoToPoseRelative(getOutOfCommunityPoseLong, fieldRelative, .02, 10.0);
+        swerveBot.GoToPoseRelative(getOutOfCommunityPoseLong, fieldRelative, 0.2, 10.0);
         dash->PutString("State", "Completed Long Drive");
         // frc::Pose2d zeroPose = frc::Pose2d(0_m,0_m,0_deg);
         // swerveBot.GoToPoseRelative(zeroPose, fieldRelative, .02, 5.0);
       }
     }
+    //  frc::Pose2d TestPoseRot = frc::Pose2d(0_m, 0_m, 180_deg);
+    // swerveBot.GoToPoseRelative(TestPoseRot, fieldRelative, .2, 10.0);
+
+    // frc::Pose2d TestPoseRot2 = frc::Pose2d(0_m, 0_m, -180_deg);
+    // swerveBot.GoToPoseRelative(TestPoseRot2, fieldRelative, .2, 10.0);
+
+        dash->PutNumber("forwardSpeed",swerveBot.forwardSpeed);
+        dash->PutNumber("strafeSpeed",swerveBot.strafeSpeed);
+        dash->PutNumber("rotationSpeed",swerveBot.rotationSpeed);    
+        dash->PutNumber("forwardDiff",swerveBot.ForwardDiff);
+        dash->PutNumber("strafeDiff",swerveBot.StrafeDiff);
+        dash->PutNumber("rotationDiff",swerveBot.HeadingDiff);   
+        dash->PutNumber("TurnDirection",swerveBot.TurnDirection);
+        dash->PutNumber("DesiredAngle", swerveBot.PoseAngle);
+    
 
     //   frc::Pose2d RampDist = frc::Pose2d(-2.0_m,0.0_m, 0.0_rad*std::numbers::pi);
     // // while(true){
@@ -280,6 +284,16 @@ public:
     else
     {
       ArmControl();
+      frc::Pose2d getOutOfCommunityPoseShort = frc::Pose2d(ShortAutoLength * 1.0_m, 0_m, 0.0_rad);
+      //swerveBot.GoToPoseRelative(getOutOfCommunityPoseShort, fieldRelative, .02, 10.0);
+      dash -> PutNumber("PID X",swerveBot.forwardSpeed);
+      dash -> PutNumber("PID Y",swerveBot.strafeSpeed);
+      dash -> PutNumber("PID Gyro",swerveBot.rotationSpeed);
+      dash -> PutNumber("X Diff",fabs(swerveBot.SwerveOdometryGetPose().X().value() - (swerveBot.initPose.X().value() + swerveBot.desiredPose.X().value())) );
+      dash -> PutNumber("Y Diff",fabs(swerveBot.SwerveOdometryGetPose().Y().value() - (swerveBot.initPose.Y().value() + swerveBot.desiredPose.Y().value())));
+      dash -> PutNumber("Gyro Diff",fabs(swerveBot.SwerveOdometryGetPose().Rotation().Radians().value() - (swerveBot.initPose.Rotation().Radians().value() + 
+          swerveBot.desiredPose.Rotation().Radians().value())) );
+      
     }
     // arm.CalculateXY();
     // if(fabs(arm.alpha-arm.alphaNew+arm.beta-arm.betaNew+arm.gamma-arm.gammaNew) < 4 || fabs(inverseStick.GetY()-y1+inverseStick.GetX()-x1) > .2){

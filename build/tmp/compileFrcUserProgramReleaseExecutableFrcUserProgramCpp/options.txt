@@ -15,7 +15,7 @@ c++
 -O2
 -nostdinc
 -I
-"C:\\Users\\Ken\\source\\repos\\2023ChargedUp-4122 armsetpoints\\src\\main\\include"
+C:\\Users\\Ken\\Desktop\\ArmAutoTestingCode\\src\\main\\include
 -I
 C:\\Users\\Ken\\.gradle\\caches\\transforms-3\\827334f66fa0ef39b8fa7358a5936c1c\\transformed\\wpilibNewCommands-cpp-2023.3.2-headers
 -I

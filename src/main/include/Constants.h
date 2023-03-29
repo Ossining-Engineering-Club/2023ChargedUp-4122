@@ -86,6 +86,8 @@
 #define TurnEncoderPosFactor (TurningMotorGearRatio * 3.1415926535 * 2.0)
 #define TurnEncoderVelocityFactor (TurnEncoderPosFactor / 60.0)
 
+#define TranslationPIDKickInVal 0.15
+
 #define GYRO_PORT 13
 //Offsets for Absolute Encoders
 #define RFZERO (1.761010-1.57079632)-3.1415926535

@@ -85,10 +85,20 @@ class Drivetrain {
   double targetOffsetAngle_Vertical = table->GetNumber("ty",0.0);
   double targetArea = table->GetNumber("ta",0.0);
   double targetSkew = table->GetNumber("ts",0.0);
+  frc::Pose2d initPose;
+  frc::Pose2d desiredPose;
+
+  double HeadingDiff;
+  double ForwardDiff;
+  double StrafeDiff;
+
+  double TurnDirection;
 
   double forwardSpeed;
   double strafeSpeed;
   double rotationSpeed;
+
+  double PoseAngle;
 
   frc::Timer timer;
  private:
@@ -104,7 +114,7 @@ class Drivetrain {
   const double FowardSide_D_GAIN 
   = 0.0;
 
-  const double kP_Rot = 2.5;
+  const double kP_Rot = 1.0; //was 2.5
   const double kI_Rot = 0.0;
   const double kD_Rot = 0.0;
 

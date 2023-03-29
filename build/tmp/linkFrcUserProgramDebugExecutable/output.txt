@@ -1,4 +1,4 @@
-See file:///C:/Users/Ken/source/repos/2023ChargedUp-4122%20armsetpoints/build/tmp/linkFrcUserProgramDebugExecutable/output.txt for all output for linkFrcUserProgramDebugExecutable.
+See file:///C:/Users/Ken/Desktop/ArmAutoTestingCode/build/tmp/linkFrcUserProgramDebugExecutable/output.txt for all output for linkFrcUserProgramDebugExecutable.
 linking frcUserProgram successful.
 
-Finished linkFrcUserProgramDebugExecutable, see full log file:///C:/Users/Ken/source/repos/2023ChargedUp-4122%20armsetpoints/build/tmp/linkFrcUserProgramDebugExecutable/output.txt.
+Finished linkFrcUserProgramDebugExecutable, see full log file:///C:/Users/Ken/Desktop/ArmAutoTestingCode/build/tmp/linkFrcUserProgramDebugExecutable/output.txt.
