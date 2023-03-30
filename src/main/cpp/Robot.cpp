@@ -107,7 +107,12 @@ public:
    bool DIOS3= !DIOSwitch3.Get();
    if(DIOS0 || DIOS1 || DIOS2 || DIOS3){
     if(DIOS3){
-      for (int i = 0; i < 174; i++)
+      for (int i = 0; i < 157; i++) // originally 174
+        { // Move to high position
+          arm.GoTo(AutoPlaceAlpha, AutoPlaceBeta, AutoStowGamma, 1.0);
+          frc::Wait(0.02_s);
+        }
+        for (int i = 0; i < 49; i++)
         { // Move to high position
           arm.GoTo(AutoPlaceAlpha, AutoPlaceBeta, AutoPlaceGamma, 1.0);
           frc::Wait(0.02_s);
@@ -120,6 +125,7 @@ public:
           arm.GoTo(AutoStowAlpha, AutoStowBeta, AutoStowGamma, 1.0);
           frc::Wait(0.02_s);
         }
+        
         arm.m_alphaMotor1.Set(0.0);
         arm.m_alphaMotor2.Set(0.0);
         arm.m_betaMotor.Set(0.0);
@@ -268,14 +274,30 @@ public:
     }
     else if (armJoint1Stick.GetRawButtonReleased(4))
     {
+      timer.Reset();
+      timer.Start();
       arm.m_clawSpinner.Set(0.2);
-      frc::Wait(0.5_s);
-      arm.m_clawSpinner.Set(0.0);
+      isSpinning = true;
+      // frc::Wait(0.5_s); // Old wait in teleop -> remove because stutters
     }
+
     else
     {
-      ArmControl();
+      // if(timer.Get().value() > 0.5){
+      //   arm.m_clawSpinner.Set(0.0);
+      //   timer.Stop();
+      //   timer.Reset();
+      //   isSpinning = false;
+      // }
+      if(isSpinning == false)  
+        ArmControl();
     }
+      if(timer.Get().value() > 0.5){
+        arm.m_clawSpinner.Set(0.0);
+        timer.Stop();
+        timer.Reset();
+        isSpinning = false;
+      }
     // arm.CalculateXY();
     // if(fabs(arm.alpha-arm.alphaNew+arm.beta-arm.betaNew+arm.gamma-arm.gammaNew) < 4 || fabs(inverseStick.GetY()-y1+inverseStick.GetX()-x1) > .2){
     //   y1 = inverseStick.GetY();
@@ -320,7 +342,7 @@ private:
   frc::DigitalInput DIOSwitch1{1};
 frc::DigitalInput DIOSwitch2{2};
   frc::DigitalInput DIOSwitch3{3};
-  
+  frc::Timer timer;
   //frc::Joystick inverseStick{4};
   frc::SmartDashboard *dash;         // Initialize smart dashboard
   Drivetrain swerveBot;              // Construct drivetrain object
@@ -329,6 +351,7 @@ frc::DigitalInput DIOSwitch2{2};
   bool isOverCurrent = false;
   int OverCurrentCount = 0.0;
   int IntakeCount = 0;
+  bool isSpinning = false;
  Arm arm{Joint1CloseToBatteryCANID,Joint1AwayFromBatteryCANID,Joint2CANID,Joint3CANID,GripSpinnerCANID};
   bool fieldRelative;
   bool isReset = false;
