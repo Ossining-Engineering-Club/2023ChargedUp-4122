@@ -16,9 +16,9 @@ class Arm{
     void SetToPosition(double X, double Y, double clawAngle,bool stick);
     void UpdateXY(double stickX, double stickY);
     void UpdateParameters();
-    void GoToStowed();
-    void GoToShelf();
-    void GoToFloor();
+    // void GoToStowed();
+    // void GoToShelf();
+    void GoTo(double Alpha, double Beta, double Gamma, double multiplier);
     double alpha = 0.0;
     double beta = 0.0;
     double gamma = 0.0;
@@ -48,9 +48,9 @@ class Arm{
     // double beta = 0.0;
     // double gamma = 0.0;
     double mu = 0.0;
-    frc2::PIDController setToPositionAlpha{.25,0.0,0.0};
-    frc2::PIDController setToPositionBeta{.6,0.0,0.0};
-    frc2::PIDController setToPositionGamma{.25,0.0,0.0};
+    frc2::PIDController setToPositionAlpha{.1,.1,0.0};
+    frc2::PIDController setToPositionBeta{.1,.1,0.0};
+    frc2::PIDController setToPositionGamma{.1,.1,0.0};
 
 
 
