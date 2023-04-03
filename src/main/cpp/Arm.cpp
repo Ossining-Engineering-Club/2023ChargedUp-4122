@@ -132,9 +132,9 @@ void Arm::GoTo(double Alpha, double Beta, double Gamma, double multiplier){ // M
     }
 
     if(Gamma - gammapos > 10.0){
-    m_gammaMotor.Set(.5*multiplier);
+    m_gammaMotor.Set(GammaMultiplier*multiplier);
     }else if(Gamma - gammapos < -10.0){
-    m_gammaMotor.Set(-.5*multiplier);
+    m_gammaMotor.Set(-GammaMultiplier*multiplier);
     }else{
     m_gammaMotor.Set(GammaSpeed);
     }

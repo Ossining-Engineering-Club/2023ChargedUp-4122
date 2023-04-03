@@ -43,27 +43,34 @@ void Drivetrain::UpdateOdometry()
 } // Update Odometry
 
 // Method for autonomous, takes in a given pose and drives until it reaches that pose
-void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double drivePower)
+void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double time)
 {
   isFinished = false;
+  timer2.Reset();
+  timer2.Start();
   Drivetrain::UpdateOdometry();
   while (isFinished == false)
   {Drivetrain::UpdateOdometry();
-    if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.1||
+    if ((fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.1||
         fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - desiredPose.Y().value()) > 0.1 ||
-        fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - desiredPose.Rotation().Radians().value()) > .02)
+        fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - desiredPose.Rotation().Radians().value()) > .02) && timer2.Get().value() < time)
     {
-
+      forwardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), desiredPose.X().value());
       
-      fowardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), desiredPose.X().value());
+
       strafeSpeed = (drivePower/drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), desiredPose.Y().value());
+      
+
       rotationSpeed = (drivePower/drivePercentage) * controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), desiredPose.Rotation().Radians().value());
-      Drivetrain::Drive(fowardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
+      Drivetrain::Drive(forwardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
+      
     }
     else
     {
       Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
       isFinished = true;
+        timer2.Stop();
+        timer2.Reset();
     }
   }
 } 
@@ -71,24 +78,30 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double dr
 // Relative version of absolute go to pose method - goes to the pose away from the starting position rather than absolute position on the field
 void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower){
   isFinished = false;
+
   Drivetrain::UpdateOdometry();
   frc::Pose2d initPose = Drivetrain::SwerveOdometryGetPose();
   while (isFinished == false)
   {Drivetrain::UpdateOdometry();
-    if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value())) > 0.01 ||
+    if ((fabs(Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value())) > 0.01 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - (initPose.Y().value() + desiredPose.Y().value())) > 0.01 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - (initPose.Rotation().Radians().value() + 
-                                                                                 desiredPose.Rotation().Radians().value())) > .04)
+                                                                                 desiredPose.Rotation().Radians().value())) > .04))
     {
-      fowardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), (initPose.X().value() + desiredPose.X().value()));
+      forwardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), (initPose.X().value() + desiredPose.X().value()));
+      
       strafeSpeed = (drivePower/drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), (initPose.Y().value() + desiredPose.Y().value()));
+      
       rotationSpeed = (drivePower/drivePercentage) * controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), (initPose.Rotation().Radians().value() + desiredPose.Rotation().Radians().value()));
-      Drivetrain::Drive(fowardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
+
+      
+      Drivetrain::Drive(forwardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
     }
     else
     {
       Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
       isFinished = true;
+
     }
   }
 
@@ -205,7 +218,7 @@ frc::Pose2d Drivetrain::SwerveOdometryGetPose()
 // Returns the yaw of the robot via PigeonIMU gyro in degrees
 frc::Rotation2d Drivetrain::getAngle()
 {
-  units::radian_t yaw{gyro.GetYaw()* ((std::numbers::pi) / (180.0))};
+  units::radian_t yaw{gyro.GetYaw()* ((std::numbers::pi) / (180.0)) + O_PI};
   return frc::Rotation2d(yaw);
   // -> Old return in radians (commented since we switched to degrees)
   // return frc::Rotation2d(((gyro.GetYaw() * ((std::numbers::pi) / (180.0)) * 1_rad)) - gyroOffset); // gyroOffset defined in constants.h
@@ -239,3 +252,116 @@ void Drivetrain::ResetDrive()
                          odometry.GetPose());
 
 } // Reset Drive
+
+
+
+// Relative version of absolute go to pose method - goes to the pose away from the starting position rather than absolute position on the field
+void Drivetrain::GoToPoseRelativeNewStraight(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout)
+{
+  isFinished = false;
+  HeadingDiff = 0.0;
+  ForwardDiff = 0.0;
+  StrafeDiff = 0.0;
+  // GoToPoseTimer.Reset();
+  // GoToPoseTimer.Start();
+  TurnDirection = 0.0;
+
+  Drivetrain::UpdateOdometry();
+  initPose = Drivetrain::SwerveOdometryGetPose();
+  PoseAngle = desiredPose.Rotation().Radians().value();
+  while (isFinished == false ) //&& GoToPoseTimer.Get() < (timeout * 1.0_s))
+  {
+  Drivetrain::UpdateOdometry();
+  //if ((desiredPose.Rotation().Radians().value()) >= 0.0) TurnDirection = 1.0;
+  //else  TurnDirection = -1.0;
+
+  HeadingDiff = Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - (initPose.Rotation().Radians().value() +
+  desiredPose.Rotation().Radians().value());
+  ForwardDiff = Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value());
+  StrafeDiff = Drivetrain::SwerveOdometryGetPose().Y().value() - (initPose.Y().value() + desiredPose.Y().value());
+  
+  if (HeadingDiff > 2.0 * O_PI)   HeadingDiff -= 2.0 * O_PI;
+  else if (HeadingDiff < -2.0 * O_PI)   HeadingDiff += 2.0 * O_PI;
+
+  if (fabs(ForwardDiff) > 0.01 || fabs(StrafeDiff) > 0.01 /*|| fabs(HeadingDiff) > .04*/)
+  {
+    if (fabs(HeadingDiff) < (O_PI / 4.0))
+      rotationSpeed = (drivePower / drivePercentage) * controllerRotationMovementNew.Calculate(HeadingDiff, 0.0);
+    else   rotationSpeed = (drivePower / drivePercentage) * controllerRotationMovementNew.Calculate((O_PI / 4.0), 0.0);
+    
+    if (ForwardDiff > TranslationPIDKickInVal)
+      forwardSpeed = (drivePower / drivePercentage) * controllerFowardMovementNew.Calculate(TranslationPIDKickInVal, 0.0);
+    else if (ForwardDiff < -TranslationPIDKickInVal)
+      forwardSpeed = (drivePower / drivePercentage) * controllerFowardMovementNew.Calculate(-TranslationPIDKickInVal, 0.0);
+    else  forwardSpeed = (drivePower / drivePercentage) * controllerFowardMovementNew.Calculate(ForwardDiff, 0.0);
+
+    if (StrafeDiff > TranslationPIDKickInVal)
+      strafeSpeed = (drivePower / drivePercentage) * controllerSideMovementNew.Calculate(TranslationPIDKickInVal, 0.0);
+    else if (StrafeDiff < -TranslationPIDKickInVal)
+      strafeSpeed = (drivePower / drivePercentage) * controllerSideMovementNew.Calculate(-TranslationPIDKickInVal, 0.0);
+    else strafeSpeed = (drivePower / drivePercentage) * controllerSideMovementNew.Calculate(StrafeDiff, 0.0);
+
+    Drivetrain::Drive(forwardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
+  }
+  else
+  {
+    isFinished = true;
+  }
+  }
+  Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
+}
+
+void Drivetrain::GoToPoseRelativeNewRotate(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout)
+{
+  isFinished = false;
+  HeadingDiff = 0.0;
+  ForwardDiff = 0.0;
+  StrafeDiff = 0.0;
+  // GoToPoseTimer.Reset();
+  // GoToPoseTimer.Start();
+  TurnDirection = 0.0;
+
+  Drivetrain::UpdateOdometry();
+  initPose = Drivetrain::SwerveOdometryGetPose();
+  PoseAngle = desiredPose.Rotation().Radians().value();
+  while (isFinished == false ) //&& GoToPoseTimer.Get() < (timeout * 1.0_s))
+  {
+  Drivetrain::UpdateOdometry();
+  //if ((desiredPose.Rotation().Radians().value()) >= 0.0) TurnDirection = 1.0;
+  //else  TurnDirection = -1.0;
+
+  HeadingDiff = Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - (initPose.Rotation().Radians().value() +
+  desiredPose.Rotation().Radians().value());
+  ForwardDiff = Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value());
+  StrafeDiff = Drivetrain::SwerveOdometryGetPose().Y().value() - (initPose.Y().value() + desiredPose.Y().value());
+  
+  if (HeadingDiff > 2.0 * O_PI)   HeadingDiff -= 2.0 * O_PI;
+  else if (HeadingDiff < -2.0 * O_PI)   HeadingDiff += 2.0 * O_PI;
+
+  if (fabs(ForwardDiff) > 0.01 || fabs(StrafeDiff) > 0.01 ||fabs(HeadingDiff) > .02)
+  {
+    if (fabs(HeadingDiff) < (O_PI / 4.0))
+      rotationSpeed = (drivePower / drivePercentage) * controllerRotationMovementNew.Calculate(HeadingDiff, 0.0);
+    else   rotationSpeed = (drivePower / drivePercentage) * controllerRotationMovementNew.Calculate((O_PI / 4.0), 0.0);
+    
+    if (ForwardDiff > TranslationPIDKickInVal)
+      forwardSpeed = (drivePower / drivePercentage) * controllerFowardMovementNew.Calculate(TranslationPIDKickInVal, 0.0);
+    else if (ForwardDiff < -TranslationPIDKickInVal)
+      forwardSpeed = (drivePower / drivePercentage) * controllerFowardMovementNew.Calculate(-TranslationPIDKickInVal, 0.0);
+    else  forwardSpeed = (drivePower / drivePercentage) * controllerFowardMovementNew.Calculate(ForwardDiff, 0.0);
+
+    if (StrafeDiff > TranslationPIDKickInVal)
+      strafeSpeed = (drivePower / drivePercentage) * controllerSideMovementNew.Calculate(TranslationPIDKickInVal, 0.0);
+    else if (StrafeDiff < -TranslationPIDKickInVal)
+      strafeSpeed = (drivePower / drivePercentage) * controllerSideMovementNew.Calculate(-TranslationPIDKickInVal, 0.0);
+    else strafeSpeed = (drivePower / drivePercentage) * controllerSideMovementNew.Calculate(StrafeDiff, 0.0);
+
+    Drivetrain::Drive(forwardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
+  }
+  else
+  {
+    isFinished = true;
+  }
+  }
+  Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
+}

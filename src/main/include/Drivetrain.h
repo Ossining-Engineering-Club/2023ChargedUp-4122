@@ -14,6 +14,7 @@
 #include "OECPigeonIMU.h"
 #include "Constants.h"
 #include "SwerveModule.h"
+
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableInstance.h"
 #include "networktables/NetworkTableEntry.h"
@@ -36,8 +37,11 @@ class Drivetrain {
   OECPigeonIMU gyro{GYRO_PORT};
   void UpdateOdometry();
   void ResetDrive();
-  void GoToPose(frc::Pose2d desiredPose,bool fieldRelative, double drivePower);
+  void GoToPose(frc::Pose2d desiredPose,bool fieldRelative, double drivePower, double time);
   void GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower);
+  void GoToPoseRelativeNewStraight(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout);
+  void GoToPoseRelativeNewRotate(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double timeout);
+
   void VisionAdjustTeleop(bool fieldRelative);
 
   void DriveUntilAngle(double angle);
@@ -84,7 +88,23 @@ double  getVisionDistance();
   double targetOffsetAngle_Vertical = table->GetNumber("ty",0.0);
   double targetArea = table->GetNumber("ta",0.0);
   double targetSkew = table->GetNumber("ts",0.0);
+
+  frc::Pose2d initPose;
+  frc::Pose2d desiredPose;
+
+  double HeadingDiff;
+  double ForwardDiff;
+  double StrafeDiff;
+
+  double TurnDirection;
+
+  double forwardSpeed;
   double strafeSpeed;
+  double rotationSpeed;
+
+  double PoseAngle;
+
+  frc::Timer GoToPoseTimer;
  private:
  // **********************************************************
   frc2::PIDController strafeSpeedVisionController{.5,0,0};
@@ -93,10 +113,8 @@ double  getVisionDistance();
   frc::Translation2d backLeftLocation{-0.29845_m, +0.27305_m};
   frc::Translation2d backRightLocation{-0.29845_m, -0.27305_m}; 
   const double FowardSide_P_GAIN = 7.5;
-
   const double FowardSide_I_GAIN = 0.0;
-  const double FowardSide_D_GAIN 
-  = 0.0;
+  const double FowardSide_D_GAIN = 0.0;
 
   const double kP_Rot = 2.5;
   const double kI_Rot = 0.0;
@@ -106,14 +124,23 @@ double  getVisionDistance();
   frc2::PIDController controllerSideMovement{FowardSide_P_GAIN, FowardSide_I_GAIN, FowardSide_D_GAIN};
   frc2::PIDController controllerRotationMovement{kP_Rot, kI_Rot, kD_Rot};
 
-  double fowardSpeed;
-  
-  double rotationSpeed;
+  // For new gotoposerelative method
+  const double FowardSide_P_GAIN_New = 7.5;
+  const double FowardSide_I_GAIN_New = 0.0;
+  const double FowardSide_D_GAIN_New = 0.0;
+
+  const double kP_Rot_New = 3.3;
+  const double kI_Rot_New = 0.0;
+  const double kD_Rot_New = 0.0;
+
+  frc2::PIDController controllerFowardMovementNew{FowardSide_P_GAIN_New, FowardSide_I_GAIN_New, FowardSide_D_GAIN_New};
+  frc2::PIDController controllerSideMovementNew{FowardSide_P_GAIN_New, FowardSide_I_GAIN_New, FowardSide_D_GAIN_New};
+  frc2::PIDController controllerRotationMovementNew{kP_Rot_New, kI_Rot_New, kD_Rot_New}; 
 
   photonlib::PhotonCamera camera{"limelight"};
   double basespeed = 0.1;
 
-
+  frc::Timer timer2;
   double smoothingWidth = 90;
   double reading;
  /*SwerveModule RFMod{1, 2, 9, true, RFZERO, false, false};
@@ -139,6 +166,6 @@ double  getVisionDistance();
         {LFMod.GetPosition(), 
         RFMod.GetPosition(),
         LBMod.GetPosition(), 
-        RBMod.GetPosition()},frc::Pose2d{0_m,0_m,0_rad}
+        RBMod.GetPosition()},frc::Pose2d{0_m, 0_m, O_PI * 1_rad} //offset by 180 degrees
         };
  };

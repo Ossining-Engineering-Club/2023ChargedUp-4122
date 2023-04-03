@@ -66,6 +66,11 @@
 #define AutoPlaceBeta -232.842621
 #define AutoPlaceGamma -83.979454
 
+#define GammaMultiplier 0.75
+
+// Distance until PID kickin for GoToPoseRelativeNew method
+#define TranslationPIDKickInVal 0.15
+
 //Autobalance
 #define TipAngle 10.0
 #define ApproachAngle 13.0
@@ -84,8 +89,8 @@
 #define GripSpinnerCANID 21
 #define O_PI std::numbers::pi
 #define gyroOffset (std::numbers::pi/2)*(0_rad)
-#define ShortAutoLength 2.03
-#define LongAutoLength 3.68
+#define ShortAutoLength 2.10 //2.03
+#define LongAutoLength 3.75 //3.68
 #define ConeStoppingThreshold 10
 #define CubeStoppingThreshold 2.25
 
@@ -97,9 +102,15 @@
 #define GYRO_PORT 13
 //Offsets for Absolute Encoders
 #define RFZERO (1.761010-1.57079632)-3.1415926535
-#define RBZERO (3.204486-1.57079632)-3.1415926535
+#define RBZERO (3.204486-1.57079632)-3.1415926535 + 0.1
 #define LFZERO (5.514661-1.57079632)-3.1415926535
 #define LBZERO (5.787710-1.57079632)-3.1415926535
+
+//Original encoder offsets
+// #define RFZERO (1.761010-1.57079632)-3.1415926535
+// #define RBZERO (3.204486-1.57079632)-3.1415926535
+// #define LFZERO (5.514661-1.57079632)-3.1415926535
+// #define LBZERO (5.787710-1.57079632)-3.1415926535
 
 //SwerveModule PID for Drive
 #define KDP 1.0
