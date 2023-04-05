@@ -14,6 +14,7 @@
 #include "OECPigeonIMU.h"
 #include "Constants.h"
 #include "SwerveModule.h"
+
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableInstance.h"
 #include "networktables/NetworkTableEntry.h"
@@ -36,7 +37,7 @@ class Drivetrain {
   OECPigeonIMU gyro{GYRO_PORT};
   void UpdateOdometry();
   void ResetDrive();
-  void GoToPose(frc::Pose2d desiredPose,bool fieldRelative, double drivePower);
+  void GoToPose(frc::Pose2d desiredPose,bool fieldRelative, double drivePower, double time);
   void GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower);
   void VisionAdjustTeleop(bool fieldRelative);
 
@@ -113,7 +114,7 @@ double  getVisionDistance();
   photonlib::PhotonCamera camera{"limelight"};
   double basespeed = 0.1;
 
-
+  frc::Timer timer2;
   double smoothingWidth = 90;
   double reading;
  /*SwerveModule RFMod{1, 2, 9, true, RFZERO, false, false};

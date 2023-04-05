@@ -43,15 +43,17 @@ void Drivetrain::UpdateOdometry()
 } // Update Odometry
 
 // Method for autonomous, takes in a given pose and drives until it reaches that pose
-void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double drivePower)
+void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double drivePower, double time)
 {
   isFinished = false;
+  timer2.Reset();
+  timer2.Start();
   Drivetrain::UpdateOdometry();
   while (isFinished == false)
   {Drivetrain::UpdateOdometry();
-    if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.1||
+    if ((fabs(Drivetrain::SwerveOdometryGetPose().X().value() - desiredPose.X().value()) > 0.1||
         fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - desiredPose.Y().value()) > 0.1 ||
-        fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - desiredPose.Rotation().Radians().value()) > .02)
+        fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - desiredPose.Rotation().Radians().value()) > .02) && timer2.Get().value() < time)
     {
 
       
@@ -59,11 +61,14 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double dr
       strafeSpeed = (drivePower/drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), desiredPose.Y().value());
       rotationSpeed = (drivePower/drivePercentage) * controllerRotationMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value(), desiredPose.Rotation().Radians().value());
       Drivetrain::Drive(fowardSpeed * Drivetrain::maxSpeed, strafeSpeed * Drivetrain::maxSpeed, rotationSpeed * Drivetrain::maxTurnRate, fieldRelative);
+      
     }
     else
     {
       Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
       isFinished = true;
+        timer2.Stop();
+        timer2.Reset();
     }
   }
 } 
@@ -71,14 +76,15 @@ void Drivetrain::GoToPose(frc::Pose2d desiredPose, bool fieldRelative, double dr
 // Relative version of absolute go to pose method - goes to the pose away from the starting position rather than absolute position on the field
 void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, double drivePower){
   isFinished = false;
+
   Drivetrain::UpdateOdometry();
   frc::Pose2d initPose = Drivetrain::SwerveOdometryGetPose();
   while (isFinished == false)
   {Drivetrain::UpdateOdometry();
-    if (fabs(Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value())) > 0.01 ||
+    if ((fabs(Drivetrain::SwerveOdometryGetPose().X().value() - (initPose.X().value() + desiredPose.X().value())) > 0.01 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Y().value() - (initPose.Y().value() + desiredPose.Y().value())) > 0.01 ||
         fabs(Drivetrain::SwerveOdometryGetPose().Rotation().Radians().value() - (initPose.Rotation().Radians().value() + 
-                                                                                 desiredPose.Rotation().Radians().value())) > .04)
+                                                                                 desiredPose.Rotation().Radians().value())) > .04))
     {
       fowardSpeed = (drivePower/drivePercentage) * controllerFowardMovement.Calculate(Drivetrain::SwerveOdometryGetPose().X().value(), (initPose.X().value() + desiredPose.X().value()));
       strafeSpeed = (drivePower/drivePercentage) * controllerSideMovement.Calculate(Drivetrain::SwerveOdometryGetPose().Y().value(), (initPose.Y().value() + desiredPose.Y().value()));
@@ -89,6 +95,7 @@ void Drivetrain::GoToPoseRelative(frc::Pose2d desiredPose, bool fieldRelative, d
     {
       Drivetrain::Drive(0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxSpeed, 0.0 * Drivetrain::maxTurnRate, fieldRelative);
       isFinished = true;
+
     }
   }
 
