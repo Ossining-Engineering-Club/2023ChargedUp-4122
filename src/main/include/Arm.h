@@ -19,6 +19,7 @@ class Arm{
     // void GoToStowed();
     // void GoToShelf();
     void GoTo(double Alpha, double Beta, double Gamma, double multiplier);
+    void GoToAuto(double Alpha, double Beta, double Gamma, double multiplier);
     double alpha = 0.0;
     double beta = 0.0;
     double gamma = 0.0;

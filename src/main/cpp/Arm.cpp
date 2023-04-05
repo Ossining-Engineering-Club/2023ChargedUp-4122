@@ -132,9 +132,49 @@ void Arm::GoTo(double Alpha, double Beta, double Gamma, double multiplier){ // M
     }
 
     if(Gamma - gammapos > 10.0){
-    m_gammaMotor.Set(.5*multiplier);
+    m_gammaMotor.Set(GammaMultiplier*multiplier);
     }else if(Gamma - gammapos < -10.0){
-    m_gammaMotor.Set(-.5*multiplier);
+    m_gammaMotor.Set(-GammaMultiplier*multiplier);
+    }else{
+    m_gammaMotor.Set(GammaSpeed);
+    }
+
+}
+
+void Arm::GoToAuto(double Alpha, double Beta, double Gamma, double multiplier){ // Multiplier is a double from 0.0 to 1.0
+
+    double alphapos = e_alpha -> GetPosition();
+    double betapos = e_beta -> GetPosition();
+    double gammapos = e_gamma -> GetPosition();
+
+    double Alpha1Speed = pid_alpha.Calculate(alphapos, Alpha);
+    double Alpha2Speed = -pid_alpha.Calculate(alphapos, Alpha);
+    double BetaSpeed = pid_beta.Calculate(betapos, Beta);
+    double GammaSpeed = pid_gamma.Calculate(gammapos,Gamma);
+
+    if(Alpha - alphapos > 5.0){
+    m_alphaMotor1.Set(.15*multiplier); // Alpha Forward
+    m_alphaMotor2.Set(-.15*multiplier); //Alpha Forward
+    }else if(Alpha - alphapos < -5.0){
+    m_alphaMotor1.Set(-.25*multiplier); // Alpha Backward
+    m_alphaMotor2.Set(.25*multiplier); // Alpha Backward
+    }else{
+    m_alphaMotor1.Set(Alpha1Speed);
+    m_alphaMotor2.Set(Alpha2Speed);
+    }
+    
+    if(Beta - betapos > 5.0){
+    m_betaMotor.Set(.7*multiplier); // Beta backward
+    }else if(Beta - betapos < -5.0){
+    m_betaMotor.Set(-1.0*multiplier); //Beta forward
+    }else{
+    m_betaMotor.Set(BetaSpeed);
+    }
+
+    if(Gamma - gammapos > 10.0){
+    m_gammaMotor.Set(0.4*multiplier);
+    }else if(Gamma - gammapos < -10.0){
+    m_gammaMotor.Set(-0.4*multiplier);
     }else{
     m_gammaMotor.Set(GammaSpeed);
     }
