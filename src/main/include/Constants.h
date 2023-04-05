@@ -44,7 +44,7 @@
 #define StowBeta -3.238093
 #define StowGamma -1.976190
 
-#define AutoStowAlpha 0.476190
+#define AutoStowAlpha 0.1 //0.476190
 #define AutoStowBeta -1.638093
 #define AutoStowGamma -1.976190
 
@@ -58,10 +58,15 @@
 
 #define PlaceGamma -95.741432
 
+// Place Gamma for cones in auto
+#define PlaceGammaAuto -75.741432
+
+
 #define ShelfAlpha 8.500027
 #define ShelfBeta -98.335808
 #define ShelfGamma -178.277390
 
+// FOR CUBES
 #define AutoPlaceAlpha 2.0
 #define AutoPlaceBeta -232.842621
 #define AutoPlaceGamma -83.979454

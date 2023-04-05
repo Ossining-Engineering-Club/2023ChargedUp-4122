@@ -338,7 +338,7 @@ void Drivetrain::GoToPoseRelativeNewRotate(frc::Pose2d desiredPose, bool fieldRe
   if (HeadingDiff > 2.0 * O_PI)   HeadingDiff -= 2.0 * O_PI;
   else if (HeadingDiff < -2.0 * O_PI)   HeadingDiff += 2.0 * O_PI;
 
-  if (fabs(ForwardDiff) > 0.01 || fabs(StrafeDiff) > 0.01 ||fabs(HeadingDiff) > .02)
+  if (fabs(ForwardDiff) > 0.01 || fabs(StrafeDiff) > 0.01 ||fabs(HeadingDiff) > .04)
   {
     if (fabs(HeadingDiff) < (O_PI / 4.0))
       rotationSpeed = (drivePower / drivePercentage) * controllerRotationMovementNew.Calculate(HeadingDiff, 0.0);

@@ -129,7 +129,7 @@ double  getVisionDistance();
   const double FowardSide_I_GAIN_New = 0.0;
   const double FowardSide_D_GAIN_New = 0.0;
 
-  const double kP_Rot_New = 3.3;
+  const double kP_Rot_New = 4.5;
   const double kI_Rot_New = 0.0;
   const double kD_Rot_New = 0.0;
 
