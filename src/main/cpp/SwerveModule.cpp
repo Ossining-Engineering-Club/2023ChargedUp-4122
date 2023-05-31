@@ -22,15 +22,15 @@ SwerveModule::SwerveModule(int RotatorMotorNo,
                            bool DriveReverse,
                            bool TurnReverse):
     //Instantiates the Driving and Turning motors
-    DriveMotor(DriveMotorNo, rev::CANSparkMax::MotorType::kBrushless),
     RotatorMotor(RotatorMotorNo, rev::CANSparkMax::MotorType::kBrushless),
+    DriveMotor(DriveMotorNo, rev::CANSparkMax::MotorType::kBrushless),
     //Instantiates the Absolute Encoder
     absEncoder(CANCoderId)
     {
             absEncoderOffset = AbsEncoderOffsetConstant; // Assign Constant from table in initialization
             if(ReverseDirection == true) absSignum = -1.0;
             else absSignum = 1.0;
-
+            
             // Sets the drive and rotator motors reverse if the module is reverse (bool)
             DriveMotor.SetInverted(DriveReverse);
             RotatorMotor.SetInverted(TurnReverse);
@@ -40,6 +40,7 @@ SwerveModule::SwerveModule(int RotatorMotorNo,
             driveEncoder = new rev::SparkMaxRelativeEncoder(DriveMotor.GetEncoder());
             turningEncoder = new rev::SparkMaxRelativeEncoder(RotatorMotor.GetEncoder());
             driveEncoder -> SetPositionConversionFactor(DriveEncoderPosFactor); // Constant
+            
             turningEncoder -> SetPositionConversionFactor(TurnEncoderPosFactor); // Constant
             driveEncoder -> SetVelocityConversionFactor(DriveEncoderVelocityFactor); // Constant
             turningEncoder -> SetVelocityConversionFactor(TurnEncoderVelocityFactor); // Constant
@@ -53,6 +54,7 @@ SwerveModule::SwerveModule(int RotatorMotorNo,
 
 // Get State Method for Odometry
 frc::SwerveModuleState SwerveModule::GetState() const {
+    //velocity
   return {units::meters_per_second_t{driveEncoder -> GetVelocity()},
           
           units::radian_t{-1.0*(turningEncoder -> GetPosition() - turningEncoderOffset)}
@@ -60,7 +62,9 @@ frc::SwerveModuleState SwerveModule::GetState() const {
 }
 
 // Get Position Method for Odometry
-frc::SwerveModulePosition SwerveModule::GetPosition() const {
+frc::SwerveModulePosition SwerveModule::GetPosition() const{
+   
+    //position
   return {units::meter_t{driveEncoder -> GetPosition()},
           units::radian_t{-1.0*(turningEncoder -> GetPosition() - turningEncoderOffset)}};
 }
@@ -105,7 +109,7 @@ void SwerveModule::SetDesiredState(const frc::SwerveModuleState& state) {
         else if(turningVal < -1.0) turningVal = -1.0;
 
 
-        DriveMotor.Set(drivePercentage * optimizedState.speed*(1.0/4.441_mps)); //Change to variable later
+        DriveMotor.Set(1.0 * optimizedState.speed*(1.0/4.441_mps)); //Change to variable later
         RotatorMotor.Set(rotatePercentage * turningVal);
     }
     else{

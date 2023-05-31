@@ -1,34 +1,47 @@
-See file:///C:/Users/engineering/Desktop/ALBANYCODE%20-%20Copy/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramReleaseExecutableFrcUserProgramCpp.
+See file:///C:/Users/finnl/Desktop/2023ChargedUp-4122Print/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramReleaseExecutableFrcUserProgramCpp.
+compiling SwerveModule.cpp successful.
+In file included from C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\SwerveModule.cpp:5:
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\include/SwerveModule.h: In constructor 'SwerveModule::SwerveModule(int, int, int, bool, double, bool, bool)':
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\include/SwerveModule.h:51:20: warning: 'SwerveModule::RotatorMotor' will be initialized after [-Wreorder]
+   51 |   rev::CANSparkMax RotatorMotor;
+      |                    ^~~~~~~~~~~~
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\include/SwerveModule.h:50:20: warning:   'rev::CANSparkMax SwerveModule::DriveMotor' [-Wreorder]
+   50 |   rev::CANSparkMax DriveMotor;
+      |                    ^~~~~~~~~~
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\SwerveModule.cpp:17:1: warning:   when initialized here [-Wreorder]
+   17 | SwerveModule::SwerveModule(int RotatorMotorNo,
+      | ^~~~~~~~~~~~
+
 compiling Robot.cpp successful.
-C:\Users\engineering\Desktop\ALBANYCODE - Copy\src\main\cpp\Robot.cpp: In member function 'virtual void Robot::AutonomousInit()':
-C:\Users\engineering\Desktop\ALBANYCODE - Copy\src\main\cpp\Robot.cpp:65:17: warning: variable 'HomePose' set but not used [-Wunused-but-set-variable]
-   65 |     frc::Pose2d HomePose = frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg));
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\Robot.cpp: In member function 'virtual void Robot::AutonomousInit()':
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\Robot.cpp:56:17: warning: variable 'HomePose' set but not used [-Wunused-but-set-variable]
+   56 |     frc::Pose2d HomePose = frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg));
       |                 ^~~~~~~~
-C:\Users\engineering\Desktop\ALBANYCODE - Copy\src\main\cpp\Robot.cpp:66:18: warning: variable 'TurningFromHomePose' set but not used [-Wunused-but-set-variable]
-   66 |     frc::Pose2d  TurningFromHomePose  = frc::Pose2d(2.58_m, 0_m, frc::Rotation2d(180_deg));
-      |                  ^~~~~~~~~~~~~~~~~~~
-C:\Users\engineering\Desktop\ALBANYCODE - Copy\src\main\cpp\Robot.cpp:67:18: warning: variable 'TurningFromPickupPose' set but not used [-Wunused-but-set-variable]
-   67 |     frc::Pose2d  TurningFromPickupPose  = frc::Pose2d(-2.58_m, 0_m, frc::Rotation2d(180_deg));
-      |                  ^~~~~~~~~~~~~~~~~~~~~
-C:\Users\engineering\Desktop\ALBANYCODE - Copy\src\main\cpp\Robot.cpp:69:18: warning: variable 'PickupOnePose' set but not used [-Wunused-but-set-variable]
-   69 |     frc::Pose2d  PickupOnePose  = frc::Pose2d(-2_m, 0_m, frc::Rotation2d(0_deg));
-      |                  ^~~~~~~~~~~~~
-C:\Users\engineering\Desktop\ALBANYCODE - Copy\src\main\cpp\Robot.cpp:70:18: warning: variable 'k2ndPickupTurningPose' set but not used [-Wunused-but-set-variable]
-   70 |     frc::Pose2d  k2ndPickupTurningPose  = frc::Pose2d(3_m, 0_m, frc::Rotation2d(90_deg));
-      |                  ^~~~~~~~~~~~~~~~~~~~~
-C:\Users\engineering\Desktop\ALBANYCODE - Copy\src\main\cpp\Robot.cpp:71:17: warning: variable 'MovingToSecondPickupPose' set but not used [-Wunused-but-set-variable]
-   71 |     frc::Pose2d MovingToSecondPickupPose = frc::Pose2d(0_m, -1.28_m, frc::Rotation2d(0_deg));
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\Robot.cpp:57:17: warning: variable 'TurningFromHomePose' set but not used [-Wunused-but-set-variable]
+   57 |     frc::Pose2d TurningFromHomePose = frc::Pose2d(2.58_m, 0_m, frc::Rotation2d(180_deg));
+      |                 ^~~~~~~~~~~~~~~~~~~
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\Robot.cpp:58:17: warning: variable 'TurningFromPickupPose' set but not used [-Wunused-but-set-variable]
+   58 |     frc::Pose2d TurningFromPickupPose = frc::Pose2d(-2.58_m, 0_m, frc::Rotation2d(180_deg));
+      |                 ^~~~~~~~~~~~~~~~~~~~~
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\Robot.cpp:60:17: warning: variable 'PickupOnePose' set but not used [-Wunused-but-set-variable]
+   60 |     frc::Pose2d PickupOnePose = frc::Pose2d(-2_m, 0_m, frc::Rotation2d(0_deg));
+      |                 ^~~~~~~~~~~~~
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\Robot.cpp:61:17: warning: variable 'k2ndPickupTurningPose' set but not used [-Wunused-but-set-variable]
+   61 |     frc::Pose2d k2ndPickupTurningPose = frc::Pose2d(3_m, 0_m, frc::Rotation2d(90_deg));
+      |                 ^~~~~~~~~~~~~~~~~~~~~
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\Robot.cpp:62:17: warning: variable 'MovingToSecondPickupPose' set but not used [-Wunused-but-set-variable]
+   62 |     frc::Pose2d MovingToSecondPickupPose = frc::Pose2d(0_m, -1.28_m, frc::Rotation2d(0_deg));
       |                 ^~~~~~~~~~~~~~~~~~~~~~~~
-C:\Users\engineering\Desktop\ALBANYCODE - Copy\src\main\cpp\Robot.cpp:72:19: warning: variable 'TurningAfterSecondPickupPose' set but not used [-Wunused-but-set-variable]
-   72 |     frc::Pose2d   TurningAfterSecondPickupPose = frc::Pose2d(0_m, 0_m, frc::Rotation2d(180_deg));
-      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-C:\Users\engineering\Desktop\ALBANYCODE - Copy\src\main\cpp\Robot.cpp:73:18: warning: variable 'MovingAwayAfterSecondPickupPose' set but not used [-Wunused-but-set-variable]
-   73 |     frc::Pose2d  MovingAwayAfterSecondPickupPose = frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
-      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\Robot.cpp:63:17: warning: variable 'TurningAfterSecondPickupPose' set but not used [-Wunused-but-set-variable]
+   63 |     frc::Pose2d TurningAfterSecondPickupPose = frc::Pose2d(0_m, 0_m, frc::Rotation2d(180_deg));
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\Robot.cpp:64:17: warning: variable 'MovingAwayAfterSecondPickupPose' set but not used [-Wunused-but-set-variable]
+   64 |     frc::Pose2d MovingAwayAfterSecondPickupPose = frc::Pose2d(4.46_m, 0_m, frc::Rotation2d(0_deg));
+      |                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 compiling Drivetrain.cpp successful.
-C:\Users\engineering\Desktop\ALBANYCODE - Copy\src\main\cpp\Drivetrain.cpp:182:5: warning: "/*" within comment [-Wcomment]
-  182 |     /*
+C:\Users\finnl\Desktop\2023ChargedUp-4122Print\src\main\cpp\Drivetrain.cpp:195:5: warning: "/*" within comment [-Wcomment]
+  195 |     /*
       |      
 
-Finished compileFrcUserProgramReleaseExecutableFrcUserProgramCpp, see full log file:///C:/Users/engineering/Desktop/ALBANYCODE%20-%20Copy/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt.
+Finished compileFrcUserProgramReleaseExecutableFrcUserProgramCpp, see full log file:///C:/Users/finnl/Desktop/2023ChargedUp-4122Print/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt.

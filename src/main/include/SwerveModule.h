@@ -14,6 +14,12 @@
 #include <units/velocity.h>
 #include <units/angular_velocity.h>
 #include <units/angular_acceleration.h>
+#include <ctre/Phoenix.h>
+#include <ctre/phoenix/motorcontrol/can/WPI_TalonFX.h>
+#include <ctre/phoenix/sensors/WPI_CANCoder.h>
+#include <ctre/phoenix/motorcontrol/FeedbackDevice.h>
+#include <ctre/phoenix/motorcontrol/ControlFrame.h>
+#include <ctre/phoenix/motorcontrol/can/TalonFX.h>
 #include "Constants.h"
 
 class SwerveModule {
@@ -35,7 +41,7 @@ class SwerveModule {
   void Balance();
 
  private:
-
+  
 //Radians per second for angular velocity, notable for the rotational movement
   static constexpr auto ModuleMaxAngularVelocity = std::numbers::pi * 1_rad_per_s;  // radians per second
   static constexpr auto ModuleMaxAngularAcceleration = std::numbers::pi * units::angular_acceleration::radians_per_second_squared_t{1};  // radians per second^2
